@@ -1,0 +1,44 @@
+<div (window:resize)="onWindowResize($event)" [ngClass]="{ 'sidebar-collapse': collapsed }" class="sidebar__container">
+  <div class="menu__container">
+    <button (click)="alternarSidebarColapsado()" class="btn-menu">
+      <img [src]="urlMenuIcon" alt="Menu Icon" />
+    </button>
+  </div>
+
+  <a (click)="alternarSidebarColapsado()" [ngClass]="{ show: collapsed }" class="btn_menu_collapsez btn-submenu">
+    <img [src]="urlMenuCollapsedIcon" alt="Menu Icon" />
+    <span>Menú</span>
+  </a>
+
+  <ul *ngIf="elements" class="option__container">
+    <li *ngFor="let element of elements">
+      <a (click)="elementoSeleccionado(element)" [ngClass]="{ option__selected: idSelected === element.idOrder }">
+        <span>
+          {{ element.name }}
+          <p *ngIf="element.count > 0" class="counter" [ngClass]="{ 'fix-count': element.options.length > 0 }">
+            {{ element.count }}
+          </p>
+          <img *ngIf="element.options.length > 0" [src]="urlDropDown" class="dropdown-icon"
+            alt="{{ element.name }} DropDown" [ngStyle]="{
+              transform: element.extended ? 'rotate(180deg)' : 'rotate(0)'
+            }" />
+        </span>
+      </a>
+      <ul class="suboption__container" [ngClass]="{ 'not-extended': !element.extended }">
+        <li *ngFor="let option of element.options">
+          <a (click)="elementoSeleccionado(option, element.idOrder)" [routerLink]="option.url"
+            [ngClass]="{ option__selected: idSelected === option.idOrder }" class="subitem">
+            <span>
+              {{ option.name }}
+              <p *ngIf="option.count > 0" class="counter">
+                {{ option.count }}
+              </p>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <div class="sidebar__bottom"></div>
+</div>

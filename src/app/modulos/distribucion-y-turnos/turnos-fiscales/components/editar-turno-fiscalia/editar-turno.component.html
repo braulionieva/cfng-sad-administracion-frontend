@@ -1,0 +1,303 @@
+<div class="modal__header">
+  <h4 class="font-semibold m-3 ml-5" *ngIf="!editar">Agregar Turno</h4>
+  <h4 class="font-semibold m-3 ml-5" *ngIf="editar">Editar Turno</h4>
+  <div class="cfe-close__document mt-3" (click)="close()" (keypress)="close()">
+    <img [src]="icon('close_new')" class="img-custom" alt=""/>
+  </div>
+</div>
+<form [formGroup]="formularioNuevoTurno">
+  <div class="m-0 ml-8 mr-8">
+    <div>
+      <div class="subtitle">Distrito Fiscal</div>
+      <p-dropdown [options]="distritosFiscalesList"
+              formControlName="distritoFiscal"
+              [placeholder]="editar?turnoSelect.distritoFiscal:'Seleccione el Distrito Fiscal'"
+              [required] optionLabel="nombre"
+              emptyMessage="No se encontraron registros"
+              optionValue="id"
+              (onChange)="renuevaDependencia($event.value)"
+        ></p-dropdown>
+    </div>
+    <div>
+      <div class="subtitle">Fiscalía</div>
+      <p-dropdown
+              [options]="dependenciasFiscalesList"
+              formControlName="dependencia"
+              [placeholder]="editar?turnoSelect.dependencia:'Seleccione la Fiscalía'"
+              [required] optionLabel="dependencia"
+              emptyMessage="No se encontraron registros"
+              labelValue="codigoDependencia"
+              optionLabel="dependencia"
+              (onChange)="renuevaDespacho($event.value)"
+      ></p-dropdown>
+    </div>
+    <div *ngIf="editar">
+      <div class="subtitle">Despacho</div>
+      <p-dropdown
+              [options]="despachosList"
+              formControlName="despacho"
+              [placeholder]="editar?turnoSelect.despacho:'Seleccione el despacho'"
+              [required] optionLabel="nombre"
+              emptyMessage="No se encontraron registros"
+              optionValue="codigo"
+      ></p-dropdown>
+     <button class="btn-hidden"></button>
+      <hr class="height-1px">
+      <div *ngIf="editar" class="w-90% m-0 mt-2">
+        <div class="flex justify-content-center grid m-0" style="width:auto" >
+          <div class="mt-4" style="width:200px;"><b>Fecha y hora del turno</b></div>
+          <div class="flex justify-content-between grid"  style="width:auto;">
+              <div class=" m-2" >
+                  <div><b>Fecha Inicio</b></div>
+                  <div class="grid m-1">
+                    <p-calendar
+                      appendTo="body"
+                      dateMask
+                      dateFormat="dd/mm/yy"
+                      formControlName="fechaInicio"
+                      class="p-inputtext-sm cfe-calendar-turno h-39"
+                      styleClass="margin-botton:50px"
+                      [minDate]="fechaMinima"
+                      [showIcon]="true"
+                      icon="cfe-calendar-icon"
+                      (onSelect)="validarHorarioEdit()"
+                    ></p-calendar>
+                  </div>
+                </div>
+                <div class="m-2 ml-0">
+                  <div><b>Hora Inicio</b></div>
+                  <div class="grid m-1">
+                    <p-calendar
+                    class="p-inputtext-sm cfe-time-turno ampm h-39"
+                    formControlName="horaInicio"
+                    [timeOnly]="true"
+                    [hourFormat]="'24'"
+                    [minDate]="minTime"
+                    [maxDate]="maxTime"
+                    placeholder="HH:MM"
+                    (onInput)="validarHorarioEdit()"
+                />
+                <p-selectButton [options]="stateOptions"
+                                class="selector_hora ampm"
+                                formControlName="ampmIni"
+                                (onChange)="valorAMPM($event)"
+                                optionValue="value"></p-selectButton>
+                  </div>
+                </div>
+                <div class= "m-2">
+                  <div><b>Fecha Fin</b></div>
+                  <div class="grid m-1">
+                   <p-calendar
+                    appendTo="body"
+                    dateMask
+                    dateFormat="dd/mm/yy"
+                    formControlName="fechaFin"
+                    class="p-inputtext-sm cfe-calendar-turno h-39"
+                    [showIcon]="true"
+                    [minDate]="fechaMinima"
+                    icon="cfe-calendar-icon"
+                    (onSelect)="validarHorarioEdit()"
+                  ></p-calendar>
+                  </div>
+                </div>
+                <div class="m-2 ml-0">
+                  <div><b>Hora Fin</b></div>
+                  <div class="grid m-1">
+                    <p-calendar
+                    class="p-inputtext-sm cfe-time-turno ampm h-39"
+                    formControlName="horaFin"
+                    [timeOnly]="true"
+                    [hourFormat]="'24'"
+                    [minDate]="minTime"
+                    [maxDate]="maxTime"
+                    placeholder="HH:MM"
+                    (onInput)="validarHorarioEdit()"
+                  />
+                  <p-selectButton [options]="stateOptions"
+                                  class="selector_hora ampm"
+                                  formControlName="ampmFin"
+                                  (onChange)="valorAMPM($event)"
+                                  optionValue="value"></p-selectButton>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+
+    <!--hr-->
+    <div *ngIf="!editar">
+      <div class="grid col mt-2">
+        <div class="alert alert-warning w-full" style="display: flex; align-items: center">
+          <div style="width:4%; display:inline-block;">
+            <i class="pi pi-exclamation-circle"></i>
+          </div>
+          <div style="width:96%; display:inline-block;">
+            <p>{{getMessage(0)}}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="messaggeFecha[1].mostrar" class="alert alert-error w-full" style="display: flex; align-items: center">
+          <div style="width:4%; display:inline-block;"><i class="pi pi-ellipsis-v"></i></div>
+          <div style="width:96%; display:inline-block;"><p>{{getMessage(1)}}</p></div>
+        </div>
+        <div  *ngIf="messaggeFecha[2].mostrar" class="alert alert-error w-full" style="display: flex; align-items: center">
+          <div style="width:4%; display:inline-block;">
+          <i class="pi pi-ellipsis-v"></i>
+          </div><div style="width:96%; display:inline-block;">
+            <p>{{getMessage(2)}}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="messaggeFecha[3].mostrar" class="alert alert-warning w-full" style="display: flex; align-items: center">
+          <div style="width:4%; display:inline-block;">
+            <i class="pi pi-ellipsis-v"></i>
+            </div>
+            <div style="width:96%; display:inline-block;">
+            <p>{{getMessage(3)}}
+            </p>
+          </div>
+        </div>
+        <div  *ngIf="messaggeFecha[3].mostrar" class="alert alert-error w-full" style="display: flex; align-items: center">
+          <div style="width:4%; display:inline-block;">
+            <i class="pi pi-ellipsis-v"></i>
+            </div>
+          <div style="width:96%; display:inline-block;">
+            <p>{{getMessage(3)}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div *ngIf="!editar"  class="w-full " >
+      <div class="subtitle">Configurar turnos para los Despachos:<br></div>
+      <div class="flex justify-content-center">
+          <div style="width:650px mt-2">
+              <div class="flex justify-content-center surface-border border-bottom-1 pb-2 mt-2">
+                <div style="width:40px; text-align: center;">N°</div >
+                <div style="width:250px; text-align: center; align-content: center;">Despacho</div >
+                <div  style="width:350px; text-align: center; align-items: center;">
+                  Fecha  hora  turno
+                </div >
+              </div >
+              <div class="flex justify-content-center surface-border border-bottom-1 mt-2"
+                   *ngFor="let dep of despachoTurnoList; let indice = index;">
+                  <div class="flex justify-content-center" style="width:auto;text-align: center;" >
+                    <div style="width:50px; align-content: center;text-align: left;">{{indice+1}}</div>
+                    <div style="width:250px; align-content: center;">{{ dep?.despacho|titlecase}}</div>
+                    <div style="width: auto;">
+                        <div class="grid ">
+                          <div class="p-2 " >
+                            <div style="text-align: left;"><b>Fecha Inicio</b></div>
+                            <p-calendar
+                              #calendar
+                              appendTo="body"
+                              dateFormat="dd/mm/yy"
+                              formControlName="fechaFin"
+                              class="p-inputtext-sm cfe-calendar-turno h-39 mt-2"
+                              [minDate]="fechaMinima"
+                              [showIcon]="true"
+                              icon="cfe-calendar-icon"
+                              placeholder="DD/MM/AAAA"
+                              (onSelect)="setFechaInicio(dep,$event)"
+                            ></p-calendar>
+                          </div>
+                          <div class="p-2 ">
+                            <div style="text-align: left;"><b>Hora</b></div>
+                            <div class="flex">
+                              <p-calendar
+                                class="p-inputtext-sm cfe-time-turno h-39 mt-2"
+                                [timeOnly]="true"
+                                [hourFormat]="'24'"
+                                [minDate]="minTime"
+                                [maxDate]="maxTime"
+                                placeholder="HH:MM"
+                                (onSelect)="setHoraInicio(dep,$event)"
+                                (onInput)="evaluamin()"
+                               />
+                              <p-selectButton id="state"
+                                              [options]="stateOptions"
+                                              class="selector_hora ampm mt-2"
+                                              formControlName="ampmIni"
+                                              (onChange)="valorAMPM($event)"
+                                              optionValue="value"></p-selectButton>
+                              </div>
+                          </div>
+                          <div class="pt-6" style="width:20px;">
+                              <div class="fondoCheck" *ngIf="dep?.validadoInicio" >
+                                <i class="filterLink" aria-hidden="true"><fn-icon [ico]="obtenerIcono('iCheck')"  color="#33CC85" width="10px"/></i>
+                              </div>
+                          </div>
+                        </div>
+
+                        <div class="grid">
+                          <div class="p-2 pt-0 ">
+                            <div style="text-align: left;"><b>Fecha Fin</b></div>
+                            <p-calendar
+                            appendTo="body"
+                              dateFormat="dd/mm/yy"
+                              formControlName="fechaFin"
+                              class="p-inputtext-sm cfe-calendar-turno h-39 mt-2"
+                              [showIcon]="true"
+                              [minDate]="fechaMinima"
+                              icon="cfe-calendar-icon"
+                              placeholder="DD/MM/AAAA"
+                              (onSelect)="setFechaFin(dep,$event)"
+                            ></p-calendar>
+                          </div>
+                          <div class="p-2 pt-0 ">
+                            <div style="text-align: left;"><b>Hora</b></div>
+                            <div class="flex ">
+                              <p-calendar
+                                class="p-inputtext-sm cfe-time-turno h-39 mt-2"
+                                [timeOnly]="true"
+                                [hourFormat]="'24'"
+                                [minDate]="minTime"
+                                [maxDate]="maxTime"
+                                placeholder="HH:MM"
+                                (onSelect)="setHoraFin(dep,$event)" 
+                                (onClear)="clearHoraFin(dep)" 
+                                (ngModelChange)="onChangeHoraFin(dep, $event)"
+                              />
+                              
+                              <p-selectButton [options]="stateOptions"
+                                              class="selector_hora ampm mt-2"
+                                              formControlName="ampmFin"
+                                              (onChange)="valorAMPM($event)"
+                                              optionValue="value"></p-selectButton>
+                            </div>
+                          </div>
+                          <div class="pt-6" style="width:20px;">
+                            <div class="fondoCheck" *ngIf="dep?.validadoFin" >
+                              <i class="filterLink" aria-hidden="true"><fn-icon [ico]="obtenerIcono('iCheck')"  color="#33CC85" width="10px"/></i>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+</form>
+
+<div class="flex m-4 mb-6">
+  <div class="w-full flex justify-content-center ">
+        <p-button
+          styleClass="btn-mpfn-sad-cancel"
+          label="Cancelar"
+          (onClick)="close()">
+        </p-button>
+        <p-button
+          styleClass="btn-mpfn-sad-prime ml-3"
+          [label]="editar?'Guardar':'Registrar'"
+          (onClick)="requestTurno()"
+          [disabled]="!canSave">
+        </p-button>
+  </div>
+</div>
+

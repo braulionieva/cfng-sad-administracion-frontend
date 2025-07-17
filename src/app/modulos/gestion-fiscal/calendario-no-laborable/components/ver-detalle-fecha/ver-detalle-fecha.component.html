@@ -1,0 +1,19 @@
+<div class="">
+  <div class="flex justify-content-between grid w-full m-1">
+      <div *ngIf="fechaNoLaborable?.tipoDia=='FERIADO'" class="feriado"></div>
+      <div *ngIf="!(fechaNoLaborable?.tipoDia=='FERIADO')" class="laborable"></div>
+      <div class="ml-2"><h5>{{sumillaFechas}}</h5></div>
+      <div class="ml-2">
+        <i class="pointer" (click)="onEditFecha(idNoLaborable)" ><img [src]="logo('pencil')" alt="Editar" class="img-custom" width="27" height="27" /></i>
+        <i class="pointer" (click)="onEliminarFecha(idNoLaborable)" ><fn-icon [ico]="obtenerIcono('iTrashCan')" color="#C1292E" height="1.5rem" /></i>
+        <i class="pointer" (click)="close()" ><img [src]="icon('close_new')" class="img-custom" alt=""></i>
+      </div>
+  </div>
+  <div>
+    <div class="m-2"><b>Nombre:</b> {{fechaNoLaborable.nombre}}<br></div>
+    <div class="m-2"> <b>Descripción:</b> {{fechaNoLaborable.descripcion}}<br></div>
+    <div class="m-2 " *ngIf="fechaNoLaborable?.tipoAmbito=='REGIONAL'"> <b>Distrito(s) Fiscale(s): </b><br>
+        <div class="chip" style="width: auto;" >{{fechaNoLaborable?.distritoFiscal}}</div>
+    </div>
+  </div>
+</div>

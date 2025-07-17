@@ -1,0 +1,11 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.modal {
+  padding: 1rem;
+  input {
+    width: 100%;
+  }
+}
+.label-error {
+  color: $red;
+}

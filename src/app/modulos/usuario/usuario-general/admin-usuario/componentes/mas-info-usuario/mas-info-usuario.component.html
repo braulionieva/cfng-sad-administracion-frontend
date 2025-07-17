@@ -1,0 +1,56 @@
+<div class="modal__header">
+  <div *ngIf="!historialContrasenias" class="title m-3 ml-5">Mas información</div>
+  <div *ngIf="historialContrasenias" class="title m-3 ml-5">Historial de contraseñas</div>
+  <div class="cfe-close__document mt-3" (click)="close()" (keydown)="close()">
+    <img [src]="icon('close_new')" class="img-custom" alt="" />
+  </div>
+</div>
+<div *ngIf="(!infoCompleta)&&(!historialContrasenias)" class="body-modal">
+  <div class="panel-foto">
+    <div class="style-photo "> <img *ngIf='usuario?.foto' class="circle-foto" alt="profile" id="profile"
+        [src]="'data:image/png;base64,' + usuario.foto">
+      <img *ngIf='!usuario?.foto' class="circle-foto" alt="profile" id="profile" [src]="imgDefault">
+    </div>
+
+    <div><b>{{usuario?.nombreCompleto}}</b></div>
+    <div>Tipo de documento: <b>{{usuario?.tipoDocumento}}</b></div>
+    <div>Número de documento: <b>{{usuario?.numeroDocumento}}</b></div>
+  </div>
+
+  <div class="flex flex-column gap-3 mb-3 mt-3">
+    <div class="flex gap-2">Usuario:<b>{{usuario?.numeroDocumento}}</b></div>
+    <div class="flex gap-2">Relación Laboral:<b>{{usuario?.relacionLaboral}}</b></div>
+    <div class="flex gap-2">Dependencia:<b>{{usuario?.dependencia}}</b></div>
+    <div class="flex gap-2">Cargo:<b>{{usuario?.cargo}}</b></div>
+    <div class="flex gap-2">Celular:<b>{{usuario?.celular}}</b></div>
+    <div class="flex gap-2">Correo electrónico personal:<b>{{usuario?.correoPersonal}}</b></div>
+    <div class="flex gap-2">Correo electrónico institucional:<b>{{usuario?.correoInstitucional}}</b></div>
+    <div class="flex gap-2">Código SINOE:<b>{{usuario?.codigoSINOE}}</b></div>
+    <div class="flex gap-2">País de Origen/Nacionalidad:<b>{{usuario?.paisOrigen}}</b></div>
+    <div class="flex gap-2">Bloqueado: <b>{{ usuario?.bloqueado == 1 ? 'Sí' : 'No' }}</b></div>
+    <div class="flex gap-2">Registrado:<b>{{usuario?.usrCrea }}</b></div>
+    <div class="flex gap-2">Actualizado:<b>{{usuario?.usrModifica}}</b></div>
+    <!--<div class="flex gap-2">Actualizado:<b>{{usuario?.fechaActualizacion | date: 'dd/MM/yyyy HH:mm'}}</b></div>-->
+    <div class="flex gap-2">
+      Estado:<b>{{usuario?.estado?usuario.estado=='1'?'Activo':'Inactivo':usuario?'Activo':'-'}}</b></div>
+  </div>
+  <div class="flex flex-column gap-3 w-full">
+    <p-button styleClass="btn-mpfn-sad-prime  w-full h-25" (onClick)="onInfoCompleta()">
+      <img [src]="icon('user-white')" height="23px" alt="" />
+      &nbsp;&nbsp; Ver información completa</p-button>
+    <p-button styleClass="btn-mpfn-sad-prime  w-full h-25" (onClick)="onHistorialContrasenias()">
+      <img [src]="icon('key-closed')" height="23px" alt="" />&nbsp;&nbsp; Historial de contraseñas</p-button>
+    <p-button styleClass="btn-mpfn-sad-prime  w-full h-25" (onClick)="onFichaUsuario()">
+      <img [src]="icon('print-white')" height="23px" alt="" />&nbsp;&nbsp; Ficha del usuario (PDF)</p-button>
+  </div>
+</div>
+
+<div *ngIf="infoCompleta" class="body-modal">
+  <app-mas-info-completa [usuario]="usuario"
+                         (goBack)="onGoBackFromChild()">
+  </app-mas-info-completa>
+</div>
+<div *ngIf="historialContrasenias" class="body-modal">
+  <app-historial-contrasenias [usuario]="usuario">
+  </app-historial-contrasenias>
+</div>

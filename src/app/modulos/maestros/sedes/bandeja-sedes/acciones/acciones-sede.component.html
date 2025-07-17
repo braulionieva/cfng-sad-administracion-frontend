@@ -1,0 +1,18 @@
+<div class="flex justify-content-end">
+  <p-button
+    styleClass="btn-mpfn-sad-cancel ml-3"
+    (onClick)="exportarBandeja()"
+    [disabled]="!puedeExportar"
+  >
+    <img [src]="icon('excel')" alt="Excel Icon" />&nbsp;Exportar Excel
+  </p-button>
+
+  <p-button
+    styleClass="btn-mpfn-sad-prime px-4 ml-3"
+    label="Agregar"
+    (onClick)="mostrarModalAgregar()"
+  >
+  </p-button>
+</div>
+
+<p-toast></p-toast>

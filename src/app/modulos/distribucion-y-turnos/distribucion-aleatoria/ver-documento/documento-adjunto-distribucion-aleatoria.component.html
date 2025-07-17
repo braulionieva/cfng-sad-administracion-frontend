@@ -1,0 +1,35 @@
+<div class="grid h-full w-full m-0 border-round-sm mt-17">
+
+  <div class="col-fixed px-4 scroll-inner">
+    <div class="close flex justify-content-between"><h3>Documentos de Sustento</h3><div (click)="close()" (keypress)="close()">
+      <img [src]="icon('close_new')" class="img-custom" alt=""/>
+    </div></div>
+
+    <div class="mb-2">
+      <span class="font-semibold"><b>Distrito Fiscal:</b></span>  {{datosDocumento?.distritoFiscal}}
+    </div>
+    <div class="mb-2">
+      <span class="font-semibold"><b>Tipo Especialidad:</b></span>  {{datosDocumento?.tipoEspecialidad}}
+    </div>
+    <div class="mb-2">
+      <span class="font-semibold"><b>Especialidad:</b></span>  {{datosDocumento?.especialidad}}
+    </div>
+    <div class="mb-2">
+      <span class="font-semibold"><b>Distrito:</b></span>  {{datosDocumento?.distrito}}
+    </div>
+
+    <div class="mb-3 mt-5">
+      <span class="font-semibold"><b>Archivos:</b> {{datosDocumento?.totalArchivo}}</span>
+    </div>
+    <hr>
+    <div class="grid docs">
+      <div class="m-3"><img [src]="img('pdf_img')" style="height: 50px;" alt=""></div>
+      <div class="m-3">{{ datosDocumento?.nombreDocumento }}</div><div><a (click)="descargarArchivo()">
+      <i class="pi pi-download size-cursor handCursor m-3" pTooltip="Descargar anexo" tooltipPosition="bottom"></i>
+      </a></div></div>
+
+  </div>
+  <div class="col h-full pr-0 mt-5">
+    <app-visor-pdf-frame [documentoAdjunto]="documentoAdjunto"></app-visor-pdf-frame>
+  </div>
+</div>

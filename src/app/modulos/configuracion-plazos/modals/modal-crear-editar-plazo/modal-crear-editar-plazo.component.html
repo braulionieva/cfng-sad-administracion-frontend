@@ -1,0 +1,120 @@
+<section class="modal">
+  <form class="flex flex-column gap-3" [formGroup]="formGroup">
+    <div class="flex flex-column gap-2">
+      <label for="">Plazo configurado por: <span class="required">*</span></label>
+      <div class="flex gap-4">
+        <div class="flex align-items-center gap-1">
+          <p-radioButton name="configurado" [value]="927" inputId="distritoFiscal"
+            formControlName="configurado"></p-radioButton>
+          <label for="distritoFiscal">Distrito Fiscal</label>
+        </div>
+        <div class="flex align-items-center gap-1">
+          <p-radioButton name="configurado" [value]="928" inputId="tipoEspecialidad"
+            formControlName="configurado"></p-radioButton>
+          <label for="tipoEspecialidad">Tipo de Especialidad</label>
+        </div>
+        <div class="flex align-items-center gap-1">
+          <p-radioButton name="configurado" [value]="929" inputId="especialidad"
+            formControlName="configurado"></p-radioButton>
+          <label for="especialidad">Especialidad</label>
+        </div>
+      </div>
+      <!-- errores -->
+      <small *ngIf="
+          configuradoField.touched && configuradoField!.hasError('required')
+        " class="label-error">Plazo Configurado es requerido.</small>
+    </div>
+    <div *ngIf="configuradoField && configuradoField.value" class="flex gap-3">
+      <label for="" style="min-width: 130px" class="mt-2">Distrito fiscal <span class="required">*</span></label>
+      <div style="width: 100%; max-width: 250px">
+        <p-dropdown [options]="taxDistrictsDropdown" optionLabel="name" optionValue="value" placeholder="Seleccione..."
+          [showClear]="true" formControlName="distrito_fiscal"></p-dropdown>
+        <!-- errores -->
+        <small *ngIf="
+            distritoFiscalField.touched &&
+            distritoFiscalField!.hasError('required')
+          " class="label-error">Distrito Fiscal es requerido.</small>
+      </div>
+    </div>
+    <div *ngIf="
+        configuradoField &&
+        (configuradoField.value === 928 || configuradoField.value === 929)
+      " class="flex gap-3">
+      <label for="" style="min-width: 130px" class="mt-2">Tipo especialidad <span class="required">*</span></label>
+      <div style="width: 100%; max-width: 250px">
+        <p-dropdown optionLabel="name" optionValue="value" [options]="typeSpecialtiesDropdown"
+          placeholder="Seleccione..." [showClear]="true" formControlName="tipo_especialidad"></p-dropdown>
+        <!-- errores -->
+        <small *ngIf="
+            tipoEspecialidadField.touched &&
+            tipoEspecialidadField!.hasError('required')
+          " class="label-error">Tipo Especialidad es requerido.</small>
+      </div>
+    </div>
+    <div *ngIf="configuradoField && configuradoField.value === 929" class="flex gap-3">
+      <label for="" style="min-width: 130px" class="mt-2">Especialidad <span class="required">*</span></label>
+      <div style="width: 100%; max-width: 250px">
+        <p-dropdown optionLabel="name" optionValue="value" [options]="specialtiesDropdown" placeholder="Seleccione..."
+          [showClear]="true" formControlName="especialidad"></p-dropdown>
+        <!-- errores -->
+        <small *ngIf="
+            especialidadField.touched && especialidadField!.hasError('required')
+          " class="label-error">Especialidad es requerido.</small>
+      </div>
+    </div>
+    <div class="flex flex-column gap-3 mt-5">
+      <label for="">Plazo para evaluar caso derivado/acumulado (días)
+        <span class="required">*</span></label>
+      <div class="flex gap-4">
+        <div class="flex flex-column gap-2">
+          <p-inputNumber placeholder="Plazo (dias)" [useGrouping]="false"
+            formControlName="plazo_evaluar_cantidad"></p-inputNumber>
+          <!-- errores -->
+          <small *ngIf="
+              plazoEvaluarCantidadField.touched &&
+              plazoEvaluarCantidadField!.hasError('required')
+            " class="label-error">Requerido.</small>
+        </div>
+        <div class="flex flex-column gap-2" style="width: 100%; max-width: 250px">
+          <p-dropdown optionLabel="name" optionValue="value" [options]="typeDeadlineDaysDropdown"
+            placeholder="Seleccione..." [showClear]="true" formControlName="plazo_evaluar_tipo"></p-dropdown>
+          <!-- errores -->
+          <small *ngIf="
+              plazoEvaluarTipoField.touched &&
+              plazoEvaluarTipoField!.hasError('required')
+            " class="label-error">Requerido.</small>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-column gap-3">
+      <label for="">Plazo para mostrar alerta de vencimiento de caso derivado/acumulado
+        (días) <span class="required">*</span></label>
+      <div class="flex gap-4">
+        <div class="flex flex-column gap-2">
+          <p-inputNumber placeholder="Plazo (dias)" [useGrouping]="false"
+            formControlName="plazo_mostrar_cantidad"></p-inputNumber>
+          <!-- errores -->
+          <small *ngIf="
+              plazoMostrarCantidadField.touched &&
+              plazoMostrarCantidadField!.hasError('required')
+            " class="label-error">Requerido.</small>
+        </div>
+        <div class="flex flex-column gap-2" style="width: 100%; max-width: 250px">
+          <p-dropdown optionLabel="name" optionValue="value" [options]="typeDeadlineDaysDropdown"
+            placeholder="Seleccione..." [showClear]="true" formControlName="plazo_mostrar_tipo"></p-dropdown>
+          <!-- errores -->
+          <small *ngIf="
+              plazoMostrarTipoField.touched &&
+              plazoMostrarTipoField!.hasError('required')
+            " class="label-error">Requerido.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal__actions">
+      <p-button type="button" label="Cancelar" styleClass="button-style p-button-secondary"
+        (click)="closeModal()"></p-button>
+      <p-button type="button" label="Guardar" styleClass="button-style" (click)="sendPlazoCreateSave()"></p-button>
+    </div>
+  </form>
+</section>

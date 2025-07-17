@@ -1,0 +1,26 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.filter {
+  // background: #d1d2d2;
+  //   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    background-color: var(--surface-ground);
+    div[ng-trigger-stateFilter] {
+      background-color: #3333331a !important; // Forzar el color deseado
+    }
+
+    & > div {
+      padding: 1rem !important;
+    }
+  }
+  &__main {
+    width: 100%;
+    padding: 25px;
+    overflow: hidden;
+    background: rgba(51, 51, 51, 0.1) !important;
+  }
+}

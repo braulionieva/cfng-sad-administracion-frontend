@@ -1,0 +1,642 @@
+<div class="agregar-editar-usuario-modal-container">
+  <div class="close-wrapper">
+    <h3>{{ nombreFormulario }}</h3>
+    <div class="cfe-close__document" (click)="close()" (keypress)="close()">
+      <img [src]="icon('close_new')" class="img-custom" height="35px" alt="" />
+    </div>
+  </div>
+
+  <form
+    [formGroup]="formGroup"
+    autocomplete="off"
+    class="form-container-filter"
+  >
+    <!-- INICIO PRIMERA FILA -->
+    <div class="grid">
+      <div class="col-12">
+        <div class="flex flex-wrap gap-5">
+          <label htmlFor="origen" class="font-bold">Origen</label>
+          <div *ngFor="let obj of origenes" class="field-checkbox">
+            <div class="flex align-items-center">
+              <p-radioButton
+                class="custom-radio"
+                [inputId]="obj.key"
+                [value]="obj.key"
+                formControlName="origen"
+                (onClick)="onChangeOrigen($event)"
+              />
+              <label [for]="obj.key" class="ml-2">
+                {{ obj.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIN PRIMERA FILA-->
+
+    <!-- INICIO SEGUNDA FILA -->
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="tipoDocumento" class="font-bold">Tipo de documento</label>
+          <div id="tipoDocumento">
+            <p-dropdown
+              formControlName="tipoDocumento"
+              optionLabel="tipoDocumento"
+              optionValue="idTipoDocumento"
+              appendTo="body"
+              placeholder="Seleccione el Tipo de documento"
+              (onChange)="onChangeTipoDocumento($event)"
+              emptyMessage="Sin resultados"
+              [options]="tipoDocumentoGeneral"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="flex justify-content-between">
+          <div class="flex flex-column w-full mr-2 gap-2">
+            <!--<label for="tipoDocumento" class="font-bold">{{labelTipoDocumento}}</label>-->
+            <label for="tipoDocumento" class="font-bold">Número de documento</label>
+            <input
+              pInputText
+              id="numeroDocumento"
+              formControlName="numeroDocumento"
+              (input)="onInputNumeroDocumento($event)"
+              (blur)="onBlurNumeroDocumento()"
+              placeholder="Ingrese número de documento"
+              maxlength="{{ maxLongitudActual }}"
+            />
+            <div>
+              <div style="float: left">
+                <small
+                  class="error-message"
+                  *ngIf="numeroDocumento.touched&&numeroDocumento.errors?.['required']"
+                >
+                  Campo requerido</small
+                >
+                <small
+                  class="error-message"
+                  *ngIf="numeroDocumento.invalid&&numeroDocumento.errors?.['maxlength']"
+                >
+                  Excede límite de campo</small
+                >
+                <small
+                  class="error-message"
+                  *ngIf="numeroDocumento.touched&&numeroDocumento.errors?.['pattern']"
+                >
+                  Ingrese el campo correctamente</small
+                >
+                <small
+                  class="error-message"
+                  *ngIf="
+                    numeroDocumento.touched &&
+                    numeroDocumento.hasError('dniDuplicado')
+                  "
+                >
+                  El número y tipo de documento ya se encuentra registrado en el
+                  sistema. Por favor verificar.
+                </small>
+                <!--<small class="error-message" *ngIf="flagTipoDocDuplicado">
+                  El número de DNI ingresado ya se encuentra registrado en el sistema. Por favor verificar.</small>-->
+              </div>
+              <div style="text-align: right">
+                <small
+                  >{{
+                    numeroDocumento.value ? numeroDocumento.value.length : 0
+                  }}/{{ maxLongitudActual }}</small
+                >
+              </div>
+            </div>
+          </div>
+
+          <p-button
+            styleClass="btn_ico btn-mpfn-sad-prime"
+            (onClick)="consultarPersona()"
+            label=""
+          >
+            <img [src]="icon('find-us')" height="22px" alt="" />
+          </p-button>
+        </div>
+      </div>
+    </div>
+    <!-- FIN SEGUNDA FILA -->
+
+    <div class="grid">
+      <div class="col-12">
+        <div class="flex flex-column gap-2">
+          <label for="nombres" class="font-bold">Nombres</label>
+          <div id="nombres">
+            <input
+              type="text"
+              pInputText
+              formControlName="nombres"
+              placeholder="Ingrese los nombres"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="primerApellido" class="font-bold">Apellido Paterno</label>
+          <div id="primerApellido">
+            <input
+              type="text"
+              pInputText
+              placeholder="Ingrese el apellido Paterno"
+              formControlName="primerApellido"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="segundoApellido" class="font-bold"
+            >Apellido Materno
+            <span *ngIf="formGroup.value.origen === 'E'">
+              (opcional)</span
+            ></label
+          >
+          <div id="segundoApellido">
+            <input
+              type="text"
+              pInputText
+              placeholder="Ingrese el apellido Materno"
+              formControlName="segundoApellido"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="idDistritoFiscal" class="font-bold"
+            >Distrito Fiscal</label
+          >
+          <div id="idDistritoFiscal">
+            <p-dropdown
+              formControlName="idDistritoFiscal"
+              appendTo="body"
+              placeholder="Seleccionar"
+              [options]="distritosFiscales"
+              emptyMessage="Sin resultados"
+              optionLabel="nombre"
+              optionValue="id"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="idSede" class="font-bold">Sede</label>
+          <div id="idSede">
+            <p-dropdown
+              formControlName="idSede"
+              appendTo="body"
+              placeholder="Seleccionar"
+              emptyMessage="Sin resultados"
+              [options]="sedes"
+              optionLabel="nombreSede"
+              optionValue="codSede"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="idTipoDependencia" class="font-bold"
+            >Tipo de dependencia</label
+          >
+          <div id="idTipoDependencia">
+            <p-dropdown
+              formControlName="idTipoDependencia"
+              appendTo="body"
+              placeholder="Seleccionar"
+              emptyMessage="Sin resultados"
+              [options]="tipoEntidad"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="codigoDependencia" class="font-bold">Dependencia</label>
+          <div id="codigoDependencia">
+            <p-dropdown
+              formControlName="codigoDependencia"
+              appendTo="body"
+              placeholder="Seleccionar"
+              [options]="dependencias"
+              optionLabel="nombre"
+              emptyMessage="Sin resultados"
+              optionValue="codigo"
+              (onChange)="onChangeDependencias($event)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid" *ngIf="mostrarDespachos">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="despachoFiscalia" class="font-bold">Despachos</label>
+          <div id="despachoFiscalia">
+            <p-dropdown
+              formControlName="despachoFiscalia"
+              appendTo="body"
+              placeholder="Seleccionar"
+              [options]="despachoFiscalia"
+              optionLabel="noVDespacho"
+              emptyMessage="Sin resultados"
+              optionValue="coVDespacho"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="idCargo" class="font-bold">Cargo</label>
+          <div id="idCargo">
+            <p-dropdown
+              formControlName="idCargo"
+              appendTo="body"
+              [options]="cargos"
+              optionLabel="nombre"
+              optionValue="id"
+              emptyMessage="Sin resultados"
+              [placeholder]="placeHolder"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="flex flex-wrap gap-5 py-5">
+        <label htmlFor="idRelacionLaboral" class="font-bold"
+          >Relación Laboral</label
+        >
+        <div *ngFor="let category of relacionLaboral" class="field-checkbox">
+          <div class="flex align-items-center">
+            <p-radioButton
+              [inputId]="category.key"
+              [value]="category.key"
+              formControlName="idRelacionLaboral"
+            />
+            <label [for]="category.key" class="ml-2">
+              {{ category.name }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-11">
+        <div class="flex flex-column gap-2">
+          <label for="correoPersonal" class="font-bold"
+            >Correo Electrónico Personal</label
+          >
+          <div id="correoPersonal">
+            <input
+              type="text"
+              pInputText
+              placeholder="Ingrese correo electrónico personal"
+              formControlName="correoPersonal"
+              maxlength="100"
+              (keydown)="invalidaCorreoPersonal()"
+              [ngStyle]="{
+                    'border': correoPersonalBD? '1px solid green' : (!correoPersonalBD && duplicadoCP)? '1px solid red' : '',
+                   }"
+            />
+            <div>
+              <div style="float: left">
+                <small
+                  class="error-message"
+                  *ngIf="correoPersonal.touched && correoPersonal.errors?.['required']"
+                >
+                  Campo requerido</small
+                >
+                <small
+                  class="error-message"
+                  *ngIf="correoPersonal.invalid && correoPersonal.errors?.['maxlength']"
+                >
+                  Excede límite de campo</small
+                >
+                <small
+                  class="error-message"
+                  *ngIf="correoPersonal.touched && correoPersonal.errors?.['email']"
+                >
+                  Ingrese el campo correctamente</small
+                >
+                <small class="error-message" *ngIf="duplicadoCP">
+                  El correo electrónico ingresado ya se encuentra
+                  registrado.</small
+                >
+              </div>
+              <div style="text-align: right">
+                <small
+                  >{{
+                    correoPersonal.value ? correoPersonal.value.length : 0
+                  }}/100</small
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pt-6">
+        <button
+          *ngIf="!(correoPersonalBD == true)"
+          class="square-btn"
+          (click)="consultarCorreoBD('correoPersonal')"
+        ></button>
+        <img
+          *ngIf="correoPersonalBD == true"
+          [src]="img('check-green')"
+          class="img-custom"
+          height="20px"
+          alt=""
+        />
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-11">
+        <div class="flex flex-column gap-2">
+          <label for="correoInstitucional" class="font-bold"
+            >Correo Electrónico Institucional (opcional)</label
+          >
+          <div id="correoInstitucional">
+            <input
+              type="text"
+              pInputText
+              pInputText
+              placeholder="Ingrese correo electrónico institucional"
+              formControlName="correoInstitucional"
+              maxlength="100"
+              (keydown)="invalidaCorreoInstitucional()"
+              [ngStyle]="{
+                    'border': correoInstitucionalBD? '1px solid green' : (!correoInstitucionalBD&&duplicadoCI)? '1px solid red' : '',
+                   }"
+            />
+            <div>
+              <div style="float: left">
+                <small
+                  class="error-message"
+                  *ngIf="correoInstitucional.touched&&correoInstitucional.errors?.['required']"
+                >
+                  Campo requerido</small
+                >
+                <small
+                  class="error-message"
+                  *ngIf="correoInstitucional.invalid&&correoInstitucional.errors?.['maxlength']"
+                >
+                  Excede límite de campo</small
+                >
+                <small
+                  class="error-message"
+                  *ngIf="correoInstitucional.touched&&correoInstitucional.errors?.['email']"
+                >
+                  Ingrese el campo correctamente</small
+                >
+                <small class="error-message" *ngIf="duplicadoCI">
+                  El correo electrónico ingresado ya se encuentra
+                  registrado.</small
+                >
+              </div>
+              <div style="text-align: right">
+                <small
+                  >{{
+                    correoInstitucional.value
+                      ? correoInstitucional.value.length
+                      : 0
+                  }}/100</small
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pt-6">
+        <button
+          *ngIf="!(correoInstitucionalBD == true)"
+          class="square-btn"
+          (click)="consultarCorreoBD('correoInstitucional')"
+        ></button>
+        <img
+          *ngIf="correoInstitucionalBD == true"
+          [src]="img('check-green')"
+          class="img-custom"
+          height="20px"
+          alt=""
+        />
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="codigoSinoe" class="font-bold"
+            >Código SINOE (opcional)</label
+          >
+          <div>
+            <input
+              pInputText
+              id="codigoSinoe"
+              formControlName="codigoSinoe"
+              (input)="onInputCodigoSinoe($event)"
+              placeholder="Ingrese código SINOE"
+              maxlength="20"
+            />
+            <div>
+              <div style="float: left">
+                <small
+                  class="error-message"
+                  *ngIf="codigoSinoe.touched&&codigoSinoe.errors?.['required']"
+                >
+                  Campo requerido</small
+                >
+                <small
+                  class="error-message"
+                  *ngIf="codigoSinoe.invalid&&codigoSinoe.errors?.['maxlength']"
+                >
+                  Excede límite de campo</small
+                >
+                <small
+                  class="error-message"
+                  *ngIf="codigoSinoe.touched&&codigoSinoe.errors?.['pattern']"
+                >
+                  Ingrese el DNI correctamente</small
+                >
+              </div>
+              <div style="text-align: right">
+                <small
+                  >{{
+                    codigoSinoe.value ? codigoSinoe.value.length : 0
+                  }}/20</small
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="fechaNacimiento" class="font-bold"
+            >Fecha de nacimiento
+            <span *ngIf="formGroup.value.origen === 'E'"> (opcional)</span>
+          </label>
+          <div id="fechaNacimiento">
+            <p-calendar
+              dateMask
+              dateFormat="dd/mm/yy"
+              class="p-inputtext-lg cfe-calendar h-39 width-200px"
+              [showIcon]="true"
+              icon="cfe-calendar-icon"
+              placeholder="dd/mm/aaaa"
+              formControlName="fechaNacimiento"
+            ></p-calendar>
+            <small
+              class="error-message"
+              *ngIf="
+                 formGroup.get('fechaNacimiento').touched &&
+                 formGroup.get('fechaNacimiento').errors?.['required']
+               "
+            >
+              Campo requerido
+            </small>
+            <small
+              class="error-message"
+              *ngIf="formGroup.get('fechaNacimiento')?.hasError('menorDeEdad')"
+            >
+              Debe ser mayor de 18 años
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="celular" class="font-bold"
+            >Celular personal/institucional (opcional)</label
+          >
+          <div>
+            <input
+              pInputText
+              id="celular"
+              formControlName="celular"
+              (input)="onInputCelular($event)"
+              placeholder="Ingrese Celular personal/institucional"
+              maxlength="9"
+            />
+            <div>
+              <div style="float: left">
+                <small
+                  class="error-message"
+                  *ngIf="celular.touched && celular.errors?.['required']"
+                >
+                  Campo requerido</small
+                >
+                <small
+                  class="error-message"
+                  *ngIf="celular.invalid&&celular.errors?.['maxlength']"
+                >
+                  Excede límite de campo</small
+                >
+                <small
+                  class="error-message"
+                  *ngIf="celular.touched&&celular.errors?.['pattern']"
+                >
+                  Ingrese el DNI correctamente</small
+                >
+              </div>
+              <div style="text-align: right">
+                <small>{{ celular.value ? celular.value.length : 0 }}/9</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="idPaisOrigen" class="font-bold"
+            >País de origen/Nacionalidad
+            <span *ngIf="formGroup.value.origen === 'E'"> (opcional)</span>
+          </label>
+          <div id="idPaisOrigen">
+            <p-dropdown
+              formControlName="idPaisOrigen"
+              appendTo="body"
+              [options]="pais"
+              optionLabel="nombre"
+              optionValue="id"
+              placeholder="Seleccionar"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-wrap gap-3">
+          <label htmlFor="codigoSexo" class="font-bold">Sexo:</label>
+          <div *ngFor="let category of sexo" class="field-checkbox">
+            <div class="flex align-items-center">
+              <p-radioButton
+                [inputId]="category.key"
+                [value]="category.key"
+                formControlName="codigoSexo"
+              />
+              <label [for]="category.key" class="ml-2">
+                {{ category.name }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!editar">
+      <div class="flex gap-2">
+        <p-checkbox
+          formControlName="checkCambioContrasenia"
+          value="true"
+          [binary]="true"
+          inputId="cambioContrasenia"
+        /><b>Pedir al usuario que cambie su contraseña cuando inicie sesión</b>
+      </div>
+      <div class="mt-3">
+        <ul>
+          El nombre de usuario y contraseña se generan automáticamente.
+        </ul>
+      </div>
+    </div>
+    <div class="flex justify-content-center mt-4">
+      <p-button (onClick)="close()" styleClass="btn-mpfn-sad-cancel"
+        >Cancelar
+      </p-button>
+      <p-button
+        (onClick)="registrar()"
+        styleClass="btn-mpfn-sad-prime ml-3"
+        [disabled]="!formUsuarioValido"
+        >Registrar
+      </p-button>
+    </div>
+
+    <!--<div>
+      <pre>
+        {{formGroup.value | json}}
+      </pre>
+    </div>-->
+  </form>
+</div>

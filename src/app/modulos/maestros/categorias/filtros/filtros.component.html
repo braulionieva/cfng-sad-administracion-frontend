@@ -1,0 +1,110 @@
+<form [formGroup]="formularioFiltros">
+  <div class="filter">
+    <div class="grid">
+      <div class="col-12 sm:col-9">
+        <label for="nombre">Nombre</label>
+        <input
+          (keyup.enter)="obtenerFiltros()"
+          formControlName="nombre"
+          placeholder="Ingrese nombre"
+          maxlength="60"
+          type="text"
+          pInputText
+        />
+      </div>
+
+      <div class="col-12 sm:col-3 btn-positions">
+        <div class="flex gap-2">
+          <div [@stateFilter]="indiceActivo === 0 ? 'expanded' : 'collapsed'">
+            <p-button
+              (click)="mostrarOcultarFiltros(0)"
+              [icon]="
+                indiceActivo
+                  ? 'pi pi-angle-double-down'
+                  : 'pi pi-angle-double-up'
+              "
+              styleClass="cfe-boton-secondary"
+              type="button"
+              class="mt-4"
+            />
+          </div>
+
+          <p-button
+            (onClick)="limpiarFiltros()"
+            label="Limpiar filtros"
+            styleClass="cfe-boton-lg cfe-boton-secondary"
+            type="button"
+          />
+        </div>
+      </div>
+
+      <div
+        class="grid filter__collapsed m-0"
+        [ngClass]="{ active: indiceActivo }"
+        [@stateFilter]="indiceActivo === 0 ? 'expanded' : 'collapsed'"
+      >
+        <div class="col-6">
+          <label for="codigo">Código</label>
+          <input
+            (keyup.enter)="obtenerFiltros()"
+            (keypress)="onlyNumberKey($event)"
+            (paste)="onPasteSoloNumeros($event)"
+            placeholder="Ingrese código"
+            formControlName="codigo"
+            maxlength="4"
+            type="text"
+            pInputText
+          />
+        </div>
+
+        <div class="col-6">
+          <label for="nombrePlural">Nombre plural</label>
+          <input
+            (keyup.enter)="obtenerFiltros()"
+            formControlName="nombrePlural"
+            maxlength="90"
+            type="text"
+            placeholder="Ingrese nombre plural"
+            pInputText
+          />
+        </div>
+
+        <div class="col-6">
+          <label for="palabraClave">Palabra clave</label>
+          <input
+            (keyup.enter)="obtenerFiltros()"
+            type="text"
+            formControlName="palabraClave"
+            placeholder="IIngrese palabra clave y presione Enter"
+            maxlength="100"
+            pInputText
+          />
+        </div>
+
+        <div class="col-6">
+          <label for="categoriaPadre">Categoría padre</label>
+          <p-dropdown
+            [options]="dropdownsData?.categorias_padre"
+            optionLabel="nombre"
+            optionValue="id"
+            placeholder="Seleccionar"
+            formControlName="categoriaPadre"
+            (onChange)="obtenerFiltros()"
+            appendTo="body"
+            emptyMessage="No se encontraron registros"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="filter__options">
+  <div class="flex flex-end">
+    <p-button
+      (click)="showModalCreationCategory()"
+      label="Agregar"
+      styleClass="btn-mpfn-sad-prime px-4 ml-3"
+    />
+  </div>
+</div>

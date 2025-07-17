@@ -1,0 +1,141 @@
+<p-toast></p-toast>
+<p-dialog header="Nuevo Despacho" [(visible)]="data.isVisible" [modal]="true" [style]="{width: '60%'}"
+  [styleClass]="'p-dialog-custom'" [contentStyleClass]="'p-dialog-content-custom'" [maximizable]="false"
+  [draggable]="false" [resizable]="false">
+  <div class="cfe-close__document" (click)="cierraAddAppModal()" (keydown.enter)="$event.preventDefault()"
+    (keydown.space)="$event.preventDefault()">
+    <img [src]="icon('close_new')" class="img-custom" height="35px" alt="" />
+  </div>
+  <form [formGroup]="formGroupDespacho" class="mx-3 mt-0 pt-0">
+    <div class="grid">
+      <div class="col-12">
+        <div class="flex flex-column gap-2">
+          <label for="nombre"><b>Nombre</b></label>
+          <input type="text" pInputText class="p-inputtext w-full despacho" placeholder="Ingrese nombre"
+            formControlName="nombre" id="nombre" maxlength="100" />
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="nombre.touched&&nombre.errors?.['required']">
+                {{ getErrorMessage('nombre', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="nombre.invalid&&nombre.errors?.['maxlength']">
+                {{ getErrorMessage('nombre', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="nombre.invalid&&nombre.errors?.['pattern']">
+                {{ getErrorMessage('nombre', 'pattern') }}
+              </small>
+            </div>
+            <div style="text-align: right;">
+              <small>{{ getLength('nombre') }}/100</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="coDistritoFiscal"><b>Distrito Fiscal</b></label>
+          <p-dropdown class="despacho" formControlName="coDistritoFiscal" placeholder="Seleccionar"
+            [options]="distritosFiscales" (onChange)="onchangeDfGetSedes($event)" appendTo="body"
+            emptyMessage="No se encontraron registros"></p-dropdown>
+          <small class="error-message"
+            *ngIf="formGroupDespacho.get('coDistritoFiscal').invalid && formGroupDespacho.get('coDistritoFiscal').touched">
+            Campo requerido</small>
+        </div>
+
+      </div>
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="coSede"><b>Sede</b></label>
+          <p-dropdown class="despacho" formControlName="coSede" placeholder="Seleccionar" [options]="sedes"
+            (onChange)="onchangeSedeGetDependencias($event)" appendTo="body"
+            emptyMessage="No se encontraron registros"></p-dropdown>
+          <small class="error-message"
+            *ngIf="formGroupDespacho.get('coSede').invalid && formGroupDespacho.get('coSede').touched">
+            Campo requerido</small>
+        </div>
+
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-12">
+        <div class="flex flex-column gap-2">
+          <label for="coDependencia"><b>Fiscalía</b></label>
+          <p-dropdown class="despacho" formControlName="coDependencia" placeholder="Seleccionar"
+            [options]="dependencias" (onChange)="onChangeDependencia($event)" appendTo="body"
+            emptyMessage="No se encontraron registros"></p-dropdown>
+          <small class="error-message"
+            *ngIf="formGroupDespacho.get('coDependencia').invalid && formGroupDespacho.get('coDependencia').touched">
+            Campo requerido</small>
+        </div>
+
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="mt-2"><b>Código de Despacho</b></div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="codigoDependencia" class="font-bold">Código de Fiscalía</label>
+          <input type="text" class="despacho" formControlName="codigoDependencia" pInputText class="p-inputtext w-full"
+            placeholder="Ingrese código de fiscalía" />
+        </div>
+
+      </div>
+      <div style="align-content: center;">
+        <i style="font-size: 0.5rem" class="pi pi-minus"></i>
+        <br>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="nuDespacho" class="font-bold">N° de despacho</label>
+          <input type="text" formControlName="nuDespacho" id="nuDespacho" pInputText class="p-inputtext w-full"
+            placeholder="Ingrese N° de despacho" maxlength="11" (keypress)="validOnlyNumbers($event)" />
+          <div style="text-align: right;">
+            <div style="float: left;">
+              <div
+                *ngIf="formGroupDespacho.get('nuDespacho').invalid&&(formGroupDespacho.get('nuDespacho').dirty||formGroupDespacho.get('nuDespacho').touched)">
+                <small class="error-message" *ngIf="formGroupDespacho.get('nuDespacho').errors?.['required']">
+                  Campo requerido</small>
+                <small class="error-message" *ngIf="formGroupDespacho.get('nuDespacho').errors?.['pattern']">
+                  Por favor, ingrese solo números</small>
+                <small class="error-message" *ngIf="formGroupDespacho.get('nuDespacho').errors?.['maxlength']">
+                  Excede límite(11) de campo</small>
+              </div>
+            </div>
+            <small>{{ formGroupDespacho.get('nuDespacho').value ? formGroupDespacho.get('nuDespacho').value.length : 0
+              }}
+              /11</small>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="coTopologia"><b>Topología</b></label>
+          <p-dropdown formControlName="coTopologia" id="coTopologia" placeholder="Seleccionar" [options]="topologias"
+            appendTo="body" emptyMessage="No se encontraron registros"></p-dropdown>
+          <small class="error-message"
+            *ngIf="formGroupDespacho.get('coTopologia').invalid && formGroupDespacho.get('coTopologia').touched">
+            Campo requerido</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-content-center my-4">
+      <p-button (onClick)="cierraAddAppModal()" styleClass="btn-mpfn-sad-cancel">Cancelar
+      </p-button>
+      <p-button (onClick)="agregarDespacho()" styleClass="btn-mpfn-sad-prime ml-3"
+        [disabled]="formGroupDespacho.invalid">Guardar
+      </p-button>
+    </div>
+  </form>
+</p-dialog>

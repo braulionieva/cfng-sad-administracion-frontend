@@ -1,0 +1,13 @@
+<div class="cfe-container">
+  <div class="tituloPage">Cargos ({{ numberCharges }})</div>
+
+  <app-filtros [jerarquias]="hierarchiesDropdown" [puedeExportar]="sedesDisponiblesParaExportar"
+    [categorias]="categoriesDropdown" (onSelectValue)="aplicarFiltros($event)" (onExportExcel)="exportarExcel($event)"
+    (createCharger)="actionCharger()" (onCleanFilters)="cleanFilters($event)" />
+  <br />
+
+  <div class="p-2 bg-white border-round">
+    <app-tabla [dataTable]="cargos" (editCharger)="actionCharger($event)" [totalRegistros]="numberCharges"
+      (cargarDatosPaginados)="obtenerListaCargos($event)" [(first)]="first" />
+  </div>
+</div>

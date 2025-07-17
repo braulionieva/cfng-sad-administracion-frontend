@@ -1,0 +1,61 @@
+<div *ngIf="dataTable">
+  <p-table [value]="dataTable" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="filasPorPagina"
+    [lazy]="true" (onLazyLoad)="obtenerListaPlazos($event)" [totalRecords]="totalRegistros" [(first)]="first"
+    (onPage)="onPageChange($event)" [showCurrentPageReport]="true"
+    currentPageReportTemplate="{last} de {{ totalRegistros }} registros">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let columna of columnas" class="text-start">
+          {{ columna }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-plazo>
+      <tr>
+        <td>
+          <div class="flex align-items-center justify-content-center">
+            {{ plazo.numeracion }}
+          </div>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-start">
+            {{ plazo.categoria }}
+          </div>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-start">
+            {{ plazo.especialidad }}
+          </div>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-start">
+            {{ plazo.plazoDeDetencionHoras }}
+          </div>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-start">
+            {{ plazo.plazoDeDetencionDias }}
+          </div>
+        </td>
+        <td>
+          <div class="flex-column align-items-center justify-content-start">
+            {{ plazo.usuarioCrea }}
+          </div>
+        </td>
+        <td>
+          <div class="flex-column align-items-center justify-content-start">
+            {{ plazo.usuarioModifica }}
+          </div>
+        </td>
+        <td>
+          <div class="flex gap-3 align-items-center justify-content-center">
+            <p-button type="button" (click)="prepareAndShowMenu($event, plazo)" icon="pi pi-ellipsis-v"
+              styleClass=" p-button-text p-button-rounded"></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-menu #menu [model]="actionsitems" [popup]="true" appendTo="body"></p-menu>

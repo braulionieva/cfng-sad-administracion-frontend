@@ -1,0 +1,28 @@
+<div class="alert-container">
+  <div (click)="closeAction()" class="cfe-close" (keypress)="closeAction()">
+    <img [src]="closeIcon" class="img-custom" alt="" />
+  </div>
+
+  <div class="alert-icon">
+    <img [src]="alertIcon" alt="Alert Icon" />
+  </div>
+
+  <h3 class="alert-title">
+    {{ title }}
+  </h3>
+
+  <br>
+
+  <div *ngIf="showDescription" [innerHTML]="getDescription()" class="alert-description"
+    style="text-align:center; word-wrap: break-word;white-space: normal;">
+  </div>
+
+  <div *ngIf="!hiddenButtons" class="col-12 alert-options">
+    <div class="flex justify-content-center">
+      <p-button *ngIf="confirm" (onClick)="cancelAction()" styleClass="btn-mpfn-sad-cancel "
+        [label]="cancelButtonText" />
+
+      <p-button (onClick)="confirmAction()" [label]="confirmButtonText" class="ml-3" styleClass="btn-mpfn-sad-prime " />
+    </div>
+  </div>
+</div>

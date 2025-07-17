@@ -1,0 +1,133 @@
+<p-dialog
+  header="Añadir perfiles"
+  [(visible)]="isVisibleModalPerfilesUs"
+  [style]="{ width: '95vw', height: '80vh' }"
+  (onHide)="onCloseModalPerfilesUs()"
+  [modal]="true"
+  [maximizable]="false"
+  [closable]="false"
+>
+  <div class="cfe-close__document" (click)="closeModal()">
+    <img
+      (click)="cierraAddAppModal()"
+      [src]="icon('close_new')"
+      class="img-custom"
+      height="35px"
+      alt="cerrar"
+    />
+  </div>
+  <div style="margin: 0 2rem">
+    <p-tabView (onChange)="onCategoriaTabChange($event)" [scrollable]="true">
+      <p-tabPanel
+        *ngFor="let tab of categoriaTabs"
+        [header]="tab.categoria"
+      ></p-tabPanel>
+    </p-tabView>
+
+    <ng-container *ngIf="sistemaTabs?.length > 0">
+      <p-tabView (onChange)="onSistemaTabChange($event)" [scrollable]="true">
+        <p-tabPanel
+          *ngFor="let tab of sistemaTabs; let i = index"
+          [header]="tab.sigla"
+        ></p-tabPanel>
+      </p-tabView>
+
+      <section *ngIf="usuarioSistema">
+        <h4>Carpeta Fiscal Electrónica</h4>
+        <div class="card">
+          <div class="grid">
+            <div class="col">
+              <p>
+                Nombre Completo:
+                <b>{{ usuarioSistema.nombreCompleto }}</b>
+              </p>
+            </div>
+          </div>
+          <div class="grid">
+            <div class="col">
+              <p>
+                Usuario: <b>{{ usuarioSistema.usuario }}</b>
+              </p>
+            </div>
+          </div>
+
+          <p-table
+            [ngClass]="{
+              hidden: !showPerfilesTable,
+              visible: showPerfilesTable
+            }"
+            [value]="perfilesFormArray?.controls"
+            [tableStyle]="{ 'min-width': '20rem', 'margin-top': '2rem' }"
+            [loading]="loadingTablePerfiles"
+          >
+            <ng-template pTemplate="body" let-perfilFormGroup let-i="rowIndex">
+              <tr [formGroup]="perfilFormGroup">
+                <td style="width: 0.5rem">
+                  <p-checkbox
+                    [inputId]="perfilFormGroup.get('id').value"
+                    formControlName="estado"
+                    [binary]="true"
+                    (onChange)="handleSelectPerfiles(i)"
+                  ></p-checkbox>
+                </td>
+                <td>
+                  <label
+                    [htmlFor]="perfilFormGroup.get('id').value"
+                    [ngClass]="{
+                      'p-disabled': perfilFormGroup.get('estado').disabled
+                    }"
+                    >{{ perfilFormGroup.get("perfil").value }}</label
+                  >
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="100%">
+                  <p style="text-align: center">No hay datos.</p>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </section>
+    </ng-container>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div
+      *ngIf="categoriaTabs?.length > 0 && sistemaTabs?.length > 0"
+      class="flex justify-content-center"
+    >
+      <p-button
+        *ngIf="!isSaveModalPerfilesUs"
+        type="button"
+        icon="pi pi-pencil"
+        label="Editar"
+        styleClass="font-semibold text-center px-4 py-2"
+        [disabled]="!isEditingModalPerfilesUs"
+        (onClick)="toggleTableVisibility(); enabledCheckboxesPerfiles()"
+      ></p-button>
+      <p-button
+        *ngIf="isSaveModalPerfilesUs"
+        type="button"
+        icon="pi pi-save"
+        label="Grabar"
+        styleClass="font-semibold text-center px-4 py-2"
+        (onClick)="savePerfiles()"
+        [disabled]="!isEditingModalPerfilesUs"
+      ></p-button>
+      <p-button
+        *ngIf="!isSaveModalPerfilesUs"
+        type="button"
+        icon="pi pi-arrow-left"
+        label="Personalizar"
+        styleClass="font-semibold text-center px-4 py-2"
+        [disabled]="!isCustomiseModalPerfilesUs"
+        (onClick)="handlePersonalizar()"
+      ></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<app-seleccionar-opciones-menu></app-seleccionar-opciones-menu>

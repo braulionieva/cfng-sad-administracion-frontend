@@ -1,0 +1,20 @@
+<p-toast></p-toast>
+<form [formGroup]="agregarPerfilForm" (ngSubmit)="onSubmit()">
+  <!--INICIO CAMPOS INPUTS FORMULARIO-->
+  <div class="grid">
+    <div class="col-4">
+      <div style="text-align: right; padding-top: 12px">
+        <label for="extras" class="font-semibold"> Nuevo Perfil: </label>
+      </div>
+    </div>
+    <div class="col-4">
+      <input type="text" pInputText class="p-inputtext-lg w-full" formControlName="nombrePerfil"
+        placeholder="Ingrese nuevo perfil" required maxlength="60" />
+    </div>
+
+    <div class="col-4">
+      <p-button type="onSubmit" styleClass="btn-mpfn-sad-prime px-8 py-2"
+        [disabled]="agregarPerfilForm.invalid">Agregar</p-button>
+    </div>
+  </div>
+</form>

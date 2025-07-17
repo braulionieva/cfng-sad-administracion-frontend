@@ -1,0 +1,271 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule, formatDate } from '@angular/common';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ComunDialogService } from '@services/dialog/comun-dialog.service';
+import { Subscription } from 'rxjs';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import {
+  ISegListHPassword,
+  ISegPaginacionHPassword,
+} from '@interfaces/seguridad-cuenta/seguridad-cuenta';
+import { Table, TableModule } from 'primeng/table';
+import { SeguridadCuentaService } from '@services/seguridad-cuenta/seguridad-cuenta.service';
+import { saveAs } from 'file-saver';
+import { NgxSpinnerService } from 'ngx-spinner';
+
+@Component({
+  selector: 'app-historial-cambios-contrasena',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    DialogModule,
+    InputTextModule,
+    CalendarModule,
+    TableModule,
+  ],
+  templateUrl: './historial-cambios-contrasena.component.html',
+  styleUrls: ['../seguridad-cuenta.component.scss'],
+  providers: [MessageService, DynamicDialogRef],
+  animations: [
+    trigger('stateFilter', [
+      state(
+        'collapsed',
+        style({
+          height: '0',
+          padding: '0',
+        })
+      ),
+      state(
+        'expanded',
+        style({
+          height: '*',
+        })
+      ),
+      transition(
+        'expanded <=> collapsed',
+        animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')
+      ),
+      transition(
+        'collapsed <=> expanded',
+        animate('400ms cubic-bezier(0.86, 0, 0.07, 1)')
+      ),
+    ]),
+  ],
+})
+export class HistorialCambiosContrasenaComponent implements OnInit {
+  @ViewChild('tableRef') myTable: Table;
+  private suscripcionMostrarDialogo: Subscription;
+  private suscripcionOcultarDialogo: Subscription;
+  public visible: boolean;
+  public usuarioActual;
+  public indiceActivo: number = 1;
+  public formularioFiltro: FormGroup;
+
+  public fechaMinima: Date;
+
+  public datosTabla: ISegListHPassword[];
+  public cargandoTabla: boolean = true;
+  public filasTabla: number = 10;
+  public registrosTotales: number;
+
+  private objetoFormulario = {
+    nombre: new FormControl(''),
+    dispositivo: new FormControl(''),
+    fechaInicio: new FormControl(null),
+    fechaFin: new FormControl(null),
+  };
+
+  constructor(
+    private seguridadCuentaService: SeguridadCuentaService,
+    private messageService: MessageService,
+    private dialogService: DialogService,
+    public dialogComunService: ComunDialogService,
+    private spinner: NgxSpinnerService
+  ) {
+    this.formularioFiltro = new FormGroup(this.objetoFormulario);
+
+    this.suscribirMostrarDialogo();
+    this.suscribirOcultarDialogo();
+  }
+
+  ngOnInit(): void {
+    this.campoFechaInicio.valueChanges.subscribe((fecha: Date) => {
+      this.fechaMinima = fecha;
+      this.campoFechaFin.setValue(null);
+    });
+  }
+
+  cierraAddAppModal() {
+    this.closeModal();
+  }
+
+  protected closeModal() {
+    this.visible = false;
+  }
+
+  public icon(name: string): string {
+    return `assets/icons/${name}.svg`;
+  }
+
+  private suscribirMostrarDialogo() {
+    this.suscripcionMostrarDialogo =
+      this.dialogComunService.showDialog$.subscribe((params) => {
+        if (!params || params.tipoModal !== 'historialContrasena') return;
+        this.visible = true;
+        this.usuarioActual = params.usuario;
+
+        if (this.myTable) {
+          this.myTable.reset();
+        }
+      });
+  }
+
+  private suscribirOcultarDialogo() {
+    this.suscripcionOcultarDialogo =
+      this.dialogComunService.hideDialog$.subscribe(() => {
+        this.visible = false;
+        this.formularioFiltro.reset();
+      });
+  }
+
+  public obtenerListaHistorialContrasena(event: any) {
+    if (!this.usuarioActual) return;
+
+    this.cargandoTabla = true;
+    const page = event?.first / event?.rows + 1;
+    const size = event?.rows;
+
+    const datosSolicitud = this.construirDatosSolicitudPassword(page, size);
+
+    this.seguridadCuentaService
+      .getListHistoryPassword(datosSolicitud)
+      .subscribe({
+        next: (res: ISegPaginacionHPassword) => {
+          this.datosTabla = res.registros;
+          this.registrosTotales = res.totalElementos;
+        },
+        error: (err) => {
+          console.error(
+            'Error en la solicitud [getListHistoryPassword]: ',
+            err
+          );
+        },
+        complete: () => {
+          this.cargandoTabla = false;
+        },
+      });
+  }
+
+  public aplicarFiltros() {
+    // restableciendo paginacion y limpiando ordenaciones
+    const resetEvent = {
+      first: 0,
+      rows: this.filasTabla,
+      sortOrder: 1,
+      sortField: null,
+    };
+
+    this.obtenerListaHistorialContrasena(resetEvent);
+  }
+
+  public limpiarFiltros() {
+    this.formularioFiltro.reset();
+    if (this.myTable) {
+      this.myTable.reset();
+    }
+  }
+
+  public descargarExcel() {
+    if (this.datosTabla?.length <= 0 && !this.usuarioActual) return;
+
+    const datosSolicitud = this.construirDatosSolicitudPassword();
+
+    this.spinner.show();
+
+    this.seguridadCuentaService
+      .getListaHistorialPasswordExcel(datosSolicitud)
+      .subscribe({
+        next: (resp) => {
+          this.spinner.hide();
+          saveAs(resp, 'HistorialPassword.xlsx');
+        },
+        error: (err) => {
+          this.spinner.hide();
+          console.error(
+            'Error en la solicitud [getListaHistorialPasswordExcel]: ',
+            err
+          );
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error descargando el archivo Excel',
+          });
+        },
+      });
+  }
+
+  // Método auxiliar para formatear fechas
+  private formatearFecha(fecha: Date | null): string {
+    return fecha ? formatDate(fecha, 'dd-MM-yyyy', 'en') : '';
+  }
+
+  // Método auxiliar para construir datos de solicitud
+  private construirDatosSolicitudPassword(page?: number, size?: number): any {
+    const solicitudBase = {
+      ...this.formularioFiltro.value,
+      codigoUserName: this.usuarioActual?.usuario,
+      fechaInicio: this.formatearFecha(this.campoFechaInicio.value),
+      fechaFin: this.formatearFecha(this.campoFechaFin.value),
+    };
+
+    return page && size
+      ? { ...solicitudBase, pagina: page, registrosPorPagina: size }
+      : solicitudBase;
+  }
+
+  public alternarBotonFiltro(index: number) {
+    if (this.indiceActivo === index) {
+      this.indiceActivo = -1;
+    } else {
+      this.indiceActivo = index;
+    }
+  }
+
+  public manejarOcultar() {
+    this.dialogComunService.hideDialog({});
+  }
+
+  get campoNombre(): AbstractControl {
+    return this.formularioFiltro.get('nombre')!;
+  }
+  get campoDispositivo(): AbstractControl {
+    return this.formularioFiltro.get('dispositivo')!;
+  }
+  get campoFechaInicio(): AbstractControl {
+    return this.formularioFiltro.get('fechaInicio')!;
+  }
+  get campoFechaFin(): AbstractControl {
+    return this.formularioFiltro.get('fechaFin')!;
+  }
+}

@@ -1,0 +1,66 @@
+<div class="detalle-menu-modal-container">
+  <h3>Fiscalías del grupo aleatorio</h3>
+  <div class="cfe-close__document" (click)="close()" (keypress)="close()">
+    <img [src]="icon('close_new')" class="img-custom" alt=""/>
+  </div>
+
+  <div class="grid">
+    <div class="col-12">
+      <h5 style="margin-bottom: 0.2em"><strong>Grupo Aleatorio: {{grupoAleatorio.nombreGrupoAleatorio}}</strong></h5>
+    </div>
+  </div>
+  <div class="grid" *ngIf="grupoAleatorio.inNotaPeriodo=='1'">
+    <div class="col-12" style="padding-left: 4em;">
+      <app-nota-info [iconColor]="'#F19700'" [description]="getNotaFinalizaPeriodo()"></app-nota-info>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-12" style="padding-left: 4em;">
+      <h5 style="margin-bottom: 0.2em"><strong>Periodo:</strong></h5>
+      <p style="padding-left: 2em; margin-bottom: 0em;"><strong>Fecha Inicio: </strong><small>{{grupoAleatorio.fechaApertura}}</small></p>
+      <p style="padding-left: 2em;"><strong>Fecha Fin: </strong><small>{{grupoAleatorio.fechaCierre}}</small></p>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-12" style="padding-left: 4em;">
+      <h5 style="display: inline-block; margin-right: 5px; margin-bottom: 0em;"><strong>Articulo(s):</strong></h5>
+      <h5 style="display: inline-block; font-weight: normal; margin-top: 0em; margin-bottom: 0em;">{{grupoAleatorio.articulo}}</h5>
+    </div>
+  </div>
+  <div *ngFor="let fiscalia of fiscaliasGrupoAleatorio">
+    <div class="grid">
+      <div class="col-12" style="padding-left: 4em; margin-top: 1em;">
+        <h5 style="display: inline-block; margin-right: 5px;"><strong>Fiscalía:</strong></h5>
+        <h5 style="display: inline-block; font-weight: normal; margin-top: 0em">{{ fiscalia.nombreFiscalia }}</h5>
+        <p-table
+        class="centrado"
+        [value]="fiscalia.lsDespachos"
+        [rows]="10"
+        [paginator]="false"
+        >
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col">N°</th>
+            <th scope="col">Despacho</th>
+            <th scope="col">Fiscales</th>
+            <th scope="col">Estado</th>
+            <th scope="col">¿Considera turno?</th>
+            <th scope="col">Última Modificación</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-fiscalia let-i="rowIndex">
+          <tr>
+            <td>{{ i + 1}}</td>
+            <td>{{ fiscalia.nombreDespacho }}</td>
+            <td><p [innerHTML]="fiscalia.nombreFiscales"></p></td>
+            <td><p [innerHTML]="fiscalia.estadoDespacho"></p></td>
+            <td>{{ fiscalia.consideraTurno }}</td>
+            <td>{{ fiscalia.ultimaModificacion }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      </div>
+    </div>
+  </div>
+</div>

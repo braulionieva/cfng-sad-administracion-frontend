@@ -1,0 +1,37 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.modal {
+  &__icon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  &__text {
+    width: 100%;
+    max-width: 450px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 auto;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  &__actions {
+    width: 100%;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+}
+
+::ng-deep .button-style {
+  padding: 0.8rem 2rem !important;
+}
+
+.required {
+  color: $red;
+}

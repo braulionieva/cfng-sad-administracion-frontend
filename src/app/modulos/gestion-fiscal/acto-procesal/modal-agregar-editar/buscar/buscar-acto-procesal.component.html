@@ -1,0 +1,77 @@
+<div class="grid">
+  <div class="col-12">
+    <hr class="mt-3 mb-3">
+  </div>
+  <div class="col-12" *ngIf="tipoLlamado == 'agregar'">
+    <app-nota-info [description]="getDescripcionTop()"></app-nota-info>
+  </div>
+  <div class="col-12">
+    <form [formGroup]="formularioBuscar" class="form-container-filter">
+      <div class="grid">
+        <div class="col-12 mb-4" style="display: grid !important;">
+          <label for="extras" class="font-label">Nombre del acto procesal</label>
+          <span class="p-fluid">
+            <p-autoComplete
+              #nombreActoProcesal
+              formControlName="nombreActoProcesal"
+              class="p-inputtext-lg w-full"
+              [suggestions]="filteredActoProcesal"
+              (completeMethod)="search($event)"
+              (onSelect)="onSelect($event)"
+              (onKeyUp)="onKeyUp($event)"
+              [maxlength]="100"
+              field="nombre"
+              placeholder="Ingrese el nombre del acto procesal. Ejemplo: Acu"
+              >
+            </p-autoComplete>
+          </span>
+          <div style="text-align: right;">
+            <small>{{ formularioBuscar.get('nombreActoProcesal').value ? nombre.length : 0 }}/100</small>
+          </div>
+        </div>
+        <div class="col-12" *ngIf="mensajeNoExisteActoProcesal">
+          <app-nota-info [description]="getDescripcionNoExiste()" [color]="colorBackgroundMensaje"></app-nota-info>
+        </div>
+        <div class="col-12" *ngIf="nombre.length > 0">
+          <app-tabla-modal-agregar-editar-acto-procesal
+            [idActoProcesal]="idActoProcesalSelected"
+            [nombreActoProcesal]="nombre"
+            [showActions]="false"></app-tabla-modal-agregar-editar-acto-procesal>
+        </div>
+        <div class="col-12">
+          <app-nota-info [description]="getDescripcionButton()"></app-nota-info>
+        </div>
+      </div>
+
+      <!--<div class="grid mt-3" style="justify-content: flex-end !important">
+        <div class="col-2">
+          <p-button
+            styleClass="btn-mpfn-sad-cancel"
+            label="Cancelar"
+            (onClick)="close()"
+          ></p-button>
+        </div>
+        <div class="col-2">
+          <p-button
+            type="submit"
+            styleClass="btn-mpfn-sad-prime"
+            [disabled]="formularioBuscar.invalid"
+            (onClick)="nextPage()"
+            label="Siguiente"
+          ></p-button>
+        </div>
+      </div>-->
+
+      <div class="flex justify-content-center mt-4">
+        <p-button (onClick)="close()" styleClass="btn-mpfn-sad-cancel">
+          Cancelar
+        </p-button>
+
+        <p-button (onClick)="nextPage()" [disabled]="formularioBuscar.invalid" styleClass="btn-mpfn-sad-prime ml-3">
+          Siguiente
+        </p-button>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<!-- Tabla -->
+<div class="grid">
+  <div class="col-12">
+
+    <p-table [value]="bandejaTramitePorActoProcesal" [loading]="loading" sortField="indexRow" sortMode="single" dataKey="tramite" rowGroupMode="subheader" groupRowsBy="tramite" [tableStyle]="{'min-width': '70rem'}">
+      <ng-template pTemplate="header">
+          <tr>
+              <th style="width:5%">Código</th>
+              <th style="width:10%">Carpeta/cuaderno</th>
+              <th style="width:10%">Tipo especialidad</th>
+              <th style="width:10%">Especialidad</th>
+              <th style="width:10%">Jerarquía</th>
+              <th style="width:10%">Tipo proceso</th>
+              <th style="width:10%">Subtipo proceso</th>
+              <th style="width:10%">Etapa</th>
+              <th style="width:10%">Acto procesal relacionado</th>
+              <th style="width:5%">Estado</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="groupheader" let-detalle let-rowIndex="rowIndex" let-expanded="expanded" let-i="absRowIndex">
+          <tr >
+            <td>{{detalle.idActoProcesal}}</td>
+            <td colspan="7" style="text-align: center;">
+              <span class="font-bold ml-2">{{detalle.tramite}}</span>
+            </td>
+            <td colspan="2" style="text-align: right;">
+              <!--<p-button type="button" (click)="editar('{{detalle.idActoProcesal}}')" icon="pi pi-pencil" styleClass=" p-button-text p-button-rounded"></p-button>
+              <p-button type="button" (click)="onDetails(detalle.idTramite)" icon="pi pi-eye" styleClass=" p-button-text p-button-rounded"></p-button>
+              <p-button type="button" (click)="onDelete(detalle.idTramite, detalle.tramite)" icon="pi pi-trash" styleClass=" p-button-text p-button-rounded mr-5"></p-button>
+              <button type="button" pButton pRipple [pRowToggler]="detalle" class="p-button-text p-button-rounded p-button-plain ml-5" [icon]="expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"></button>-->
+              <div>
+
+                <p-menu #menu [model]="actionItems" [popup]="true" appendTo="body" [pSelectableRow]="detalle"></p-menu>
+                <p-button icon="pi pi-ellipsis-v" styleClass="p-button-rounded p-button-text"
+                          (click)="itemSelected(detalle); menu.toggle($event)" (keydown.enter)="$event.preventDefault()"
+                          (keydown.space)="$event.preventDefault()" tabindex="0"></p-button>
+                <button type="button" pButton pRipple [pRowToggler]="detalle" class="p-button-text p-button-rounded p-button-plain ml-5" [icon]="expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"></button>
+              </div>
+            </td>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-detalle>
+          <tr>
+              <td>{{detalle.codigo}}</td>
+              <td>{{detalle.tipoCuaderno}}</td>
+              <td>{{detalle.tipoEspecialidad}}</td>
+              <td>{{detalle.esppecialidad}}</td>
+              <td>{{detalle.jerarquia}} </td>
+              <td>{{detalle.tipoProceso}}</td>
+              <td>{{detalle.subTipoProceso}}</td>
+              <td>{{detalle.etapa}}</td>
+              <td>{{detalle.actoProcesal}}</td>
+              <td>{{detalle.estado}}</td>
+          </tr>
+      </ng-template>
+  </p-table>
+  </div>
+</div>

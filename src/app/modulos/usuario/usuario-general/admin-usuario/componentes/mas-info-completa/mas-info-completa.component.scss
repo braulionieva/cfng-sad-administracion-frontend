@@ -1,0 +1,63 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.modal {
+  padding: 2rem;
+  padding-top: 3rem;
+
+  input {
+    width: 100%;
+  }
+  &__actions {
+    justify-content: flex-end !important;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    & h4 {
+      color: $primary;
+    }
+    & > div {
+      cursor: pointer;
+    }
+  }
+  &__form {
+    padding: 3% 5%;
+  }
+}
+.title {
+  color: #0E2E4A;
+  font-weight:600;
+  font-size: 20px;
+}
+.body-modal{
+  margin : 0 4em 2em 4em;
+
+}
+.panel-foto{
+  background-color: #CFD5DB;
+  color: #fff;
+  text-align: center;
+  padding: 1em;
+}
+.circle-foto {
+  border-radius: 50%; /* Esto redondea los bordes completamente */
+  width: 100px;       /* Ajusta el tamaño según sea necesario */
+  height: 100px;      /* Asegúrate de mantener las proporciones */
+  object-fit: cover;  /* Para que la imagen se recorte correctamente dentro del contenedor */
+}
+.alert{
+  margin-top:10px; padding:10px; border-radius: 5px;
+}
+.alert-error{
+  background-color: #F4D8D8;
+}
+.alert-warning{
+  background-color: #F7EED6;
+}
+.alert i{
+  font-size: 1.5rem;
+  color: #F19700;
+}
+.alert b{
+    padding-left: 5px;
+}

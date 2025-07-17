@@ -1,0 +1,69 @@
+<div class="cfe-close__document" (click)="closeModal()">
+  <img (click)="closeModal()" [src]="icon('close_new')" class="img-custom" height="35px" alt="img" />
+</div>
+
+<section class="modal">
+  <form [formGroup]="formGroup" class="flex flex-column gap-3">
+    <div class="flex flex-column gap-2">
+      <label for="nombre">Nombre</label>
+
+      <input formControlName="nombre" id="nombre" placeholder="Ingrese nombre" maxlength="60" pInputText />
+
+      <div style="text-align: right">
+        <small>{{ formGroup.get("nombre").value ? formGroup.get("nombre").value.length : 0 }}/60</small>
+      </div>
+
+      <small *ngIf="nombreField.touched && nombreField!.hasError('required')" class="label-error">
+        Nombre es requerido.</small>
+    </div>
+
+    <div class="flex flex-column gap-2">
+      <label for="nombrePlural">Nombre plural</label>
+
+      <input formControlName="nombrePlural" id="nombrePlural" placeholder="Ingrese nombre plural"
+             maxlength="90" pInputText />
+
+      <div style="text-align: right">
+        <small>{{ formGroup.get("nombrePlural").value ? formGroup.get("nombrePlural").value.length : 0 }}/90</small>
+      </div>
+
+      <small *ngIf="nombrePluralField.touched && nombrePluralField!.hasError('required')" class="label-error">
+        Nombre plural es requerido.
+      </small>
+    </div>
+
+    <div class="flex flex-column gap-2">
+      <label for="idCategoriaPadre">Categoría padre (opcional)</label>
+      <p-dropdown [options]="categoriasPadreDropdown" formControlName="idCategoriaPadre" id="idCategoriaPadre"
+        optionLabel="nombre" optionValue="id" placeholder="Seleccionar" [showClear]="true" appendTo="body"
+        emptyMessage="No se encontraron registros" />
+    </div>
+
+    <div class="flex flex-column gap-2">
+      <label for="palabrasClave">Palabras claves (opcional)</label>
+
+      <p-autoComplete
+        formControlName="palabrasClave"
+        [multiple]="true"
+        placeholder="Ingrese palabras claves"
+        [forceSelection]="false">
+      </p-autoComplete>
+
+      <div style="text-align: right">
+        <small>{{ totalPalabrasClaveLength }}/100</small>
+      </div>
+
+      <small *ngIf="palabrasClaveField.touched && palabrasClaveField.hasError('maxTotalLength')" class="label-error">
+        El total de caracteres no debe exceder 100.
+      </small>
+    </div>
+
+    <div class="modal__actions">
+      <p-button (click)="closeModal()" styleClass="cfe-boton-lg cfe-boton cfe-boton-secondary" label="Cancelar"
+        type="button" />
+
+      <p-button (click)="sendCategorySave()" [disabled]="formGroup.invalid" styleClass="cfe-boton-lg cfe-boton"
+        label="Guardar" type="button" />
+    </div>
+  </form>
+</section>

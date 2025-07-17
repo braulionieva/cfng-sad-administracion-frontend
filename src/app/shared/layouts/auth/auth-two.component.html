@@ -1,0 +1,41 @@
+<p-toast position="top-center"></p-toast>
+<div
+  class="flex align-items-center justify-content-center min-h-screen container"
+>
+  <div class="p-4 border-round">
+    <div>
+      <p class="font-bold m-0 text-white">Bienvenidos al</p>
+      <p class="text-xl font-bold m-0 text-white">
+        Sistema de la Carpeta Fiscal Electrónica
+      </p>
+    </div>
+
+    <div class="px-3 sm:px-4 md:px-5 py-3 pb-0 login__container mt-3">
+      <div class="flex justify-content-center mb-4">
+        <img
+          src="../../../assets/images/logo_fiscalia_horizontal_escudo_azul.png"
+          alt="logo"
+          style="width: 9.5rem"
+        />
+      </div>
+
+      <router-outlet></router-outlet>
+    </div>
+
+    <div
+      *ngIf="isCambiarContrasena"
+      (click)="returnLogin()"
+      class="px-6 sm:px-5 md:px-6 py-3 login__container mt-3 text-center cursor-pointer font-semibold"
+    >
+      Regresar a iniciar sesión
+    </div>
+
+    <div
+      *ngIf="!isCambiarContrasena"
+      class="py-3 flex justify-content-between text-xs"
+    >
+      <span class="font-semibold">soportemp&#64;mpfn.gob.pe</span>
+      <span class="font-semibold">625-5555 Anexo: 6065</span>
+    </div>
+  </div>
+</div>

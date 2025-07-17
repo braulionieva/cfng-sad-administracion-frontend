@@ -1,0 +1,93 @@
+<div
+  class="verification__name flex align-items-center justify-content-center gap-3 p-2"
+>
+  <!-- <div class="verification__name--profile">
+    <img src="../../../../../assets/images/profile.svg" alt="profile" />
+  </div> -->
+  <span class="text-sm font-bold">{{ nombre }}</span>
+</div>
+
+<p class="text-lg text-center my-2">Verificación en dos pasos</p>
+<p class="">
+  Este paso extra nos indica que eres tú quien está intentando iniciar sesión
+</p>
+
+<p>Seleccione un método de verificación:</p>
+<div *ngFor="let option of filteredOptions">
+  <input
+    type="radio"
+    name="2faOption"
+    [value]="option.codMetodo"
+    [(ngModel)]="selectedOptionId"
+    (change)="onOptionChange()"
+  />
+  <label for="">{{ option.nombreMetodo }}</label>
+</div>
+
+<ng-container *ngIf="verificationMethods.personal">
+  <p class="mt-3">
+    Ingrese a su correo personal. Le hemos enviado un mensaje con un código a la
+    {{ enmascararCorreo(emailPersonal) }}. Luego introduzca el código recibido
+    de 6 dígitos.
+  </p>
+</ng-container>
+
+<ng-container *ngIf="verificationMethods.institucional">
+  <p class="mt-3">
+    Ingrese a su correo institucional. Le hemos enviado un mensaje con un código
+    a la
+    {{ enmascararCorreo(emailInstitucional) }}. Luego introduzca el código
+    recibido de 6 dígitos.
+  </p>
+</ng-container>
+
+<ng-container *ngIf="verificationMethods.googleAuth">
+  <p class="mt-3">
+    Introduzca el código de 6 dígitos generado en Google Authenticator. Cada 30
+    seg. se genera un nuevo código
+  </p>
+</ng-container>
+
+<div class="flex flex-column mt-5">
+  <label for="" class="font-semibold text-xs">Código de 6 dígitos</label>
+  <p-inputNumber
+    mode="decimal"
+    [useGrouping]="false"
+    class="w-full"
+    placeholder=""
+    [(ngModel)]="codeInput"
+    (ngModelChange)="onCodeInputChange()"
+    [disabled]="
+      !verificationMethods.personal &&
+      !verificationMethods.institucional &&
+      !verificationMethods.googleAuth
+    "
+  >
+  </p-inputNumber>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+</div>
+
+<div class="flex flex-column gap-3 mt-3">
+  <button
+    (click)="redireccionarHome()"
+    [disabled]="!isCodeEntered"
+    [loading]="isLoading"
+    label="Ingresar"
+    type="submit"
+    class="w-full"
+    pButton
+    pRipple
+  ></button>
+
+  <button
+    (click)="onCancel()"
+    pButton
+    pRipple
+    type="button"
+    class="w-full"
+    label="Cancelar"
+    class="p-button-secondary"
+  ></button>
+</div>

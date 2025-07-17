@@ -1,0 +1,19 @@
+<p-dialog [(visible)]="visible" [modal]="true" [showHeader]="false"
+  [style]="{ width: '40vw',   minWidth: '300px',    'border-radius': '10px',    overflow: 'hidden' }"
+  [contentStyle]="{ 'max-height': 'calc(40vh - 20px)', 'overflow-y': 'auto' }">
+
+  <div (click)="cierraModal()" class="modal__close">
+    <img (click)="cierraModal()" [src]="icon('close_new')" class="img-custom" alt="Cerrar" />
+  </div>
+
+  <div class="p-4">
+    <h3 class="modal__title font-semibold">Salir</h3>
+
+    <p>¿Está seguro de salir y cerrar la sesión en el sistema?</p>
+
+    <div class="modal__actions">
+      <p-button (click)="cierraModal()" label="Cancelar" styleClass="p-button-text p-button-lg" />
+      <p-button (click)="onClicked()" label="Salir" styleClass="p-button-lg" />
+    </div>
+  </div>
+</p-dialog>

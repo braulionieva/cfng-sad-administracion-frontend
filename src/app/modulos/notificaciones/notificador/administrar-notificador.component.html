@@ -1,0 +1,243 @@
+<!-- dialogo de confirmacion -->
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
+<!-- filtro -->
+<div class="cfe-container">
+  <div class="tituloPage">
+    Notificadores ({{ buscarNotificadoresResTotal }})
+  </div>
+
+  <form [formGroup]="formFiltroBuscar" class="color-filter">
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <p-dropdown [options]="distritoFiscalLst" formControlName="idNDistritoFiscal"
+                      placeholder="Distrito Fiscal" [required] optionLabel="noVDistritoFiscal"
+                      optionValue="idNDistritoFiscal"
+                      (onChange)="buscarNotificadoresFormFiltro()"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <p-dropdown [options]="centralNotificacionLst" formControlName="idVCentral"
+                      placeholder="Central Notificaciones" [required] optionLabel="noVCentral"
+                      optionValue="idVCentral"
+                      (onChange)="buscarNotificadoresFormFiltro()"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <input id="nuVDocumento" placeholder="Número de documento"
+                 type="text" pInputText formControlName="nuVDocumento" class="cfe-fondo-blanco"
+                 (keyup)="buscarNotificadoresFormFiltroNuVDocumentoKeyUp()"
+                 maxlength="10"
+          />
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <input id="noVNotificador" placeholder="Notificador"
+                 type="text" pInputText formControlName="noVNotificador" class="cfe-fondo-blanco"
+                 (keyup)="buscarNotificadoresFormFiltroNoVNotificadorKeyUp()"
+                 maxlength="40"
+          />
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <p-button label="Limpiar Filtros" styleClass="btn-mpfn-sad-cancel btn-mpfn-sad-filtrar w-full"
+                    (onClick)="onClearFilters()"></p-button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="flex justify-content-end w-full my-4">
+    <p-button
+      styleClass="btn-mpfn-sad-cancel"
+      label="Exportar Excel"
+      (onClick)="exportarNotificadoresForm()"
+      [disabled]="exportarExcelDisabled"
+    >
+      <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px"/>
+    </p-button>
+
+    <p-button
+      styleClass="btn-mpfn-sad-prime ml-3"
+      label="Agregar"
+      (onClick)="agregarNotificadorBtn()"
+    >
+    </p-button>
+  </div>
+
+</div>
+
+<!-- Tabla -->
+<div class="grid bg-white border-round">
+  <div class="col-12">
+    <p-table [value]="buscarNotificadoresResLst" [lazy]="true"
+             (onLazyLoad)="buscarNotificadorPaginacion($event)" [paginator]="true"
+             [rows]="this.configPage.perPage" [totalRecords]="this.buscarNotificadoresResTotal"
+             [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">N°</th>
+          <th scope="col">Nº Documento</th>
+          <th scope="col">Notificador</th>
+          <th scope="col">Distrito Fiscal</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Central</th>
+          <th scope="col">Creación</th>
+          <th scope="col">Modificación</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>{{ item.secuencia }}</td>
+          <td>{{ item.nuVDocumento }}</td>
+          <td>{{ item.noVNotificador }}</td>
+          <td>{{ item.noVDistritoFiscal }}</td>
+          <td>
+            <p-tag *ngIf="item.esCNotificador=='1'" severity="success" value="{{ item.noEsCNotificador }}"></p-tag>
+            <p-tag *ngIf="item.esCNotificador=='0'" class
+                   [style]="{ 'background-color': '#5f6062'}"
+                   value="{{ item.noEsCNotificador }}"></p-tag>
+          </td>
+
+          <td>{{ item.noVCentral }}</td>
+          <td>{{ item.usrCrea }} <br>{{ item.feDCreacionStr }}</td>
+          <td>{{ item.usrModifica }} <br>{{ item.feDModificacionStr }}</td>
+          <td>
+            <div>
+              <p-menu #menu [model]="actionItems" [popup]="true" appendTo="body"
+                      [pSelectableRow]="item"></p-menu>
+              <p-button icon="pi pi-ellipsis-v"
+                        styleClass="p-button-rounded p-button-text"
+                        (click)="itemSelected(item);menu.toggle($event)"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
+<!-- ventana modal para mostrar el formulario notificador -->
+<p-dialog header="" [(visible)]="isVisibleModalNewForm"
+          [modal]="true"
+          [styleClass]="'p-dialog-custom'" [contentStyleClass]="'p-dialog-content-custom'"
+          [maximizable]="false" [draggable]="false" [resizable]="false"
+          >
+  <ng-template pTemplate="header">
+    <ng-container *ngIf="isEditForm==true; then editForm; else newForm"></ng-container>
+    <ng-template #editForm>
+      <span class="p-dialog-header p-dialog-title p-component">Modificar Notificador</span>
+    </ng-template>
+    <ng-template #newForm>
+      <span class="p-dialog-header p-dialog-title p-component">Agregar Notificador</span>
+    </ng-template>
+  </ng-template>
+  <div class="cfe-close__document" (click)="onCloseModal()">
+    <img [src]="icon('close_new')" class="img-custom" height="35px" alt=""/>
+  </div>
+  <form [formGroup]="formNotificadorNew" class="mx-3 mt-0 pt-0">
+    <div class="grid"><div class="col"></div></div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="coVEntidad" class="font-bold">Central</label>
+          <p-dropdown [options]="centralNotificacionLst" formControlName="idVCentral"
+                      placeholder="Central Notificaciones" [required] appendTo="body"
+                      optionLabel="noVCentral" optionValue="idVCentral"
+          ></p-dropdown>
+          <div>
+            <small
+              *ngIf="formNotificadorNew.get('idVCentral').touched&&formNotificadorNew.get('idVCentral').errors?.['required']"
+              class="label-error"
+            >Este campo es requerido
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="nuVDocumento" class="font-bold">Número de documento</label>
+          <input type="text" pInputText formControlName="nuVDocumento"
+                 placeholder="Ingrese el DNI" class="cfe-fondo-blanco"
+                 [ngClass]="{'disabled-input': formNotificadorNew.get('nuVDocumento').disabled}"
+          />
+          <div>
+            <div class="float-left">
+              <small
+                *ngIf="formNotificadorNew.get('nuVDocumento').touched&&formNotificadorNew.get('nuVDocumento').errors?.['required']"
+                class="label-error"
+              >Este campo es requerido</small>
+              <small
+                *ngIf="formNotificadorNew.get('nuVDocumento').invalid&&formNotificadorNew.get('nuVDocumento').errors?.['maxlength']"
+                class="label-error"
+              >Exceso de caracteres
+              </small>
+            </div>
+            <div class="float-right">
+              <small>
+                {{
+                  formNotificadorNew.get('nuVDocumento').value ?
+                    formNotificadorNew.get('nuVDocumento').value.length : 0
+                }}/10</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="noVNotificador" class="font-bold">Notificador</label>
+          <input type="text" pInputText formControlName="noVNotificador"
+                 placeholder="Ingrese el nombre del notificador" class="cfe-fondo-blanco"
+                 [ngClass]="{'disabled-input': formNotificadorNew.get('noVNotificador').disabled}"
+          />
+          <div>
+            <div class="float-left">
+              <small
+                *ngIf="formNotificadorNew.get('noVNotificador').touched&&formNotificadorNew.get('noVNotificador').errors?.['required']"
+                class="label-error"
+              >Este campo es requerido</small>
+              <small
+                *ngIf="formNotificadorNew.get('noVNotificador').invalid&&formNotificadorNew.get('noVNotificador').errors?.['maxlength']"
+                class="label-error"
+              >Exceso de caracteres
+              </small>
+            </div>
+            <div class="float-right">
+              <small>
+                {{
+                  formNotificadorNew.get('noVNotificador').value ?
+                    formNotificadorNew.get('noVNotificador').value.length : 0
+                }}/40</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-center">
+      <p-button (click)="cancelarAddNotificadorSubmit()" styleClass="btn-mpfn-sad-cancel px-8"
+      >Cancelar
+      </p-button>
+      <p-button *ngIf="isEditForm==false" (click)="agregarNotificadorSubmit()" styleClass="btn-mpfn-sad-prime width-auto ml-3 px-8"
+      >Aceptar
+      </p-button>
+      <p-button *ngIf="isEditForm==true" (click)="editNotificadorSubmit()" styleClass="btn-mpfn-sad-prime width-auto ml-3 px-8"
+      >Aceptar
+      </p-button>
+    </div>
+  </ng-template>
+</p-dialog>

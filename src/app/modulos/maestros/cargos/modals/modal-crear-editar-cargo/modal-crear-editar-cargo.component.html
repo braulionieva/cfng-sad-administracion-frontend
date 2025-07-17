@@ -1,0 +1,196 @@
+<div class="cfe-close__document" (click)="closeModal()">
+  <img
+    (click)="closeModal()"
+    [src]="icon('close_new')"
+    class="img-custom"
+    height="35px"
+    alt="cerrar"
+  />
+</div>
+
+<section class="modal">
+  <form class="flex flex-column gap-3" [formGroup]="formGroup">
+    <div class="flex gap-3">
+      <div class="flex-1 flex flex-column gap-2">
+        <label for="nombre">Nombre</label>
+
+        <input
+          formControlName="nombre"
+          id="nombre"
+          class="cfe-fondo-blanco"
+          placeholder="Ingrese nombre"
+          maxlength="100"
+          pInputText
+        />
+
+        <div class="flex justify-content-between">
+          <small
+            *ngIf="
+              nombreField.touched &&
+              nombreField!.hasError('required') &&
+              formGroup.invalid
+            "
+            class="p-error"
+          >
+            Nombre es requerido.
+          </small>
+
+          <small
+            *ngIf="
+              nombreField.touched &&
+              nombreField!.hasError('soloTexto') &&
+              formGroup.invalid
+            "
+            class="p-error"
+          >
+            Este campo solo acepta letras, espacios y los caracteres . / ( ) -
+          </small>
+
+          <div></div>
+
+          <small>
+            {{
+              formGroup.get("nombre").value
+                ? formGroup.get("nombre").value.length
+                : 0
+            }}/100
+          </small>
+        </div>
+      </div>
+
+      <div class="flex-1 flex flex-column gap-2">
+        <label for="descripcion">Descripción</label>
+
+        <input
+          formControlName="descripcion"
+          id="descripcion"
+          class="cfe-fondo-blanco"
+          placeholder="Ingrese descripción"
+          maxlength="100"
+          pInputText
+        />
+
+        <div class="flex justify-content-between">
+          <small
+            *ngIf="
+              descripcionField.touched &&
+              descripcionField!.hasError('required') &&
+              formGroup.invalid
+            "
+            class="p-error"
+          >
+            Descripción es requerido.
+          </small>
+
+          <small
+            *ngIf="
+              descripcionField.touched &&
+              descripcionField!.hasError('soloTexto') &&
+              formGroup.invalid
+            "
+            class="p-error"
+          >
+            Este campo solo acepta letras, espacios y los caracteres . / ( ) -
+          </small>
+
+          <div></div>
+
+          <small>
+            {{
+              formGroup.get("descripcion").value
+                ? formGroup.get("descripcion").value.length
+                : 0
+            }}/100
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex gap-3">
+      <div class="flex-1 flex flex-column gap-2">
+        <label for="codigo">Código Cargo</label>
+
+        <input
+          formControlName="codigo"
+          id="codigo"
+          class="cfe-fondo-blanco"
+          placeholder="Ingrese código de cargo"
+          maxlength="10"
+          pInputText
+        />
+
+        <div class="flex justify-content-between">
+          <small
+            *ngIf="
+              codigoField.touched &&
+              codigoField!.hasError('soloAlfanumerico') &&
+              formGroup.invalid
+            "
+            class="p-error"
+          >
+            Codigo Cargo es requerido.</small
+          >
+          <div></div>
+          <small
+            >{{
+              formGroup.get("codigo").value
+                ? formGroup.get("codigo").value.length
+                : 0
+            }}/10</small
+          >
+        </div>
+      </div>
+
+      <div class="flex-1 flex flex-column gap-2">
+        <label for="jerarquia">Jerarquía (opcional)</label>
+
+        <p-dropdown
+          [options]="jerarquiaLista"
+          formControlName="jerarquia"
+          id="jerarquia"
+          optionLabel="nombre"
+          optionValue="id"
+          [showClear]="!!jerarquiaField.value"
+          appendTo="body"
+          placeholder="Seleccionar"
+          emptyMessage="No se encontraron registros"
+        />
+      </div>
+
+      <div class="flex-1 flex flex-column gap-2">
+        <label for="categoria">Categoría (opcional)</label>
+
+        <p-dropdown
+          [options]="categoriaLista"
+          id="categoria"
+          optionLabel="nombreCategoriaCargo"
+          optionValue="idCategoriaCargo"
+          formControlName="categoria"
+          id="categoria"
+          [showClear]="!!categoriaField.value"
+          appendTo="body"
+          placeholder="Seleccionar"
+          emptyMessage="No se encontraron registros"
+        />
+      </div>
+    </div>
+
+    <div class="modal__actions">
+      <p-button
+        (onClick)="closeModal()"
+        label="Cancelar"
+        styleClass="btn-mpfn-sad-cancel btn-adjust-cargo"
+        type="button"
+      />
+
+      <p-button
+        (onClick)="sendChargerCreateSave()"
+        [disabled]="formGroup.pristine || formGroup.invalid"
+        label="Guardar"
+        class="ml-3"
+        styleClass="btn-mpfn-sad-prime btn-adjust-cargo"
+        type="button"
+      />
+    </div>
+  </form>
+</section>

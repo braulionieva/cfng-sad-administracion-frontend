@@ -1,0 +1,168 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.modal {
+  padding: 2rem;
+  input {
+    width: 100%;
+  }
+  &__actions {
+    justify-content: flex-end !important;
+  }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    & h4 {
+      color: $primary;
+    }
+    & > div {
+      cursor: pointer;
+    }
+  }
+  &__form {
+    padding: 3% 5%;
+  }
+}
+.label-error {
+  color: $red;
+}
+.label-agregar {
+  columns: #1B1C1E;
+  text-decoration: underline;
+  font-weight: 500;
+  font-size: 1.05em;
+  line-height: 20px;
+  letter-spacing: 2%;
+}
+
+/*********************************/
+.checkBig{
+  width: 1.50em;
+  height: 1.50em;
+  border-color:#000;
+}
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+  width: 1.50em;
+  height: 1.50em;
+  background-color:#699BF7;
+}
+/*
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #FFF;
+  margin: 0;
+  font: inherit;
+  color: #3F9FD6;
+  width: 1.50em;
+  height: 1.50em;
+  border: 0.15em solid #3F9FD6;
+  border-radius: 50%;
+  transform: translateY(-0.075em);
+
+  display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 1.0em;
+  height: 1.0em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #3F9FD6;
+
+  background-color: CanvasText;
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="checkbox"]:focus {
+  outline: max(2px, 0.15em) solid #58ccfae5;
+  outline-offset: max(1px, 0.15em);
+}
+*/
+/********fondo check circular***********/
+.fondoCheck {
+  background:  #4ECB71;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+/***********************/
+/*********************/
+.filterLink{
+  cursor: pointer;
+}
+/*********checkbox***********/
+:host ::ng-deep .p-checkbox .p-checkbox-box {
+  border: 2px solid #212529 !important;
+  background: #ffffff !important;
+  width: 20px;
+  height: 20px;
+  color: #212529;
+  border-radius: 4px;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+:host ::ng-deep .p-checkbox .p-checkbox-box .p-checkbox-icon {
+  transition-duration: 0.15s;
+  color: #000;
+  font-size: 14px;
+  font-size: large;
+}
+/**:host ::ng-deep .p-checkbox .p-checkbox-box.p-highlight {
+  border-color: var(--mpfn-lightblue);
+  background: var(--mpfn-lightblue);
+}**/
+
+:host ::ng-deep .p-checkbox .p-checkbox-box.p-highlight {
+  border-color: #000 !important;
+  background:  #fff !important;
+}
+
+:host ::ng-deep .p-icon :before {
+  content: "\e903" !important;
+  color: #000 !important;
+}
+/***************************/
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  //border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 600px;
+  //background-color: black;
+  //border: 1px solid black;
+  color: #000;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 6px;
+  opacity: 0.7;
+  position: absolute;
+  z-index: 1;
+  top: 98%;
+  left: 19%;
+  //margin-left: 10px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+////////************/
+
+:host ::ng-deep .p-dropdown:not(.p-disabled) {
+border-color: #131314;
+}
+:host ::ng-deep .p-disabled, .p-component:disabled {
+  opacity: 0.65;
+  border-color: #000;
+}

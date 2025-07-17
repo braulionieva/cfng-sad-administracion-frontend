@@ -1,0 +1,51 @@
+<div style="margin: 0 2rem">
+  <div class="flex justify-content-center">
+    <img src="assets/images/email-1.svg" alt="Gear" style="width: 4.5rem" />
+  </div>
+  <p class="m-0 mt-3">
+    Para <span *ngIf="!metodo?.estadoMetodo" class="font-bold">activar</span
+    ><span *ngIf="metodo?.estadoMetodo" class="font-bold">desactivar</span> la
+    autenticación de doble factor con este método debe ingresar el código de 6
+    dígitos recibido en su correo electrónico {{ correo }}. Si no le llegó
+    pruebe
+    <span
+      class="texto-resaltado font-semibold cursor-pointer"
+      (click)="generarCodigoEmail()"
+      (keydown.enter)="generarCodigoEmail()"
+      >Enviar otro código</span
+    >
+  </p>
+  <div
+    class="flex flex-column align-items-center gap-1 mt-3"
+    style="height: 85px"
+  >
+    <div style="max-width: 18rem">
+      <p-inputNumber
+        [useGrouping]="false"
+        [formControl]="codigoValidacion"
+        [maxlength]="6"
+      />
+    </div>
+    <small
+      style="color: red"
+      *ngIf="codigoValidacion.touched && codigoValidacion.errors?.['required']"
+      >Ingrese el código recibido.</small
+    >
+    <small
+      style="color: red"
+      *ngIf="codigoValidacion.touched && codigoValidacion.errors?.['pattern']"
+      >Código no valido.</small
+    >
+    <small style="color: red" *ngIf="codigoError"
+      >El código ingresado no es válido, por favor intentelo nuevamente.</small
+    >
+  </div>
+
+  <div class="flex justify-content-center">
+    <p-button
+      label="Confirmar código"
+      styleClass="cfe-boton-lg cfe-boton mt-3"
+      (onClick)="onConfirmarCodigo()"
+    />
+  </div>
+</div>

@@ -1,0 +1,45 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+.scroll-inner {
+  width: calc(42%);
+  overflow-y: scroll;
+  height: 90vh;
+}
+
+.scroll-inner::-webkit-scrollbar {
+  width: 0px;
+  border-radius: 5px;
+  background-color: var(--mpfn-gray4);
+}
+
+.scroll-inner::-webkit-scrollbar-thumb {
+  background-color: var(--mpfn-gray1);
+  border-radius: 0.5rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
+}
+
+.scroll-inner::-webkit-scrollbar-thumb:hover {
+  background-color: var(--mpfn-gray14);
+}
+.handCursor {
+  cursor: pointer;
+}
+.docs{
+  background-color: #F5F2E0;
+
+}
+
+:host::ng-deep .p-dialog .p-dialog-content {
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+}
+.title {
+  color: #0E2E4A;
+  font-weight:600;
+  font-size: 20px;
+}
+

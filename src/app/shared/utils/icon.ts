@@ -1,0 +1,56 @@
+import {
+  iChevronUp,
+  iChevronDown,
+  iChevronOrder,
+  iAlert,
+  iTable,
+  iFileDownload,
+  iEdit,
+  iFile,
+  iClose,
+  iCheckCircle,
+  iSave,
+  iTrashMpe,
+  iTrashCan,
+  iTrash,
+  iEye,
+  iTooltip,
+  iAttach,
+  iCheck,
+  iChevronRight,
+  iChevronLeft,
+  iInfo,
+  iUser,
+  iInfoCircle,
+} from 'ngx-mpfn-dev-icojs-regular';
+
+const ICONOS = [
+  { nombre: 'iChevronUp', icono: iChevronUp },
+  { nombre: 'iChevronDown', icono: iChevronDown },
+  { nombre: 'iChevronOrder', icono: iChevronOrder },
+  { nombre: 'chevronLeft', icono: iChevronLeft },
+  { nombre: 'chevronRight', icono: iChevronRight },
+  { nombre: 'iAlert', icono: iAlert },
+  { nombre: 'iTable', icono: iTable },
+  { nombre: 'iFileDownload', icono: iFileDownload },
+  { nombre: 'iEdit', icono: iEdit },
+  { nombre: 'iFile', icono: iFile },
+  { nombre: 'iClose', icono: iClose },
+  { nombre: 'iCheckCircle', icono: iCheckCircle },
+  { nombre: 'iSave', icono: iSave },
+  { nombre: 'iTrashMpe', icono: iTrashMpe },
+  { nombre: 'iTrashCan', icono: iTrashCan },
+  { nombre: 'iTrash', icono: iTrash },
+  { nombre: 'iEye', icono: iEye },
+  { nombre: 'iTooltip', icono: iTooltip },
+  { nombre: 'iAttach', icono: iAttach },
+  { nombre: 'iCheck', icono: iCheck },
+  { nombre: 'iInfo', icono: iInfo },
+
+  { nombre: 'iUser', icono: iUser },
+  { nombre: 'iInfoCircle', icono: iInfoCircle },
+];
+
+export const obtenerIcono = (nombre: string) => {
+  return ICONOS.find((icono) => icono.nombre === nombre)?.icono;
+};

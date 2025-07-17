@@ -1,0 +1,102 @@
+
+<div class="modal__header">
+  <h5 class="font-semibold m-3">CARGA MASIVA DE TURNOS</h5>
+  <div class="cfe-close__document  mt-3" (click)="close()" (keypress)="close()">
+    <img [src]="icon('close_new')" class="img-custom" alt=""/>
+  </div>
+</div>
+<form [formGroup]="formularioImportar">
+  <div class="m-4 mt-1">
+    <div class="m-5 mt-0">
+      <hr class="height=1px">
+      <div class="subtitleModalSad">Descargue la plantilla, complete las fechas para los despachos de los distritos fiscales que estarán de turno. </div>
+    </div>
+    <div  class="flex justify-content-center">
+      <p-button (onClick)="descargarPlantilla()" label=""
+          styleClass="btn-prime-lg btn-mpfn-sad-prime ml-3">
+          <img [src]="icon('download')" alt="Excel Icon" class="mr-2" width="20" height="20" />Descargar Plantilla (xlsx)</p-button>
+
+    </div>
+    <div class="m-5">
+        <div class="subtitleModalSad">Observaciones(Opcional)</div>
+        <textarea
+          rows="5"
+          [placeholder]="'Escriba la observación'"
+          formControlName="observaciones"
+          class="p-inputtext p-2 w-full h-20px"
+          [ngClass]="{ 'ng-invalid ng-dirty': errorMsg('observaciones') }"
+          (input)="validMaxLength('observaciones')"
+        ></textarea>
+        <small
+        class="block text-right mt-1"
+        [ngClass]="{'p-error': counterObservacion > 300 ||counterObservacion < 1}"
+      >{{counterObservacion?counterObservacion:0}}/300
+      </small>
+    </div>
+    <div class="flex justify-content-center m-5 mt-0">
+      <div class="w-full">
+        <input
+          type="file"
+          formControlName="file"
+          class="file-input"
+          (change)="onLoad($event)"
+          #fileUpload>
+          <div class="file-upload">
+            <div class="w-full upload-area border-1">
+                <div class="flex justify-content-center">
+                  <p-button styleClass="btn-mpfn-sad-cancel"
+                            (onClick)="fileUpload.click()">
+                            <fn-icon [ico]="obtenerIcono('iAttach')" height="1.2rem"/>
+                            Subir archivos
+                  </p-button>
+                </div>
+                <div class="w-full"  style="text-align: center;">
+                  {{getDescripcionFile()}}
+                <br><b>10MB</b>
+                </div>
+            </div>
+            <div *ngIf="fileName" class="flex justify-content-center w-full mt-2">
+              <div class="flex justify-content-center w-auto ">
+                <div class="text-align-center" style="width:auto;min-width: 550px; ">
+                  <div class="flex justify-content-between border-bottom-1 p-0 m-0">
+                      <div class="text-align-left" style="width: 40%;min-width: 200px">Nombre Archivo</div>
+                      <div style="width: 80px;" >Formato</div>
+                      <div style="width: 80px;" >Tamaño</div>
+                      <div class="text-align-rigth " style="width: 60px;" >Acción</div>
+                  </div>
+                  <div class="flex justify-content-between  p-0 m-0">
+                    <div class="text-align-left" style="width: 40%;min-width: 200px">{{fileName}}</div>
+                    <div style="width: 80px;" >{{format}}</div>
+                    <div style="width: 80px;" >{{FORMAT_FILE_SIZE(size,2)}}</div>
+                    <div class="text-align-rigth" style="width: 60px;">
+                      <i class="text-align-center filterLink" aria-hidden="true" (click)="quitarFile()" >
+                        <fn-icon [ico]="obtenerIcono('iTrash')" height="1.6rem" /></i>
+                    </div>
+                  </div>
+                </div>
+                <div style="width: 100px;"><div ><br></div>
+                <div>
+                  <div class="fondoCheck m-2 mt-0" *ngIf="archivoValido" >
+                    <i class="filterLink" aria-hidden="true"><fn-icon [ico]="obtenerIcono('iCheck')"  color="#06A77D"/></i>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+<div class="flex justify-content-center ">
+  <div class="p-col mb-4">
+      <p-button styleClass="btn-mpfn-sad-prime"
+                (onClick)="enviarDataExcel()"
+                label="Guardar"
+                [disabled]= "!archivoValido">
+      </p-button>
+  </div>
+</div>
+
+</form>
+
+

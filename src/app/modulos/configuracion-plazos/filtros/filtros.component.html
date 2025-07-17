@@ -1,0 +1,82 @@
+<form [formGroup]="formFilters">
+  <div class="filter grid">
+    <div class="filter__actions col-10">
+      <div class="filter__dropdown">
+        <p-dropdown
+          placeholder="Configurado por"
+          [options]="dropdownsData[0].configuresDropdown"
+          optionLabel="noVDescripcion"
+          optionValue="idNTipoConfiguracion"
+          [showClear]="true"
+          formControlName="configurado"
+          (onChange)="handleChangeConfigure($event)"
+        ></p-dropdown>
+      </div>
+      <ng-container *ngIf="configuradoField && configuradoField.value">
+        <div class="filter__dropdown">
+          <p-dropdown
+            placeholder="Seleccione distrito fiscal"
+            [options]="dropdownsData[0].taxDistrictsDropdown"
+            optionLabel="name"
+            optionValue="value"
+            [showClear]="true"
+            formControlName="distrito_fiscal"
+            (onChange)="handleChangeTaxDistrict($event)"
+          ></p-dropdown>
+        </div>
+      </ng-container>
+      <ng-container
+        *ngIf="
+          configuradoField &&
+          (configuradoField.value === 928 || configuradoField.value === 929)
+        "
+      >
+        <div class="filter__dropdown">
+          <p-dropdown
+            placeholder="Seleccione tipo especialidad"
+            [options]="dropdownsData[0].typeSpecialtiesDropdown"
+            optionLabel="name"
+            optionValue="value"
+            [showClear]="true"
+            formControlName="tipo_especialidad"
+            (onChange)="handleChangeTypeSpecialty($event)"
+          ></p-dropdown>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="configuradoField && configuradoField.value === 929">
+        <div class="filter__dropdown">
+          <p-dropdown
+            placeholder="Seleccione especialidad"
+            [options]="dropdownsData[0].specialtiesDropdown"
+            optionLabel="name"
+            optionValue="value"
+            [showClear]="true"
+            formControlName="especialidad"
+            (onChange)="handleChangeSpecialty($event)"
+          ></p-dropdown>
+        </div>
+      </ng-container>
+    </div>
+    <div class="col-2 flex justify-content-end">
+      <p-button
+        styleClass="p-button-secondary"
+        label="Limpiar filtros"
+        (onClick)="onClickCleanFilters()"
+      ></p-button>
+    </div>
+  </div>
+</form>
+
+<div class="options">
+  <p-button
+    icon="pi pi-file-excel"
+    styleClass="p-button-secondary"
+    label="Exportar Excel"
+    (onClick)="exportarExcel()"
+  ></p-button>
+  <p-button
+    icon="pi pi-plus"
+    label="Agregar"
+    (onClick)="showModalCreationPlazo()"
+  ></p-button>
+</div>

@@ -1,0 +1,26 @@
+<div class="cfe-container">
+  <!-- Bandeja Distribucion aleatoria -->
+  <app-filtro-generico
+    [tituloPage]="tituloPage"
+    [placeholder]="'Ingrese Nombre de Grupo Aleatorio'"
+    (filter)="onFilter($event)"                
+    (searchTermChange)="onSearchTermChange($event)" 
+    [bEspecialidad]="true"
+    [bDistritoFiscal]="true"
+    [bDistribucionAleatoria]="true"
+  ></app-filtro-generico>
+
+  <div class="mt-5 mb-5">
+    <app-acciones-distribucion-aleatoria [totalElementos]="gruposAleatorios?.totalElementos"
+      [inNotaPeriodo]="inNotaPeriodo" (exportar)="exportarExcel()"
+      (refrescar)="refrescar()"></app-acciones-distribucion-aleatoria>
+  </div>
+
+  <div class="p-2 bg-white border-round">
+    <app-tabla-distribucion-aleatoria [cols]="cols" [rows]="gruposAleatorios?.registros"
+      [gruposAleatorios]="gruposAleatorios?.registros" [menuActionsItems]="menuActionsItems"
+      [menu2ActionsItems]="menu2ActionsItems" [showActions]="showActionsButton" [showPagination]="true"
+      [rowsPerPage]="15" (setDataToAction)="getDataToAction($event)">
+    </app-tabla-distribucion-aleatoria>
+  </div>
+</div>

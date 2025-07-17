@@ -1,0 +1,27 @@
+<div class="col-12 pd-10"></div>
+
+<div class="pdf-container-frame">
+  <div class="visor-background-frame">
+    <iframe
+      *ngIf="documentoAdjunto?.urlPdf"
+      [src]="documentoAdjunto?.urlPdf"
+      class="frame"
+      type="application/pdf"
+      [title]="getPdfTitle()"
+    >
+    </iframe>
+  </div>
+
+  <div class="overlay-div-frame">
+    <div *ngIf="documentoAdjunto?.urlPdf" class="flex align-items-center typ-5">
+      <div class="elemento">
+        Ficha del usuario - {{ documentoAdjunto?.preNamePdf }}
+        {{ documentoAdjunto?.namePdf }}
+      </div>
+    </div>
+
+    <div *ngIf="!documentoAdjunto.urlPdf" class="text-center typ-5">
+      {{ documentoAdjunto.preNamePdf }}
+    </div>
+  </div>
+</div>

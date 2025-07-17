@@ -1,0 +1,54 @@
+<div class="body-modal">
+  <div class="flex flex-column gap-3">
+    <div>Nombre Completo: <b>{{usuario?.nombreCompleto|uppercase}}</b></div>
+    <div>Tipo de documento : <b>{{usuario?.tipoDocumento}}</b></div>
+    <div>Número de documento : <b>{{usuario?.numeroDocumento}}</b></div>
+    <div>Relación Laboral : <b>{{usuario?.relacionLaboral|uppercase}}</b></div>
+  </div>
+</div>
+
+<div class="w-full ">
+  <form [formGroup]="filtroForm" class="form-container-filter">
+    <div class="flex m-1 ">
+      <input pInputText class="p-inputtext-lg cfe-input-lg" placeholder="Buscar por Registrador"
+        formControlName="registrador" maxlength="100" (input)="submit()" />
+      <p-button label="Limpiar Filtros" styleClass="btn-mpfn-sad-cancel h-56 ml-2"
+        (onClick)="onClearFilters()"></p-button>
+    </div>
+
+  </form>
+  <div class="flex justify-content-end w-full">
+    <p-button styleClass="btn-mpfn-sad-cancel mt-3" label="" (onClick)="exportarExcelHistorial()"
+      [disabled]="!(historial?.length>0)">
+      <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px" />Exportar Excel
+    </p-button>
+  </div>
+  <p-table styleClass="mt-3" class="fontTable " [value]="historial" [paginator]="true" [rows]="10" id="historial"
+    [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header">
+      <tr>
+        <th id>N°</th>
+        <th id>Fecha</th>
+        <th id>Dispositivo</th>
+        <th id>Sistema Operativo</th>
+        <th id>Navegador</th>
+        <th id>IP</th>
+        <th id>Tipo Ip</th>
+        <th id>Registrador</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-i="rowIndex">
+      <tr>
+        <td> {{i+1}}</td>
+        <td>{{ item.fecha}}</td>
+        <td>{{ item.dispositivo| titlecase}}</td>
+        <td>{{ item.sistemaOperativo }}</td>
+        <td>{{ item.navegador}}</td>
+        <td>{{ item.ip }}</td>
+        <td>{{ item.tipoIp }}</td>
+        <td>{{ item.registrador }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>

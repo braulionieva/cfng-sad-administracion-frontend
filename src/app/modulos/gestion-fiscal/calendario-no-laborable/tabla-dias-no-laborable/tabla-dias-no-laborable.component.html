@@ -1,0 +1,120 @@
+<!-- Tabla -->
+<div class="grid form-container-tabla">
+  <div class="col-12">
+    <b>Día Festivo/No Laborable:</b>
+    <p-table
+      styleClass="mt-3"
+      class="fontTable"
+      [value]="calendarioNoLaborable"
+      [paginator]="true"
+      [rows]="10"
+      id="idNoLaborable"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 10px; text-align: center">N°</th>
+          <th style="width: 100px; text-align: center">
+            <small>Tipo de Día<br />Festivo</small>
+          </th>
+          <th style="width: 100px; text-align: center">
+            <small>Distrito(s)<br />Fiscal(es)</small>
+          </th>
+          <th style="width: 100px; text-align: center"><small>Fecha</small></th>
+          <th style="width: 100px; text-align: center">
+            <small>Nombre</small>
+          </th>
+          <th style="width: 100px; text-align: center">
+            <small>Descripción</small>
+          </th>
+          <th style="width: 100px; text-align: center">
+            <small>Última<br />Modificación</small>
+          </th>
+          <th style="width: 100px"><small>Acciones</small></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-i="rowIndex">
+        <tr
+          [ngClass]="{ 'row-edit': item.isEdit === true }"
+          [pEditableRow]="item"
+        >
+          <td
+            *ngIf="item.tipoDia == 'FERIADO'"
+            class="justify-content-center width-10px"
+            style="border-left: #c1292e 8px solid; text-align: center"
+          >
+            {{ i + 1 }}
+          </td>
+          <td
+            *ngIf="!(item.tipoDia == 'FERIADO')"
+            class="justify-content-center width-10px"
+            style="border-left: #0075bf 8px solid; text-align: center"
+          >
+            {{ i + 1 }}
+          </td>
+          <td style="text-align: center">
+            {{ item.tipoDia | titlecase }}<br />{{
+              item.tipoAmbito | titlecase
+            }}
+          </td>
+          <td>
+            <div style="text-align: center">
+              {{
+                item.distritoFiscal ? item.distritoFiscal : ("-" | titlecase)
+              }}
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              {{ item.fechaDia | titlecase }}<br />{{
+                obtenerMesLetras(item.fecha)
+              }}
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">{{ item.nombre | titlecase }}</div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              {{ item.descripcion | titlecase }}
+            </div>
+          </td>
+          <td>
+            <div style="text-align: center">
+              {{ item.paternoSujeto | titlecase }}
+              {{ item.maternoSujeto | titlecase }} <br />{{
+                item.fechaModificacion
+              }}
+            </div>
+          </td>
+          <td>
+            <div class="flex justify-content-start">
+              <div class="grid">
+                <i
+                  class="fa fa-pencil-square-o px-1 mr-1 filterLink"
+                  aria-hidden="true"
+                  (click)="editarDiaNoLaborable(item)"
+                  ><img
+                    [src]="logo('pencil_')"
+                    alt="Editar"
+                    class="img-custom"
+                    width="27px"
+                    height="27px"
+                /></i>
+                <i
+                  class="fa fa-trash-o filterLink"
+                  aria-hidden="true"
+                  (click)="quitarDiaNoLaborable(i, item)"
+                  ><fn-icon
+                    [ico]="obtenerIcono('iTrashCan')"
+                    color="#C1292E"
+                    height="23px"
+                /></i>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<!-- Tabla -->
+<div class="grid">
+  <div class="col-12">
+
+    <p-table class="fontTable" [value]="gruposAleatorios" [paginator]="true" [rows]="10"
+      [tableStyle]="{ 'min-width': '50rem' }" id="idTableDistribuciones">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">N°</th>
+          <th scope="col">Nombre del Grupo Aleatorio</th>
+          <th scope="col">Tipo de Distribución</th>
+          <th scope="col">Distrito Fiscal</th>
+          <th scope="col">Especialidad</th>
+          <th scope="col">Fiscalías</th>
+          <th scope="col" style="text-align:center">Diferencia Máxima</th>
+          <th scope="col">Última Modificación</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-i=rowIndex;>
+        <tr>
+          <td *ngIf="getVence(item)" class="tooltip width-20px text-align-center" style="border-left:#C1292E 5px solid">
+            <div>
+              {{item.secuencia}}
+              <span class="tooltiptext" style="background-color:#F4D8D8">
+                <div class="grid mt-2 ml-3">
+                  <div><img [src]="icon('warning-red')" color="#C1292E" height="20px" alt="" />
+                  </div>
+                  <div class="ml-2"><b>Nota: </b>El período configurado, para el grupo aleatorio, está cerca de
+                    finalizar.</div>
+                </div>
+              </span>
+            </div>
+          </td>
+          <td *ngIf="!getVence(item)">{{item.secuencia}}</td>
+          <td>{{item.nombreGrupoAleatorio|titlecase}}</td>
+          <td>{{(item.tipoDistribucion)}}</td>
+          <td>{{item.distritoFiscal|titlecase}}</td>
+          <td>{{item.especialidad|titlecase}}</td>
+          <td style="text-align:center">{{item.cantidadFiscalia}}</td>
+          <td style="text-align:center">{{item.diferenciaMaxima}}</td>
+          <td>{{item.ultimaModificacion|titlecase}}</td>
+          <td *ngIf="showActions">
+            <div class="flex align-items-center justify-content-center">
+              <p-button type="button" (click)="showMenu($event, item)" icon="pi pi-ellipsis-v"
+                styleClass="p-button-text p-button-rounded"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-menu #menu [model]="menuActionsItems" [popup]="true" appendTo="body"></p-menu>
+<p-menu #menu2 [model]="menu2ActionsItems" [popup]="true" appendTo="body"></p-menu>

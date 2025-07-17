@@ -1,0 +1,82 @@
+<div class="cfe-close__document" (click)="cierraAddAppModal()">
+  <img
+    [src]="icon('close_new')"
+    class="img-custom"
+    height="35px"
+    (click)="cierraAddAppModal()"
+    alt="cerrar"
+  />
+</div>
+<section class="modal">
+  <form class="flex flex-column gap-3" [formGroup]="formGroup">
+    <div class="flex gap-3">
+      <div class="flex-1 flex flex-column gap-2">
+        <label for="">Código</label>
+        <input
+          pInputText
+          placeholder="Ingrese código"
+          formControlName="codigo"
+          class="cfe-fondo-blanco"
+          maxlength="20"
+        />
+        <div style="text-align: right">
+          <small
+            >{{
+              formGroup.get("codigo").value
+                ? formGroup.get("codigo").value.length
+                : 0
+            }}/20</small
+          >
+        </div>
+      </div>
+      <div class="flex-1 flex flex-column gap-2">
+        <label for="">Nombre</label>
+        <input
+          pInputText
+          placeholder="Ingrese nombre"
+          formControlName="nombre"
+          class="cfe-fondo-blanco"
+          maxlength="100"
+        />
+        <div style="text-align: right">
+          <small
+            >{{
+              formGroup.get("nombre").value
+                ? formGroup.get("nombre").value.length
+                : 0
+            }}/100</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-column gap-2">
+      <label for="">Distrito fiscal</label>
+      <p-dropdown
+        [options]="taxDistrictsDropdown"
+        optionLabel="nombre"
+        optionValue="id"
+        placeholder="Seleccionar"
+        [showClear]="false"
+        formControlName="distrito_fiscal"
+        appendTo="body"
+        emptyMessage="No se encontraron registros"
+      ></p-dropdown>
+    </div>
+
+    <div class="modal__actions">
+      <p-button
+        type="button"
+        label="Cancelar"
+        styleClass="btn-mpfn-sad-cancel px-8"
+        (click)="onCancel($event)"
+      ></p-button>
+      <p-button
+        type="button"
+        label="Guardar"
+        styleClass="btn-mpfn-sad-prime width-auto ml-3 px-8"
+        (click)="sendCentralCreateSave()"
+        [disabled]="formGroup.invalid"
+      ></p-button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,19 @@
+<div class="cfe-container">
+  <div class="tituloPage">Configurar fiscalía de turno</div>
+  <app-filtros (filter)="onFilter($event)"></app-filtros>
+  <br />
+  <app-acciones
+    [totalElementos]="turnoResponse ? turnoResponse.totalElementos : 0"
+    [vigente]="vigente"
+    (exportar)="exportToExcel()"
+    (filtraVigente)="filtraVigente($event)"
+    (filter)="onFilter($event)"
+  ></app-acciones>
+  <br />
+  <div class="p-2 bg-white border-round">
+    <app-tabla
+      [turnoLista]="turnoTabla"
+      (clicked)="actualizarTabla()"
+    ></app-tabla>
+  </div>
+</div>

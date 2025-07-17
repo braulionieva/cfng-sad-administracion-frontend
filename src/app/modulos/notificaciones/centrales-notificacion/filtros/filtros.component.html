@@ -1,0 +1,28 @@
+<div class="filter">
+  <div class="flex flex-column gap-2 filter__main">
+    <div class="flex flex-wrap gap-4 p-fluid" style="align-items:end">
+      <div class="flex-auto">
+        <app-inputs-group-search
+          [defaultNombre]="nombreSearch"
+          [defaultCodigo]="codigoSearch"
+          (search)="searchFilters($event)"
+        ></app-inputs-group-search>
+      </div>
+      <div class="flex-auto" style="max-width: 250px">
+        <p-button
+          styleClass="p-button-secondary"
+          label="Limpiar filtros"
+          styleClass="cfe-boton-lg cfe-boton-secondary"
+          (click)="onClickCleanFilters()"
+        ></p-button>
+      </div>
+    </div>
+  </div>
+  <div class="flex" style="justify-content: flex-end; margin-top: 20px">
+    <p-button
+      label="Agregar"
+      styleClass="btn-mpfn-sad-prime px-4 ml-3"
+      (click)="showModalCreationCentral()"
+    ></p-button>
+  </div>
+</div>

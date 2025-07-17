@@ -1,0 +1,60 @@
+<div class="modal__header">
+  <div class="cfe-close__document mt-3"
+     (click)="onRegresar()"
+     (keydown)="onRegresar()">
+  <img [src]="icon('close_new')" class="img-custom" alt="" />
+</div>
+</div>
+<div class="body-modal">
+  <div class="panel-foto">
+    <div class="style-photo "> <img *ngIf='usuario?.foto' class="circle-foto" alt="profile" id="profile"
+        [src]="'data:image/png;base64,' + usuario.foto">
+      <img *ngIf='!usuario?.foto' class="circle-foto" alt="profile" id="profile" [src]="imgDefault">
+    </div>
+  </div>
+
+  <div class="flex flex-column gap-3 mb-3 mt-3">
+    <div class="flex gap-2">Apellido paterno:<b>{{usuario?.apPaterno}}</b></div>
+    <div class="flex gap-2">Apellido materno:<b>{{usuario?.apMaterno}}</b></div>
+    <div class="flex gap-2">Nombres:<b>{{usuario?.nombres}}</b></div>
+    <div class="flex gap-2">Nombre completo:<b>{{usuario?.nombreCompleto}}</b></div>
+    <div class="flex gap-2">Tipo de documento:<b>{{usuario?.tipoDocumento}}</b></div>
+    <div class="flex gap-2">Número de documento:<b>{{usuario?.numeroDocumento}}</b></div>
+    <div class="flex gap-2">Fecha de nacimiento:<b>{{cutDateString(usuario?.fechaNacimiento)}}</b></div>
+    <div class="flex gap-2">País de origen/nacionalidad:<b>{{usuario?.paisOrigen}}</b></div>
+    <div class="flex gap-2">Código SINOE:<b>{{usuario?.codigoSINOE}}</b></div>
+    <div class="flex gap-2">Sexo:<b>{{usuario?.sexo?usuario.sexo=='1'?'Masculino':'Femenino':'-'}}</b></div>
+    <div class="flex gap-2">Distrito fiscal:<b>{{usuario?.distritoFiscal}}</b></div>
+    <div class="flex gap-2">Sede:<b>{{usuario?.sede}}</b></div>
+    <div class="flex gap-2">Tipo de dependencia:<b>{{usuario?.tipoDependencia}}</b></div>
+    <div class="flex gap-2">Dependencia:<b>{{usuario?.dependencia}}</b></div>
+    <div class="flex gap-2">Relación laboral:<b>{{usuario?.relacionLaboral}}</b></div>
+    <div class="flex gap-2">Cargo: <b>{{usuario?.cargo}}</b></div>
+    <div class="flex gap-2">Correo electrónico personal:<b>{{usuario?.correoPersonal}}</b></div>
+    <div class="flex gap-2">Correo electrónico institucional:<b>{{usuario?.correoInstitucional}}</b></div>
+    <div class="flex gap-2">Auth Google:<b>{{usuario?.authGoogle?usuario.authGoogle:usuario?'NO':'-'}}</b></div>
+    <div class="flex gap-2">Celular:<b>{{usuario?.celular}}</b></div>
+    <div class="flex gap-2">
+      Cambiar clave:
+      <b>
+        {{ usuario?.cambiarClave === '1' ? 'SI' : 'NO' }}
+      </b>
+    </div>
+
+    <div class="flex gap-2">
+      Cambió clave:
+      <b>
+        {{ usuario?.cambioClave ? usuario.cambioClave : '-' }}
+      </b>
+    </div>
+    <div class="flex gap-2">Bloqueado: <b>{{ usuario?.bloqueado == 1 ? 'Sí' : 'No' }}</b></div>
+    <div class="flex gap-2">Estado
+      :<b>{{usuario?.estado?usuario.estado=='1'?'Activo':'Inactivo':usuario?'Activo':'-'}}</b></div>
+    <div class="flex gap-2">Fecha Creación:<b>{{usuario?.feDCreacionStr}}</b></div>
+    <div class="flex gap-2">Fecha de actualización:<b>{{usuario?.feDModificacionStr}}</b>
+    </div>
+    <div class="flex gap-2">Registrador:<b>{{usuario?.usrCrea}}</b></div>
+    <div class="flex gap-2">Actualizado por:<b>{{usuario?.usrModifica}}</b></div>
+
+  </div>
+</div>

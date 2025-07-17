@@ -1,0 +1,75 @@
+<div class="grid">
+  <div class="col-12">
+    <hr class="mt-3 mb-3">
+  </div>
+  <div class="col-12" *ngIf="tipoLlamado == 'agregar'">
+    <app-nota-info [description]="getDescripcionTop()"></app-nota-info>
+  </div>
+  <div class="col-12">
+    <form [formGroup]="formularioBuscar" class="form-container-filter">
+      <div class="grid">
+        <div class="col-12 mb-4" style="display: grid !important;">
+          <label for="extras" class="font-label">Nombre del trámite</label>
+          <span class="p-fluid">
+            <p-autoComplete
+              #nombreTramite
+              formControlName="nombreTramite"
+              class="p-inputtext-lg w-full"
+              [suggestions]="tramites"
+              (completeMethod)="search($event)"
+              (onSelect)="onSelect($event)"
+              [maxlength]="100"
+              field="nombre"
+              placeholder="Ingrese el nombre del trámite. Ejemplo: Dis"
+              >
+            </p-autoComplete>
+          </span>
+          <div style="text-align: right;">
+            <small>{{ caracteresActualesNombreTramite }}/100</small>
+          </div>
+        </div>
+        <div class="col-12" *ngIf="tramiteNotFound">
+          <app-nota-info [description]="getDescripcionNoExiste()" [color]="colorBackgroundMensaje"></app-nota-info>
+        </div>
+        <div class="col-12" *ngIf="idTramiteSeleccionado.length > 0">
+          <app-tabla-modal-agregar-editar-tramite
+            [idTramite]="idTramiteSeleccionado"
+            [nombreTramite]="nombre"
+            [showActions]="false"></app-tabla-modal-agregar-editar-tramite>
+        </div>
+        <div class="col-12">
+          <app-nota-info [description]="getDescripcionButton()"></app-nota-info>
+        </div>
+      </div>
+
+      <!--<div class="grid mt-3" style="justify-content: flex-end !important">
+        <div class="col-2">
+          <p-button
+            styleClass="p-button-lg w-full font-semibold p-button-secondary"
+            label="Cancelar"
+            (click)="close()"
+          ></p-button>
+        </div>
+        <div class="col-2">
+          <p-button
+            type="submit"
+            styleClass="p-button-lg w-full font-semibold p-button-primary"
+            [disabled]="formularioBuscar.invalid"
+            (onClick)="nextPage()"
+            label="Siguiente"
+          ></p-button>
+        </div>
+      </div>-->
+
+      <div class="flex justify-content-center mt-4">
+        <p-button (onClick)="close()" styleClass="btn-mpfn-sad-cancel">
+          Cancelar
+        </p-button>
+
+        <p-button (onClick)="nextPage()" [disabled]="formularioBuscar.invalid" styleClass="btn-mpfn-sad-prime ml-3">
+          Siguiente
+        </p-button>
+      </div>
+    </form>
+  </div>
+</div>

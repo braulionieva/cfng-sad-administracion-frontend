@@ -1,0 +1,26 @@
+
+  <div class="flex justify-content-end w-full">
+
+    <p-button
+      styleClass="btn-mpfn-sad-cancel"
+      label="Exportar Excel"
+      (onClick)="exportarBandeja()"
+      [disabled]="exportarExcelDisabled"
+    >
+    <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px"/>
+    </p-button>
+
+    <p-button
+      styleClass="btn-mpfn-sad-prime ml-3"
+      label="Agregar"
+      (onClick)="onOpenAgregarDespachoDialog()"
+    >
+    </p-button>
+  </div>
+  <!-- ventana modal de agrega r despacho -->
+  <app-agregar-despacho
+  [data] = "agregarDespachoDialog"
+  (close) = "onCloseAgregarDespachoDialog()"
+  (clicked)="onClicked()"
+  ></app-agregar-despacho>
+

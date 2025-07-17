@@ -1,0 +1,43 @@
+<div class="grid">
+  <div class="col-12">
+    <p-table
+      [value]="listarMenusPadre"
+      
+      
+      [tableStyle]="{ 'min-width': '50rem' }">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">Codigo</th>
+          <th scope="col">Nombre de Menu</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-menusPadre let-i="rowIndex">
+        <tr>
+          <td>{{ menusPadre.nombreCortoAplicacion }}</td>
+          <td>{{ menusPadre.nombreAplicacion }}</td>
+          <td>
+            <p-button styleClass="p-ripple p-element p-button-sm font-semibold h-full p-component mr-1"
+              label="Agregar"
+              (onClick)="agregarNodo(menusPadre.idMenu)">
+            </p-button>
+
+            <p-button styleClass="p-ripple p-element p-button-sm font-semibold h-full p-component mr-1"
+              label="Editar"
+              (onClick)="editarNodo(menusPadre.idMenu)">
+            </p-button> 
+            <p-button styleClass="p-ripple p-element p-button-sm font-semibold h-full p-component"
+              label="Eliminar"
+              (onClick)="eliminarNodo(menusPadre.idMenu)">
+            </p-button>
+          </td>
+
+        </tr>
+      </ng-template>
+
+
+    </p-table>
+
+  </div>
+</div>

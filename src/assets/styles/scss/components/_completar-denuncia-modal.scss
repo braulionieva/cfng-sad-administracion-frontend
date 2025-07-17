@@ -1,0 +1,10 @@
+.completar-denuncia-modal {
+    width: 700px;
+    .alert-title {
+        color: var(--mpfn-secondary);
+        font-size: 1.7em !important;
+    }
+    .alert-options {
+        display: flex;
+    }
+}

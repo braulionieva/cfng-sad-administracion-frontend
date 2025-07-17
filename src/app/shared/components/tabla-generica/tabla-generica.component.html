@@ -1,0 +1,39 @@
+<!-- Tabla -->
+<div class="grid">
+  <div class="col-12">
+    <p-table 
+        [columns]="cols" 
+        [value]="rows" 
+        [paginator]="(showPagination == true ? (rows?.length > rowsPerPage) : false)"
+        [rows]="rowsPerPage"
+        [tableStyle]="{ 'min-width': '50rem' }">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+              <th *ngIf="showActions">Acciones</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns">
+                <span [innerHTML]="getValueRow(rowData[col.field])"></span>
+              </td>
+              <td *ngIf="showActions">
+                <div class="flex gap-3 align-items-center justify-content-center">
+                  <p-button
+                    type="button"
+                    (click)="showMenu($event, rowData)"
+                    icon="pi pi-ellipsis-v"
+                    styleClass=" p-button-text p-button-rounded"
+                  ></p-button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+      </p-table>
+  </div>
+</div>
+
+<p-menu #menu [model]="menuActionsItems" [popup]="true" appendTo="body"></p-menu>

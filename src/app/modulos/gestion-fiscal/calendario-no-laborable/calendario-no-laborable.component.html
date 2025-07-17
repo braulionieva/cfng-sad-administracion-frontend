@@ -1,0 +1,28 @@
+<div class="cfe-container">
+  <div class="tituloPage">Calendario con Días Festivos No Laborables</div>
+  <!--INICIO DE CONTENEDOR DE FILTROS-->
+  <app-filtros (filter)="onFilter($event)"></app-filtros>
+  <!--FIN DE CONTENEDOR DE FILTROS-->
+  <br />
+  <app-acciones
+    (exportar)="exportarExcel()"
+    (onFeriadoRegistrado)="refrescarBandeja()"
+  ></app-acciones>
+  <br />
+  <div class="p-2 bg-white border-round">
+    <!--INICIO DE CONTENEDOR TABLA-->
+    <app-calendario-anual
+      *ngIf="calendario"
+      (clicked)="refrescarBandeja()"
+      (deleted)="onDelete($event)"
+    ></app-calendario-anual>
+    <app-tabla-dias-no-laborable
+      *ngIf="!calendario"
+      [calendarioNoLaborable]="calendarioNoLaborable"
+      (setDataToAction)="getDataToAction($event)"
+      (clicked)="refrescarBandeja()"
+      (deleted)="onDelete($event)"
+    ></app-tabla-dias-no-laborable>
+    <!--FIN DE CONTENEDOR TABLA-->
+  </div>
+</div>

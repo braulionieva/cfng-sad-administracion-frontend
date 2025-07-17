@@ -1,0 +1,14 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.form-container-filter {
+  background: rgba(51, 51, 51, 0.1);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+:host ::ng-deep .p-inputtext .nolaborable {
+  font-size: 1rem;
+  color: #1B1C1E !important;
+  background: #b9b5b5 !important;
+  border: 1px solid #D1D2D2 !important;
+  }

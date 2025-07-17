@@ -1,0 +1,16 @@
+.modal {
+  &__close {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__title {
+    color: var(--mpfn-primary);
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+}

@@ -1,0 +1,21 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="editarPerfilForm">
+  <div class="grid">
+    <div class="col-4">
+      <div style="text-align: right; padding-top: 12px">
+        <label for="extras" class="font-semibold"> Editar Perfil </label>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <input formControlName="descripcionPerfil" class="p-inputtext-lg w-full" type="text" pInputText />
+    </div>
+
+    <div class="col-4">
+      <div style="padding-top: 5px;">
+        <p-button type="onSubmit" styleClass="font-semibold text-center px-8 py-2">Guardar</p-button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<p-toast />

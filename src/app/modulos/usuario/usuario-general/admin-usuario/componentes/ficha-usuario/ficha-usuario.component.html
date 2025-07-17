@@ -1,0 +1,18 @@
+<div class="modal__header">
+  <div class="title m-3 ml-5">Ficha del usuario</div>
+  <div class="cfe-close__document mt-3" (click)="close()" (keydown)="close()">
+    <img [src]="icon('close_new')" class="img-custom" alt="" />
+  </div>
+</div>
+
+<!-- <div class="text-center mt-3">
+  <button (click)="descargarPDF()" class="btn btn-primary">
+    Descargar Ficha de Usuario
+  </button>
+</div> -->
+
+<div class="m-5 border-1">
+  <app-visor-pdf-frame
+    [documentoAdjunto]="documentoAdjunto"
+  ></app-visor-pdf-frame>
+</div>

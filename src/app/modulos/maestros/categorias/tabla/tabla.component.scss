@@ -1,0 +1,11 @@
+// Este archivo contiene estilos para el componente de la aplicación.
+:host ::ng-deep .p-paginator-bottom .p-paginator-current {
+  margin-right: auto;
+  padding-left: 1rem;
+}
+
+.img-logo {
+  width: 45px;
+  border-radius: 50%;
+  height: 45px;
+}

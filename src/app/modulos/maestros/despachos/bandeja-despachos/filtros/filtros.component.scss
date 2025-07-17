@@ -1,0 +1,18 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.form-container-filter {
+  background: rgba(51, 51, 51, 0.1);
+  padding: 1rem;
+ 
+  border-radius: 5px;
+
+}
+
+:host::ng-deep .p-dropdown-panel {
+  max-width: 420px;
+}
+
+:host::ng-deep .btn-mpfn-sad-cancel {
+  height: 40px!important;
+  
+}

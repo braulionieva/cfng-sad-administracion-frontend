@@ -1,0 +1,130 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+//disable dropdown
+p-dropdown.p-disabled ::ng-deep .p-dropdown {
+  background-color: #e2dfcf; // Este es un gris muy claro, similar al de la imagen
+  border-color: #e0e0e0; // Un tono ligeramente más oscuro para el borde
+
+  .p-dropdown-label {
+    color: #666666; // Un gris medio para el texto
+  }
+
+  .p-dropdown-trigger-icon {
+    color: #666666; // El mismo color para el icono
+  }
+}
+
+//background del filter
+.color-filter {
+  background: #e2dfcf;
+  padding: 1rem;
+  border-radius: 5px;
+  gap: 2rem;
+}
+
+:host::ng-deep .btn-mpfn-sad-filtrar {
+  height: 40px !important;
+}
+
+//--------------------------------
+// p dialog  cerrar aplicacion y botonoes footer
+//--------------------------------
+.submenu {
+  font-size: small;
+  font-weight: 700;
+}
+
+.cfe-close__document {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.crime-parts-container {
+  background-color: $white;
+  border-radius: 15px;
+  padding: 0px 40px;
+  width: 3000px;
+  min-height: 700px;
+
+  h3 {
+    color: $primary;
+    font-family: $font-semi-bold;
+    font-size: 2em;
+  }
+}
+
+input[type="text"]:disabled {
+  background: #e0e0e080;
+}
+
+:host ::ng-deep.p-inputtext,
+.p-inputnumber,
+.p-password,
+.p-calendar {
+  background: #fff;
+  width: 100%;
+}
+
+:host ::ng-deep.p-dialog .p-dialog-footer {
+  border-top: 1px solid #fff;
+  background: #fff !important;
+}
+
+:host ::ng-deep.p-dialog .p-dialog-header {
+  border-bottom: 1px solid #fff !important;
+  background: #ffffff;
+}
+
+:host ::ng-deep.p-dialog-header .p-icon {
+  display: none;
+}
+
+:host ::ng-deep .despacho .p-disabled,
+.p-component:disabled {
+  opacity: 1 !important;
+}
+
+:host ::ng-deep .despacho .p-disabled,
+.p-disabled * {
+  cursor: default !important;
+  pointer-events: none;
+  background: #e0e0e080 !important;
+  color: #000 !important;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header .p-dialog-title {
+  color: #0e2e4a;
+  padding-top: 13px;
+  padding-left: 10px;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer button {
+  margin-bottom: 15px;
+}
+
+//dimensiones del modal
+:host ::ng-deep .p-dialog-custom {
+  width: auto;
+  border-radius: 10px;
+  overflow: hidden;
+  /**icon: none;**/
+}
+
+:host ::ng-deep .p-dialog-content-custom {
+  min-width: 50vw;
+  max-height: calc(100vh - 20px);
+  overflow-y: auto;
+  padding-right: 50px;
+}
+
+::ng-deep .ck-editor__editable {
+  min-height: 500px;
+  max-height: 500px;
+  overflow: auto;
+}
+
+::ng-deep .ck-editor__editable_inline {
+  overflow-y: auto !important;
+}

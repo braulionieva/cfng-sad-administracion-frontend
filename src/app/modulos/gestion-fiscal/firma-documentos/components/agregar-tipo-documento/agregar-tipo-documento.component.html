@@ -1,0 +1,237 @@
+<div class="modal__header m-4">
+  <h4 class="font-semibold">
+    {{ tituloModal }} Tipo de Documento y Cargos para Firmas
+  </h4>
+  <br />
+</div>
+<div class="m-4">
+  <div *ngIf="enableSaved">
+    <p class="m-3">
+      Seleccione las casillas de los cargos que podrán firmar el nuevo tipo de
+      documento
+    </p>
+  </div>
+  <form [formGroup]="formularioTipoDocumento">
+    <div class="m-4 mt-1">
+      <div class="m-5">
+        <div class="flex">
+          <div class="col-6">
+            <div class="grid">
+              <div class="col-12">
+                <label>Tipo de Documento <span class="required"></span></label>
+                <div class="flex tooltip">
+                  <div
+                    *ngIf="showNotaExiste"
+                    class="tooltiptext"
+                    [style]="{ 'background-color': '#F7EED4' }"
+                  >
+                    <div class="grid">
+                      <div class="mt-2 mr-0 pr-0" style="width: 10%">
+                        <img [src]="icon('info')" alt="" />
+                      </div>
+                      <div style="width: 90%" class="ml-0 pl-0 mt-2">
+                        <b>Nota: </b>{{ notaExiste }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <input
+                    pInputText
+                    class="p-inputtext-lg cfe-input-lg w-full"
+                    placeholder="Ingrese Tipo de Documento"
+                    formControlName="inTipoDocumento"
+                    (input)="buscarTipoDocumento()"
+                    maxlength="50"
+                  />
+
+                  <div
+                    class="fondoCheck m-2"
+                    *ngIf="enableAgregarCargo || enableCheck"
+                  >
+                    <i class="filterLink" aria-hidden="true"
+                      ><fn-icon [ico]="obtenerIcono('iCheck')" color="#fff"
+                    /></i>
+                  </div>
+
+                  <div class="filterlink m-3" *ngIf="enableSave">
+                    <i
+                      class="fa filterLink"
+                      aria-hidden="true"
+                      (click)="guardarTipoDocumento()"
+                    >
+                      <img
+                        [src]="image('disco')"
+                        class="img-custom"
+                        height="25px"
+                        alt=""
+                        title="Guardar Tipo Documento"
+                      />
+                    </i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label>Prefijo<span class="required"></span></label>
+                <input
+                  pInputText
+                  class="p-inputtext-lg cfe-input-lg w-full"
+                  placeholder="Ingrese un prefijo"
+                  formControlName="inPrefijo"
+                  maxlength="16"
+                />
+              </div>
+
+              <div class="col-12">
+                <label>Tipo Ambito <span class="required"></span></label>
+                <p-dropdown
+                  formControlName="coTipoAmbito"
+                  id="coTipoAmbito"
+                  placeholder="Seleccionar"
+                  [options]="listaTipoAmbito"
+                  optionLabel="tipoAmbito"
+                  optionValue="codigo"
+                  appendTo="body"
+                  emptyMessage="No se encontraron registros"
+                  (onChange)="onTipoAmbito()"
+                ></p-dropdown>
+              </div>
+
+              <div class="col-12">
+                <p-checkbox
+                  inputId="checkVisibilidad"
+                  formControlName="checkVisibilidad"
+                  [binary]="true"
+                />
+                <label for="checkVisibilidad" class="ml-2"> Visibilidad </label>
+              </div>
+              <div class="col-12">
+                <p-checkbox
+                  inputId="checkFormaParteEfe"
+                  formControlName="checkFormaParteEfe"
+                  [binary]="true"
+                />
+                <label for="checkFormaParteEfe" class="ml-2">
+                  Forma Parte de EFE
+                </label>
+              </div>
+              <div class="col-12">
+                <p-checkbox
+                  inputId="checkFoliacion"
+                  formControlName="checkFoliacion"
+                  [binary]="true"
+                />
+                <label for="checkFoliacion" class="ml-2"> Foliacion </label>
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="firmaDocumentoCargos?.length > 0"
+            class="col-6"
+            class="ml-6"
+          >
+            <label>Cargo </label>
+            <p-table
+              class="fontTable"
+              [value]="firmaDocumentoCargos"
+              id="idCargosTabla"
+              [scrollable]="true"
+              scrollHeight="400px"
+            >
+              <ng-template pTemplate="body" let-item let-i="rowIndex;">
+                <tr>
+                  <td>
+                    <div *ngIf="item.firmaCheck">
+                      <input
+                        class="checkBig"
+                        type="checkbox"
+                        (change)="clickea(item, $event)"
+                        checked
+                      />
+                    </div>
+                    <div *ngIf="!item.firmaCheck">
+                      <input
+                        class="checkBig"
+                        type="checkbox"
+                        (change)="clickea(item, $event)"
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    {{ item.codigoCargo | titlecase }} - {{ item.cargo | titlecase }}
+                    <i
+                      class="fa fa-pencil-square-o px-1 mr-1 filterLink"
+                      aria-hidden="true"
+                      alt="Elimina Cargo"
+                      (click)="eliminarCargo(item, i)"
+                    >
+                      <fn-icon
+                        [ico]="obtenerIcono('iTrashCan')"
+                        height="1.2rem"
+                        color="#F24E1E"
+                    /></i>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+            <div class="ml-6">
+              <div
+                *ngIf="!enableAgregarCargo && enableCheck"
+                style="color: #1b75bb"
+                class="filterLink"
+                (click)="agregarCargo()"
+              >
+                <span class="label-agregar">Agregar Cargo</span>
+              </div>
+              <div *ngIf="enableAgregarCargo" class="grid m-2">
+                <p-dropdown
+                  formControlName="cargosAdicionales"
+                  [options]="listaCargosAdicional"
+                  placeholder="Seleccione cargo"
+                  (onChange)="activaGuardarCargo()"
+                  optionLabel="cargo"
+                  optionValue="idCargo"
+                  appendTo="body"
+                ></p-dropdown>
+
+                <i
+                  *ngIf="showGuardarCargo"
+                  class="fa m-2 ml-1"
+                  (click)="guardarCargo()"
+                >
+                  <img
+                    [src]="image('disco')"
+                    class="filterLink img-custom"
+                    height="22px"
+                    alt=""
+                /></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-5"></div>
+      <div class="m-5"></div>
+      <div class="m-5"></div>
+    </div>
+    <div class="flex m-6">
+      <div class="w-full flex justify-content-center">
+        <p-button
+          styleClass="p-ripple p-element p-button-lg font-semibold btn-mpfn-sad-cancel px-6 py-3"
+          label="Cancelar"
+          (onClick)="updateVisible()"
+        >
+        </p-button>
+        <p-button
+          styleClass="p-ripple p-element p-button-lg font-semibold btn-mpfn-sad-prime ml-3 px-6 py-3"
+          [label]="editar ? 'Registrar' : 'Guardar'"
+          (onClick)="requestFirmaTipoDocumento()"
+          [disabled]="validarBotonGuardar()"
+        >
+        </p-button>
+      </div>
+    </div>
+  </form>
+</div>

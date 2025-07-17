@@ -1,0 +1,29 @@
+<div class="w-full">
+
+  <div class="w-80%">
+    <div class="tituloPage">Actos Procesales ({{totalElementos}})</div>
+  </div>
+
+  <div class="flex justify-content-end">
+
+    <p-button styleClass="btn-mpfn-sad-cancel"
+              label="Exportar Excel"
+              [disabled]="!(totalElementos>0)"
+              (onClick)="exportarBandeja()"
+    >
+      <img [src]="icon('excel')"
+           alt="Excel Icon"
+           class="img-custom" />
+    </p-button>
+    <p-button styleClass="btn-mpfn-sad-prime ml-2"
+              label="Agregar"
+              (onClick)="mostrarModalAgregar()"
+
+    >
+    </p-button>
+
+  </div>
+
+</div>
+
+<p-toast></p-toast>

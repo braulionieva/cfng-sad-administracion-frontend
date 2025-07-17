@@ -1,0 +1,35 @@
+<div class="cfe-container">
+  <div class="grid mt-4">
+    <div class="col-12">
+      <h1 class="tituloPage">Reglas de conducta en la etapa de Ejecución de Sentencia ({{ totalReglas }})</h1>
+    </div>
+  </div>
+
+  <app-filtros (filter)="onFilter($event)"></app-filtros>
+
+  <div class="mt-5 mb-5">
+    <app-acciones
+    (clicked)="refrescarBandeja()"
+    (exportar)="exportarExcel()"
+    ></app-acciones>
+  </div>
+
+  <div class="p-2 bg-white border-round">
+    <app-tabla-generica
+      [cols]="cols"
+      [rows]="reglasConducta"
+      [menuActionsItems]="menuActionsItems"
+      [showActions]="showActionsButton"
+      [showPagination]="true"
+      [rowsPerPage]="10"
+      (setDataToAction)="getDataToAction($event)"
+    >
+    </app-tabla-generica>
+  </div>
+</div>
+<!-- ventana modal de editar regla -->
+<app-agregar-editar-regla
+[data] = "editarReglaDialog"
+(close) = "onCloseEditarReglaDialog()"
+(clicked)="refrescarBandeja()"
+></app-agregar-editar-regla>

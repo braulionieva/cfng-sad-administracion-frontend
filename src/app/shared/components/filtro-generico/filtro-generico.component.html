@@ -1,0 +1,143 @@
+<div class="tituloPage">{{ tituloPage }}
+</div>
+
+<form [formGroup]="filtroForm" class="form-container-filter">
+  <!--INICIO PRIMERA FILA-->
+  <div class="flex justify-content-between mb-2">
+    <div style="width: 80%">
+      <input
+        pInputText
+        class="p-inputtext p-inputtext-lg cfe-input-lg text-lg"
+        formControlName="codigo"
+        (input)="onCodigoInput($event)"
+        placeholder="{{ placeholder }}"
+      />
+    </div>
+
+    <div>
+      <p-button styleClass="p-button-lg btn-mpfn-toggle p-2 ml-2 py-2 px-4 font-semibold" icon="pi {{ toggleIcon }}"
+        (onClick)="changeToggle()">
+      </p-button>
+    </div>
+
+    <div style="width: 20%">
+      <p-button class="p-2" styleClass="btn-mpfn-sad-cancel w-full text-lg" label="Limpiar filtros"
+        (onClick)="onClearFilters()">
+      </p-button>
+    </div>
+  </div>
+
+  <div class="grid" *ngIf="toggleOn">
+    <div class="col-4" *ngIf="tramite.length > 0">
+      <p-dropdown [options]="tramite" emptyMessage="Sin resultados" formControlName="idTramite"
+        placeholder="Seleccione el trámite" optionLabel="nombre" optionValue="id"
+        class="p-inputtext-lg py-3 text-lg w-full"></p-dropdown>
+    </div>
+
+    <div class="col-4" *ngIf="actoProcesal.length > 0">
+      <p-dropdown [options]="actoProcesal" emptyMessage="Sin resultados" formControlName="idActoProcesal"
+        placeholder="Seleccione el acto procesal" optionLabel="nombre" optionValue="id"
+        class="p-inputtext-lg py-3 text-lg w-full"></p-dropdown>
+    </div>
+
+    <div class="col-4" *ngIf="carpetaCuaderno.length > 0">
+      <p-dropdown [options]="carpetaCuaderno" emptyMessage="Sin resultados" formControlName="idCarpetaCuaderno"
+        placeholder="Seleccione carpeta o tipo de cuaderno" optionLabel="nombre" optionValue="id"
+        class="p-inputtext-lg py-3 text-lg w-full"></p-dropdown>
+    </div>
+
+    <div class="col-4" *ngIf="tipoEspecialidad.length > 0">
+      <p-dropdown [options]="tipoEspecialidad" formControlName="idTipoEspecialidad"
+        placeholder="Seleccione el tipo especialidad" optionLabel="nombre" optionValue="id"
+        class="p-inputtext-lg py-3 text-lg w-full"></p-dropdown>
+    </div>
+
+    <div class="col-4" *ngIf="bDistritoFiscal == true">
+      <p-dropdown [options]="distritoFiscal" formControlName="idDistritoFiscal"
+        placeholder="Seleccione el Distrito Fiscal" optionLabel="nombre" optionValue="id"
+        (onChange)="onChangeDistritoFiscal()" class="p-inputtext-lg py-3 text-lg w-full"></p-dropdown>
+    </div>
+
+    <div class="col-4" *ngIf="bEspecialidad == true">
+      <p-dropdown [options]="especialidad" formControlName="idEspecialidad" placeholder="Seleccione la Especialidad"
+        optionLabel="nombre" optionValue="codigo" (onChange)="onChangeEspecialidad()"
+        class="p-inputtext-lg py-3 text-lg w-full"></p-dropdown>
+    </div>
+
+    <div class="col-4" *ngIf="bDistribucionAleatoria == true">
+      <p-dropdown [options]="distribucionAleatoria" formControlName="idDistribucionAleatoria"
+        placeholder="Seleccione Tipo de Distribución" optionLabel="nombre" optionValue="id"
+        (onChange)="onChangeDistribucionAleatoria()" class="p-inputtext-lg py-3 text-lg w-full"></p-dropdown>
+    </div>
+
+    <div class="col-4" *ngIf="jerarquia.length > 0">
+      <p-dropdown [options]="jerarquia" formControlName="idJerarquia" placeholder="Seleccione la jerarquía"
+        optionLabel="nombre" optionValue="id" class="p-inputtext-lg py-3 text-lg w-full"></p-dropdown>
+    </div>
+
+    <div class="col-4" *ngIf="tipoProceso.length > 0">
+      <p-dropdown [options]="tipoProceso" formControlName="idTipoProceso" placeholder="Seleccione el tipo proceso"
+        optionLabel="nombre" optionValue="id" class="p-inputtext-lg py-3 text-lg w-full"
+        (onChange)="onChange($event)"></p-dropdown>
+    </div>
+
+    <div class="col-4" *ngIf="subTipoProceso.length > 0">
+      <p-dropdown [options]="subTipoProceso" formControlName="idSubTipoProceso"
+        placeholder="Seleccione el subtipo proceso" optionLabel="nombre" optionValue="id"
+        class="p-inputtext-lg py-3 text-lg w-full"></p-dropdown>
+    </div>
+
+    <div class="col-4" *ngIf="bEtapas">
+      <p-dropdown [options]="etapas" formControlName="idEtapa" placeholder="Seleccione la etapa" optionLabel="nombre"
+        optionValue="id" class="p-inputtext-lg py-3 text-lg w-full"></p-dropdown>
+    </div>
+
+    <div *ngIf="phFiltroGn.length > 0" class="col-3">
+      <input pInputText (keyup.enter)="buscarActoProcesal()" class="py-3 w-full" formControlName="filtroGn"
+             placeholder="{{ phFiltroGn }}" />
+    </div>
+
+    <div *ngIf="phFiltroGc.length > 0" class="col-3">
+      <input pInputText (keyup.enter)="buscarActoProcesal()" class="py-3 w-full" formControlName="filtroGc"
+             placeholder="{{ phFiltroGc }}" />
+    </div>
+
+    <div *ngIf="phFiltroCn.length > 0" class="col-3">
+      <input pInputText (keyup.enter)="buscarActoProcesal()" class="py-3 w-full" formControlName="filtroCn"
+             placeholder="{{ phFiltroCn }}" />
+    </div>
+
+    <div *ngIf="phFiltroApp.length > 0" class="col-3">
+      <input pInputText (keyup.enter)="buscarActoProcesal()" class="py-3 w-full" formControlName="filtroApp"
+             placeholder="{{ phFiltroApp }}" />
+    </div>
+
+    <div *ngIf="bCreacionInicio" class="col-3">
+      <div class="flex-auto">
+        <p-calendar placeholder="Fecha creación Desde" [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
+          formControlName="dCreacionInicio" [showIcon]="true" inputId="icondisplay" dateFormat="dd/mm/yy"/>
+      </div>
+    </div>
+
+    <div *ngIf="bCreacionFin" class="col-3">
+      <div class="flex-auto">
+        <p-calendar placeholder="Fecha creación Hasta" [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
+          formControlName="dCreacionFin" [showIcon]="true" inputId="icondisplay" dateFormat="dd/mm/yy"/>
+      </div>
+    </div>
+
+    <div *ngIf="bModificacionInicio" class="col-3">
+      <div class="flex-auto">
+        <p-calendar placeholder="Fecha modifi. Desde" [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
+          formControlName="dModificacionInicio" [showIcon]="true" inputId="icondisplay" dateFormat="dd/mm/yy"/>
+      </div>
+    </div>
+
+    <div *ngIf="bModificacionFin" class="col-3">
+      <div class="flex-auto">
+        <p-calendar placeholder="Fecha Modifi. Hasta" [style]="{ width: '100%' }" [inputStyle]="{ width: '100%' }"
+          formControlName="dModificacionFin" [showIcon]="true" inputId="icondisplay" dateFormat="dd/mm/yy"/>
+      </div>
+    </div>
+  </div>
+</form>

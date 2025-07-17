@@ -1,0 +1,46 @@
+<!-- Tabla -->
+<div class="grid">
+    <div class="col-12">
+      <p-table
+        [value]="servidores"
+        [paginator]="true"
+        [rows]="10"
+        [tableStyle]="{ 'min-width': '50rem' }"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col">N°</th>
+            <th scope="col">Nombre(Ruta del servidor)</th>
+            <th scope="col">Tipo de servidor</th>
+            <th scope="col">Disponibilidad</th>
+            <th scope="col">Ambiente</th>
+            <th scope="col">Central</th>
+            <th scope="col">List. Apps</th>
+            <th scope="col">Adm. Cuenta</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-servidor>
+          <tr>
+            <td>{{ servidor.secuencia }}</td>
+            <td>{{ servidor.nombre }}</td>
+            <td>{{ servidor.tipo }}</td>
+            <td>{{ servidor.disponibilidad }}</td>
+            <td>{{ servidor.ambiente }}</td>
+            <td>{{ servidor.central }}</td>
+            <td>{{ servidor.listaDeApps }}</td>
+            <td>{{ servidor.administraCuenta }}</td>
+            <td>{{ servidor.estado }}</td>
+            <td>
+              <div>
+                
+              
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+  

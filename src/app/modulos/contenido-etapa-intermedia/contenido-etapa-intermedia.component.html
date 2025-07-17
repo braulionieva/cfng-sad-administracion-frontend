@@ -1,0 +1,344 @@
+<!-- dialogo de confirmacion -->
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
+<!-- filtro -->
+<div class="cfe-container">
+  <div class="tituloPage ">Contenido obligatorio ({{ this.acusacionTRowLstTotal }}) y Procedencia
+    ({{ this.sobreseimientoTRowLstTotal }}) en la Etapa Intermedia
+  </div>
+  <p>Permite configurar el contenido obligatorio en la Acusación y la procedencia en el Sobresimiento. Ambos campos
+    deben aparecer en el Requerimiento Mixto</p>
+  <form [formGroup]="formFiltroBuscar" class="color-filter">
+    <div class="grid">
+      <div class="col-5">
+        <p-dropdown [options]="tipoContenidoLst" formControlName="tipoContenido"
+                    placeholder="Seleccione tipo de contenido" optionLabel="nombre"
+                    optionValue="tipoContenido" (onChange)="buscarFiltroKeyUp()"></p-dropdown>
+      </div>
+      <div class="col-5">
+        <input type="text" pInputText formControlName="descripcion" placeholder="Ingrese descripción"
+               (keyup)="buscarFiltroKeyUp()"/>
+      </div>
+      <div class="col-2">
+        <p-button label="Limpiar Filtros" styleClass="btn-mpfn-sad-cancel btn-mpfn-sad-filtrar w-full"
+                  (onClick)="limpiarFiltrosBusqueda()"></p-button>
+      </div>
+    </div>
+  </form>
+
+  <div class="flex justify-content-end w-full my-4">
+    <p-button
+      styleClass="btn-mpfn-sad-cancel"
+      label="Exportar Excel"
+      (onClick)="exportarExcel()"
+    >
+      <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px"/>
+    </p-button>
+  </div>
+
+</div>
+
+<!-- tabla resultados  -->
+<div class="grid">
+  <div class="col">
+    <div class="mr-2 p-3 bg-white border-round">
+      <div class="flex">
+        <div class="grow w-full">
+          <h4>ACUSACIÓN</h4>
+          <b>Contenido obligatorio:</b>
+        </div>
+        <div class="flex-none">
+          <p-button styleClass="p-ripple p-element p-button font-semibold w-full p-component "
+                    label="Agregar" (onClick)="openModalNewAcusacionForm()">
+          </p-button>
+        </div>
+      </div>
+
+      <!-- tabla: acusacionTRowLst -->
+      <!-- Tabla contenido obligatorio-->
+      <p-table [value]="this.acusacionTRowLst" [lazy]="true"
+               (onLazyLoad)="buscarAcusacionFiltroPaginacion($event)" [paginator]="true"
+               [rows]="this.configPage.perPage" [totalRecords]="this.acusacionTRowLstTotal"
+               [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col">N°</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Creación</th>
+            <th scope="col">Modificación</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>{{ item.secuencia }}</td>
+            <td><b>{{ item.nuVArticulo }}</b> {{ item.noVArticulo }}</td>
+            <td>{{ item.usrCrea }} <br>{{ item.feDCreacionStr }}</td>
+            <td>{{ item.usrModifica }} <br>{{ item.feDModificacionStr }}</td>
+            <td>
+              <div>
+                <p-menu #menu [model]="actionItemsAcusacion" [popup]="true" appendTo="body"
+                        [pSelectableRow]="item"></p-menu>
+                <p-button icon="pi pi-ellipsis-v" styleClass="p-button-rounded p-button-text"
+                          (click)="itemSelectedAcusacion(item); menu.toggle($event)"></p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+  </div>
+  <div class="col">
+    <div class="ml-2 p-3 bg-white border-round">
+      <div class="flex">
+        <div class="grow w-full">
+          <h4>SOBRESEIMIENTO</h4>
+          <b>Procede por:</b>
+        </div>
+        <div class="flex-none">
+          <p-button styleClass="p-ripple p-element p-button font-semibold w-full p-component "
+                    label="Agregar" (onClick)="openModalNewSobreseimientoForm()">
+          </p-button>
+        </div>
+      </div>
+
+      <!-- tabla: sobreseimientoTRowLst -->
+      <!-- Tabla-->
+      <p-table [value]="this.sobreseimientoTRowLst" [lazy]="true"
+               (onLazyLoad)="buscarSobreseimientoFiltroPaginacion($event)" [paginator]="true"
+               [rows]="this.configPage.perPage" [totalRecords]="this.sobreseimientoTRowLstTotal"
+               [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col">N°</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Creación</th>
+            <th scope="col">Modificación</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>{{ item.secuencia }}</td>
+            <td>{{ item.noVArticulo }}</td>
+            <td>{{ item.usrCrea }} <br>{{ item.feDCreacionStr }}</td>
+            <td>{{ item.usrModifica }} <br>{{ item.feDModificacionStr }}</td>
+            <td>
+              <div>
+                <p-menu #menu [model]="actionItemsSobreseimiento" [popup]="true" appendTo="body"
+                        [pSelectableRow]="item"></p-menu>
+                <p-button icon="pi pi-ellipsis-v" styleClass="p-button-rounded p-button-text"
+                          (click)="itemSelectedSobreseimiento(item); menu.toggle($event)"></p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+  </div>
+</div>
+
+<!-- modal form acusacion-->
+<p-dialog header="" [(visible)]="isVisibleModalAcusacionNewForm" [style]="{width: '95vw', height: '50vw'}"
+          [modal]="true" [maximizable]="false" [style]="{ width: '70vw' }" [draggable]="false" [resizable]="false"
+          (onHide)="onCloseModalAcusacion()">
+  <ng-template pTemplate="header">
+    <ng-container *ngIf="isEditAcusacionForm==true; then editForm; else newForm"></ng-container>
+    <ng-template #editForm>
+      <span class="text-xl font-bold">Editar Contenido obligatorio de acusación</span>
+    </ng-template>
+    <ng-template #newForm>
+      <span class="text-xl font-bold">Agregar Contenido obligatorio de acusación</span>
+    </ng-template>
+  </ng-template>
+
+  <form [formGroup]="formGroupAcusacion">
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="nuVArticulo" class="ml-2">Artículo</label>
+          <input type="text" formControlName="nuVArticulo" pInputText class="p-inputtext w-full"
+                 placeholder="Ingrese Artículo"/>
+          <div>
+            <div style="text-align: right;">
+              <small>
+                {{
+                  formGroupAcusacion.get('nuVArticulo').value ?
+                    formGroupAcusacion.get('nuVArticulo').value.length : 0
+                }}/10</small>
+            </div>
+            <div style="text-align: left;">
+              <small
+                *ngIf="formGroupAcusacion.get('nuVArticulo').touched && formGroupAcusacion.get('nuVArticulo').invalid&&formGroupAcusacion.get('nuVArticulo')!.hasError('required')">Este
+                campo es requerido
+              </small>
+              <small
+                *ngIf="formGroupAcusacion.get('nuVArticulo').invalid && formGroupAcusacion.get('nuVArticulo').errors?.['maxlength']">Exceso
+                de caracteres
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="noVArticulo" class="ml-2">Descripción</label>
+          <textarea rows="5" cols="8" rows="5" pInputTextarea formControlName="noVArticulo"></textarea>
+          <div>
+            <div style="text-align: right;">
+              <small>
+                {{
+                  formGroupAcusacion.get('noVArticulo').value ?
+                    formGroupAcusacion.get('noVArticulo').value.length : 0
+                }}/300</small>
+            </div>
+            <div style="text-align: left;">
+              <small
+                *ngIf="formGroupAcusacion.get('noVArticulo').touched && formGroupAcusacion.get('noVArticulo').invalid&&formGroupAcusacion.get('noVArticulo')!.hasError('required')">Este
+                campo es requerido
+              </small>
+              <small
+                *ngIf="formGroupAcusacion.get('noVArticulo').invalid && formGroupAcusacion.get('noVArticulo').errors?.['maxlength']">Exceso
+                de caracteres
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="isEditAcusacionForm==false then newForm; else editForm ">
+    </ng-container>
+    <ng-template #newForm>
+      <div class="flex justify-content-center">
+        <p-button (click)="onCloseModalAcusacion()"
+                  styleClass="btn-mpfn-default font-semibold text-center px-8 py-2 mr-2">Cancelar
+        </p-button>
+        <p-button (click)="addFormAcusacionBtn()"
+                  styleClass="btn-mpfn-primary font-semibold text-center px-8 py-2">Guardar
+        </p-button>
+      </div>
+    </ng-template>
+    <ng-template #editForm>
+      <div class="flex justify-content-center">
+        <p-button (click)="onCloseModalAcusacion()"
+                  styleClass="btn-mpfn-default font-semibold text-center px-8 py-2 mr-2">Cancelar
+        </p-button>
+        <p-button (click)="updFormAcusacionBtn()"
+                  styleClass="btn-mpfn-primary font-semibold text-center px-8 py-2">Guardar
+        </p-button>
+      </div>
+    </ng-template>
+
+
+  </form>
+
+</p-dialog>
+
+<!-- modal sobreseimiento-->
+<p-dialog header="" [(visible)]="isVisibleModalSobreseimientoNewForm" [style]="{width: '95vw', height: '50vw'}"
+          [modal]="true" [maximizable]="false" [style]="{ width: '70vw' }" [draggable]="false" [resizable]="false"
+          (onHide)="onCloseModalSobreseimiento()">
+  <ng-template pTemplate="header">
+    <ng-container *ngIf="isEditSobreseimientoForm==true; then editForm; else newForm"></ng-container>
+    <ng-template #editForm>
+      <span class="text-xl font-bold">Editar Procedencia de Sobresimiento</span>
+    </ng-template>
+    <ng-template #newForm>
+      <span class="text-xl font-bold">Agregar Procedencia de Sobresimiento</span>
+    </ng-template>
+  </ng-template>
+
+  <form [formGroup]="formGroupSobreseimiento">
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="noVArticulo" class="ml-2">Descripción</label>
+          <textarea rows="5" cols="8" rows="5" pInputTextarea formControlName="noVArticulo"
+                    placeholder="Descripción"></textarea>
+          <div>
+            <div style="text-align: right;">
+              <small>
+                {{
+                  formGroupSobreseimiento.get('noVArticulo').value ?
+                    formGroupSobreseimiento.get('noVArticulo').value.length : 0
+                }}/300</small>
+            </div>
+            <div style="text-align: left;">
+              <small
+                *ngIf="formGroupSobreseimiento.get('noVArticulo').touched && formGroupSobreseimiento.get('noVArticulo').invalid&&formGroupSobreseimiento.get('noVArticulo')!.hasError('required')">Este
+                campo es requerido
+              </small>
+              <small
+                *ngIf="formGroupSobreseimiento.get('noVArticulo').invalid && formGroupSobreseimiento.get('noVArticulo').errors?.['maxlength']">Exceso
+                de caracteres
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="isEditSobreseimientoForm==false then newFormSobreseimiento; else editFormSobreseimiento ">
+    </ng-container>
+    <ng-template #newFormSobreseimiento>
+      <div class="flex justify-content-center">
+        <p-button (click)="onCloseModalSobreseimiento()"
+                  styleClass="btn-mpfn-default font-semibold text-center px-8 py-2 mr-2">Cancelar
+        </p-button>
+        <p-button (click)="addFormSobreseimientoBtn()"
+                  styleClass="btn-mpfn-primary font-semibold text-center px-8 py-2">Guardar
+        </p-button>
+      </div>
+
+    </ng-template>
+    <ng-template #editFormSobreseimiento>
+      <div class="flex justify-content-center">
+        <p-button (click)="onCloseModalSobreseimiento()"
+                  styleClass="btn-mpfn-default font-semibold text-center px-8 py-2 mr-2">Cancelar
+        </p-button>
+        <p-button (click)="updFormSobreseimientoBtn()"
+                  styleClass="btn-mpfn-primary font-semibold text-center px-8 py-2">Guardar
+        </p-button>
+      </div>
+
+    </ng-template>
+  </form>
+
+</p-dialog>
+
+<!-- modal notification -->
+<p-dialog header="" [(visible)]="isVisibleModalNotification" [style]="{width: '50vw'}" [modal]="true"
+          (onHide)="onCloseModalNotification()">
+  <p class="text-center">
+    <ng-container [ngSwitch]="modalNotificationType">
+      <ng-template ngSwitchCase="success">
+        <i class="pi pi-check" style="font-size: 3.5rem; color: rgb(11, 146, 22)"></i>
+      </ng-template>
+      <ng-template ngSwitchCase="danger">
+        <i class="pi pi-times" style="font-size: 3.5rem; color: rgb(202, 11, 11)"></i>
+      </ng-template>
+      <ng-template ngSwitchCase="warning">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3.5rem; color: rgb(189, 202, 1)"></i>
+      </ng-template>
+      <ng-container *ngSwitchDefault>
+        <i class="pi pi-exclamation-triangle" style="font-size: 3.5rem; color: rgb(11, 146, 22)"></i>
+      </ng-container>
+    </ng-container>
+  </p>
+  <h5 class="text-center">{{ modalNotificationTitle }}</h5>
+  <p class="text-center">
+    {{ modalNotificationMsg }}
+  </p>
+  <p class="text-center">
+    {{ modalNotificationMsg2 }}
+  </p>
+  <div class="text-center">
+    <button pButton pRipple label="Listo" class="" (click)="onCloseModalNotificationBtn()"></button>
+  </div>
+</p-dialog>

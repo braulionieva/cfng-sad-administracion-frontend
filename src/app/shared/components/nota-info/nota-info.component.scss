@@ -1,0 +1,49 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.notificacion-container{
+
+    display: flex;
+    padding: 20px 25px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    .notificacion-icon{
+        display: flex;
+        justify-content: center;
+        img{
+            width: 25px;
+        }
+        margin-right: 10px;
+    }
+    .notificacion-description{
+        width: 100%;
+        text-align: left!important;
+        font-family: $font-regular;
+        //font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.00em;
+    }
+}
+
+
+//--------------------------------
+//Alertas solo para baja alta bloqueo desbloqueo
+//--------------------------------
+.alert {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.alert-warning {
+  background-color: #F7EED6;
+}
+
+.alert i {
+  font-size: 1.2rem;
+  color: rgb(175, 108, 25);
+}
+
+.alert b {
+  padding-left: 5px;
+}
+
+//--------------------------------

@@ -1,0 +1,38 @@
+<div class="cfe-container">
+  <app-filtro-generico
+    [tituloPage]="tituloPage"
+    (filter)="onFilter($event)"
+    [tramite]="tramite"
+    [actoProcesal]="actoProcesal"
+    [carpetaCuaderno]="carpetaCuaderno"
+    [tipoEspecialidad]="tipoEspecialidad"
+    [bEspecialidad]="bEspecialidad"
+    [jerarquia]="jerarquia"
+    [tipoProceso]="tipoProceso"
+    [bEtapas]="true"
+  >
+  </app-filtro-generico>
+  <!--FIN DE CONTENEDOR DE FILTROS-->
+
+  <br />
+
+  <app-acciones-tramite-por-acto-procesal
+    [totalElementos]="contadorTramites"
+    (refrescar)="refrescarBandeja()"
+    (exportar)="listarBandejaTramiteActoProcesalExcel()"
+  >
+  </app-acciones-tramite-por-acto-procesal>
+
+  <br />
+
+  <div class="p-2 bg-white border-round">
+    <!--INICIO DE CONTENEDOR TABLA-->
+    <app-tabla-tramite-por-acto-procesal
+      [loading]="loading"
+      [bandejaTramitePorActoProcesal]="bandejaTramitePorActoProcesal"
+      (clickedRefrescar)="refrescarBandeja()"
+    >
+    </app-tabla-tramite-por-acto-procesal>
+    <!--FIN DE CONTENEDOR TABLA-->
+  </div>
+</div>

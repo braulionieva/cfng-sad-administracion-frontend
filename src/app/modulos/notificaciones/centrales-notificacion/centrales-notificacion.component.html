@@ -1,0 +1,18 @@
+<div class="cfe-container">
+  <div class="tituloPage">Centrales de Notificación ({{ totalRegistros }})</div>
+  <app-filtros
+    (onCleanFilters)="cleanFilters()"
+    (createCentral)="actionCentral()"
+    (onFilterValues)="applyFilters($event)"
+  ></app-filtros>
+  <br />
+  <div class="p-2 bg-white border-round">
+    <app-tabla
+      [dataTable]="centrales"
+      [totalRegistros]="totalRegistros"
+      (cargarDatosPaginados)="getListCentrales($event)"
+      (editCentral)="actionCentral($event)"
+      [(first)]="first"
+    ></app-tabla>
+  </div>
+</div>

@@ -1,0 +1,280 @@
+@charset 'utf-8';
+// mas informacion de arquitectura 5+1
+// https://matthewelsom.com/blog/simple-scss-playbook.html
+
+//Abstracts
+@import "abstracts/__abstracts-dir";
+
+//Base Styles
+@import "base/__base-dir";
+
+//Components
+@import "components/__components-dir";
+
+//Layout
+@import "layouts/__layouts-dir";
+
+//Vendor
+@import "vendor/__vendor-dir";
+
+@import "abstracts/colors";
+@import "abstracts/fonts";
+
+.btn-mpfn-toggle {
+  background-color: #5f60624d;
+  border: 1px solid transparent !important;
+  color: #333;
+  border-radius: 4px;
+  font-family: $font-semi-bold;
+  transition: 300ms background-color ease;
+  padding: 10px 10px !important;
+
+  &:hover {
+    background: #f1f1f1 !important;
+    color: $primary !important;
+    border: 1px solid #5f60624d !important;
+  }
+
+  &:focus {
+    box-shadow: none !important;
+  }
+
+  &:active {
+    background: #e2e2e2 !important;
+    border-color: #e2e2e2 !important;
+    color: $primary !important;
+    border: 1px solid #5f60624d !important;
+  }
+}
+
+.btn-mpfn-secondary {
+  background-color: #5f60624d;
+  border: 1px solid transparent !important;
+  color: #333;
+  border-radius: 4px;
+  font-family: $font-semi-bold;
+  transition: 300ms background-color ease;
+
+  &:hover {
+    background: #f1f1f1 !important;
+    /**border: 1px solid #f1f1f1 !important;**/
+    color: $primary !important;
+    border: 1px solid #5f60624d !important;
+  }
+
+  &:focus {
+    box-shadow: none !important;
+  }
+
+  &:active {
+    background: #e2e2e2 !important;
+    border-color: #e2e2e2 !important;
+    color: $primary !important;
+    border: 1px solid #5f60624d !important;
+  }
+}
+
+
+.btn-prime-img {
+  padding: 10.5px 15px 10.5px 35px !important;
+}
+
+.btn-mpfn-hover {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background: #1f64a1 !important;
+    border-color: #1f64a1 !important;
+    color: #fff !important;
+    border: 1px solid #1f64a1 !important;
+    transform: scale(2.05);
+  }
+}
+
+.btn-mpfn-sad-confirm {
+  background-color: #ff0000 !important;
+  border-color: #ff0000 !important;
+  width: 220px;
+  height: 48px;
+
+  &:hover {
+    background-color: #cc0000 !important;
+    border-color: #cc0000 !important;
+  }
+
+  &:active {
+    background-color: #b30000 !important;
+    border-color: #b30000 !important;
+  }
+}
+
+.btn-mpfn-adjust {
+  width: auto !important;
+  height: 40px !important;
+  padding: 10.5px 25px !important;
+  min-width: 120px !important;
+}
+
+.btn-mpfn-adjust-clean {
+  height: 40px !important;
+}
+
+.btn-mpfn-sad-prime {
+  background: #2b8de3 !important;
+  border-color: #2b8de3 !important;
+  color: #fff !important;
+  border: 1px solid #2b8de3 !important;
+  width: 220px;
+  height: 48px;
+  border-radius: 4px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  align-content: space-around;
+  transition: 300ms background-color ease;
+  justify-content: center;
+
+  &:hover {
+    background: #1f64a1 !important;
+    border-color: #1f64a1 !important;
+    color: #fff !important;
+    border: 1px solid #1f64a1 !important;
+  }
+
+  &:focus {
+    box-shadow: none !important;
+  }
+
+  &:active {
+    background: #1780db !important;
+    border-color: #1780db !important;
+    color: #fff !important;
+    border: 1px solid #1780db !important;
+  }
+
+  &:disabled {
+    background-color: #cfd5db80 !important;
+    border: 1px solid #cfd5db80 !important;
+    color: #00000026 !important;
+  }
+
+  .p-button-label {
+    font-size: 1em;
+  }
+}
+
+.btn-mpfn-sad-cancel {
+  background-color: #e7eaed;
+  border: 1px solid #cfd5db;
+  color: #0f2c52;
+  width: 220px;
+  height: 48px;
+  border-radius: 4px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  transition: 300ms background-color ease;
+  justify-content: center;
+
+  &:hover {
+    background: #cfd5db !important;
+    border: 1px solid #cfd5db !important;
+    color: #0f2c52 !important;
+  }
+
+  &:focus {
+    box-shadow: none !important;
+  }
+
+  &:active {
+    background: #e2e2e2 !important;
+    /**border-color: #e2e2e2 !important;**/
+    color: #0e2e4a !important;
+    border: 1px solid $gray6 !important;
+  }
+
+  .p-button-label {
+    font-size: 1em;
+  }
+}
+
+.btn-mpfn-sad-ico {
+  background-color: #e7eaed;
+  border: 1px solid #cfd5db;
+  color: #0f2c52;
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  transition: 300ms background-color ease;
+  justify-content: center;
+
+  &:hover {
+    background: #cfd5db !important;
+    border: 1px solid #cfd5db !important;
+    color: #0f2c52 !important;
+  }
+
+  &:focus {
+    box-shadow: none !important;
+  }
+
+  &:active {
+    background: #e2e2e2 !important;
+    border-color: #e2e2e2 !important;
+    color: #0e2e4a !important;
+    border: 1px solid $gray6 !important;
+  }
+
+  .p-button-label {
+    font-size: 1em;
+  }
+}
+
+.btn-icono {
+  width: 48 !important;
+  height: 48px;
+}
+
+.span-contador {
+  color: #0E2E4A;
+  font-size: 20px;
+  line-height: 32px;
+  font-weight: 700;
+  letter-spacing: 1%;
+}
+
+.tituloPage {
+  font-size: 20px !important;
+  margin-top: 40px !important;
+  margin-bottom: 30px !important;
+  font-weight: bolder !important;
+  color: #0E2E4A;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.titleModalSad {
+  color: #0e2e4a;
+  margin: 10px;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.subtitleModalSad {
+  color: #000000;
+  margin: 10px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.subtitleSad {
+  color: #000000;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.parrafoModalSad {
+  color: #000000;
+  margin: 10px;
+  font-weight: 400;
+  font-size: 16px;
+}

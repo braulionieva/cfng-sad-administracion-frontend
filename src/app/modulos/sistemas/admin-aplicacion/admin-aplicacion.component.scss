@@ -1,0 +1,16 @@
+$heigth: 45px;
+
+:host ::ng-deep .p-paginator-bottom .p-paginator-current {
+  margin-right: auto;
+  padding-left: 1rem;
+}
+
+.height-common {
+  height: $heigth;
+}
+
+.img-logo {
+  width: 45px;
+  border-radius: 50%;
+  height: 45px;
+}

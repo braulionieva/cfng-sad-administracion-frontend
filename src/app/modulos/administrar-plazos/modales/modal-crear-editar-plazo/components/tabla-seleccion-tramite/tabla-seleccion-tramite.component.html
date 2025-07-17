@@ -1,0 +1,292 @@
+<ng-container *ngIf="accionPlazo === 'crear'">
+  <div class="mt-4 mb-4">
+    <div class="flex flex-column gap-2">
+      <label for="campoTramite">Trámite</label>
+      <div class="flex gap-2">
+        <input type="text" pInputText placeholder="Buscar el trámite" [(ngModel)]="campoTramite" id="campoTramite" />
+        <p-button type="button" icon="pi pi-search" (onClick)="obtenerListaTramites()" />
+      </div>
+    </div>
+
+    <div *ngIf="tramites" class="mt-3">
+      <p-table [value]="tramites" [tableStyle]="{ 'min-width': '50rem' }" [loading]="cargandoTabla" [paginator]="true"
+        [rows]="filasPorPagina" dataKey="numeracion" [lazy]="true" (onLazyLoad)="obtenerListaTramites($event)"
+        [totalRecords]="totalRegistros">
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col" style="width: 2rem">Nº</th>
+            <th scope="col" style="text-align: center">Trámite</th>
+            <th scope="col" style="width: 2rem"></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-tramite let-expanded="expanded">
+          <tr [style]="{ background: expanded ? '#3F9FD626' : 'transparent' }">
+            <td style="width: 2rem">{{ tramite.numeracion }}</td>
+            <td style="text-align: center">{{ tramite.tramite }}</td>
+            <td style="width: 2rem">
+              <button type="button" pButton pRipple [pRowToggler]="tramite"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-up'"></button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="rowexpansion" let-tramite>
+          <tr>
+            <td colspan="10" class="p-0">
+              <p-table [value]="tramite.items" dataKey="numeracion">
+                <ng-template pTemplate="header">
+          <tr style="background: #bebebe33 !important">
+            <th scope="col" style="width: 2rem">
+              <p-checkbox [binary]="true" (onChange)="onSelectAllChange(tramite, $event)"
+                [ngModel]="isAllSelected(tramite)" [disabled]="isGrupoDisabled(tramite.idTramite)">></p-checkbox>
+            </th>
+            <th scope="col" class="text-xs text-center">Código del trámite</th>
+            <th scope="col" class="text-xs text-center">Carpeta/cuaderno</th>
+            <th scope="col" class="text-xs text-center">Tipo especialidad</th>
+            <th scope="col" class="text-xs text-center">Especialidad</th>
+            <th scope="col" class="text-xs text-center">Jerarquía</th>
+            <th scope="col" class="text-xs text-center">Tipo proceso</th>
+            <th scope="col" class="text-xs text-center">Subtipo proceso</th>
+            <th scope="col" class="text-xs text-center">Etapa</th>
+            <th scope="col" class="text-xs text-center">
+              Acto procesal relacionado
+            </th>
+            <th scope="col" class="text-xs text-center">Estado</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item>
+          <tr style="width: 2rem">
+            <td>
+              <p-checkbox [binary]="true" (onChange)="onCheckboxChange(item.codigoTramite, tramite.idTramite, $event)"
+                [ngModel]="tramitesSeleccionados.includes(item.codigoTramite)"
+                [disabled]="isGrupoDisabled(tramite.idTramite)"></p-checkbox>
+            </td>
+
+            <td class="text-xs">
+              <div class="text-center">
+                <ng-container *ngIf="item.codigoTramite; else no_content">
+                  {{ item.codigoTramite }}
+                </ng-container>
+                <ng-template #no_content>-</ng-template>
+              </div>
+            </td>
+
+            <td class="text-xs">
+              <div class="text-center">
+                <ng-container *ngIf="item.CarpetaCuaderno; else no_content">
+                  {{ item.CarpetaCuaderno }}
+                </ng-container>
+                <ng-template #no_content>-</ng-template>
+              </div>
+            </td>
+
+            <td class="text-xs">
+              <div class="text-center">
+                <ng-container *ngIf="item.tipoEspecialidad; else no_content">
+                  {{ item.tipoEspecialidad }}
+                </ng-container>
+                <ng-template #no_content>-</ng-template>
+              </div>
+            </td>
+
+            <td class="text-xs">
+              <div class="text-center">
+                <ng-container *ngIf="item.especialidad; else no_content">
+                  {{ item.especialidad }}
+                </ng-container>
+                <ng-template #no_content>-</ng-template>
+              </div>
+            </td>
+
+            <td class="text-xs">
+              <div class="text-center">
+                <ng-container *ngIf="item.jerarquia; else no_content">
+                  {{ item.jerarquia }}
+                </ng-container>
+                <ng-template #no_content>-</ng-template>
+              </div>
+            </td>
+
+            <td class="text-xs">
+              <div class="text-center">
+                <ng-container *ngIf="item.tipoProceso; else no_content">
+                  {{ item.tipoProceso }}
+                </ng-container>
+                <ng-template #no_content>-</ng-template>
+              </div>
+            </td>
+
+            <td class="text-xs">
+              <div class="text-center">
+                <ng-container *ngIf="item.subtipoProceso; else no_content">
+                  {{ item.subtipoProceso }}
+                </ng-container>
+                <ng-template #no_content>-</ng-template>
+              </div>
+            </td>
+
+            <td class="text-xs">
+              <div class="text-center">
+                <ng-container *ngIf="item.etapa; else no_content">
+                  {{ item.etapa }}
+                </ng-container>
+                <ng-template #no_content>-</ng-template>
+              </div>
+            </td>
+
+            <td class="text-xs">
+              <div class="text-center">
+                <ng-container *ngIf="item.actoProcesal; else no_content">
+                  {{ item.actoProcesal }}
+                </ng-container>
+                <ng-template #no_content>-</ng-template>
+              </div>
+            </td>
+
+            <td class="text-xs">
+              <div class="text-center">
+                <ng-container *ngIf="item.estado; else no_content">
+                  {{ item.estado }}
+                </ng-container>
+                <ng-template #no_content>-</ng-template>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      </td>
+      </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="100%">
+            <p class="text-center py-5">No se encontraron registros</p>
+          </td>
+        </tr>
+      </ng-template>
+      </p-table>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="accionPlazo === 'editar'">
+  <div class="mt-3">
+    <p-table [value]="detalleTramites" [tableStyle]="{ 'min-width': '50rem' }" [loading]="cargandoTabla"
+      [paginator]="true" [rows]="filasPorPagina" [lazy]="true"
+      (onLazyLoad)="obtenerListaDetallePlazosActosTramitesEtapas($event)" [totalRecords]="totalRegistros">
+      <ng-template pTemplate="header">
+        <tr style="background: #bebebe33 !important">
+          <th scope="col" *ngFor="let columna of columnasDetalle" class="text-center text-xs">
+            {{ columna }}
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-tramite>
+        <tr>
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.codigoTramite; else no_content">
+                {{ tramite.codigoTramite }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.carpetaCuaderno; else no_content">
+                {{ tramite.carpetaCuaderno }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.tipoEspecialidad; else no_content">
+                {{ tramite.tipoEspecialidad }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.especialidad; else no_content">
+                {{ tramite.especialidad }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.jerarquia; else no_content">
+                {{ tramite.jerarquia }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.tipoProceso; else no_content">
+                {{ tramite.tipoProceso }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.subtipoProceso; else no_content">
+                {{ tramite.subtipoProceso }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.etapa; else no_content">
+                {{ tramite.etapa }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.actoProcesal; else no_content">
+                {{ tramite.actoProcesal }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.estado; else no_content">
+                {{ tramite.estado }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="100%">
+            <p class="text-center py-5">No se encontraron registros</p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</ng-container>

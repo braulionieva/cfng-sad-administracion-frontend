@@ -1,0 +1,128 @@
+<section class="modal">
+  <ng-container *ngIf="plazo">
+    <div>
+      <p class="mb-1"><b>Plazo: </b>{{ plazo.plazoUnidad }}</p>
+      <p class="mb-1"><b>Plazo de alerta: </b>{{ plazo.plazoUnidadAlerta }}</p>
+      <p class="mb-1"><b>Complejidad: </b>{{ plazo.complejidad }}</p>
+      <p class="mb-1"><b>Tramite: </b>{{ plazo.tramite }}</p>
+    </div>
+  </ng-container>
+  
+  <div class="mt-4">
+    <p-table [value]="tramites" [tableStyle]="{ 'min-width': '50rem' }" [loading]="cargandoTabla"
+      [rows]="filasPorPagina" [lazy]="true" (onLazyLoad)="obtenerListaDetallePlazosActosTramitesEtapas($event)"
+      [totalRecords]="totalRegistros">
+    
+      <ng-template pTemplate="header">
+        <tr style="background: #bebebe33 !important">
+          <th scope="col" *ngFor="let columna of columnas" class="text-center text-xs">
+            {{ columna }}
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-tramite>
+        <tr>
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.codigoTramite; else no_content">
+                {{ tramite.codigoTramite }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.carpetaCuaderno; else no_content">
+                {{ tramite.carpetaCuaderno }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.tipoEspecialidad; else no_content">
+                {{ tramite.tipoEspecialidad }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.especialidad; else no_content">
+                {{ tramite.especialidad }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.jerarquia; else no_content">
+                {{ tramite.jerarquia }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.tipoProceso; else no_content">
+                {{ tramite.tipoProceso }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.subtipoProceso; else no_content">
+                {{ tramite.subtipoProceso }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.etapa; else no_content">
+                {{ tramite.etapa }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.actoProcesal; else no_content">
+                {{ tramite.actoProcesal }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+
+          <td class="text-xs">
+            <div class="flex align-items-center justify-content-center">
+              <ng-container *ngIf="tramite.estado; else no_content">
+                {{ tramite.estado }}
+              </ng-container>
+              <ng-template #no_content>-</ng-template>
+            </div>
+          </td>
+        </tr>
+
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="100%">
+            <p class="text-center py-5">No se encontraron registros</p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</section>

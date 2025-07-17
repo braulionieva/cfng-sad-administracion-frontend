@@ -1,0 +1,21 @@
+/* En tu archivo CSS */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  resize: none; /* Esto desactiva la capacidad de cambiar el tamaño del textarea */
+}
+
+.contador-caracteres {
+  text-align: right;
+  font-size: 12px;
+  margin-top: 5px;
+  color: #666;
+}

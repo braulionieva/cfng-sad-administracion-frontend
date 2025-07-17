@@ -1,0 +1,33 @@
+<div class="ayuda-tag-container" [class.disabled]="disabled">
+  <div class="tags-input-container">
+    <div class="selected-tag" *ngFor="let tag of selectedTags; let i = index">
+      <span class="tag-text">{{ tag.noTag }}</span>
+      <button type="button" class="remove-tag-btn" (click)="removeTag(i)" *ngIf="!disabled">
+        &times;
+      </button>
+    </div>
+    <input
+      #inputElement
+      type="text"
+      [placeholder]="selectedTags.length ? '' : placeholder"
+      [(ngModel)]="inputValue"
+      (input)="onInput()"
+      (focus)="onFocus()"
+      (keydown)="onKeyDown($event)"
+      [disabled]="disabled"
+    />
+  </div>
+  <div class="options-dropdown" *ngIf="showDropdown && !disabled">
+    <button
+      *ngFor="let option of filteredOptions; let i = index"
+      class="option-item"
+      [class.highlighted]="i === highlightedIndex"
+      (click)="addTag(option)"
+    >
+      {{ option.noTag }}
+    </button>
+    <div class="no-options" *ngIf="filteredOptions.length === 0">
+      No hay opciones disponibles. Presiona Enter para crear una nueva.
+    </div>
+  </div>
+</div>

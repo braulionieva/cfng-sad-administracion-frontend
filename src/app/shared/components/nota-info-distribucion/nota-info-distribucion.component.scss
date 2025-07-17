@@ -1,0 +1,27 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.notificacion-container {
+    /**padding: 40px;**/
+    display: flex;
+    padding: 20px 40px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+
+    .notificacion-icon {
+        display: flex;
+        justify-content: center;
+
+        img {
+            width: 25px;
+        }
+
+        margin-right: 10px;
+    }
+
+    .notificacion-description {
+        width: 100%;
+        text-align: left;
+        font-family: $font-regular;
+        font-size: 1.05em;
+    }
+}

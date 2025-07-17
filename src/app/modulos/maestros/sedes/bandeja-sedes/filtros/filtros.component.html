@@ -1,0 +1,39 @@
+<form [formGroup]="filtroForm" class="form-container-filter">
+  <!--INICIO PRIMERA FILA-->
+  <div class="flex gap-3" style="align-items: end">
+    <div style="width: 100%">
+      <label class="font-semibold">Nombre</label>
+      <input
+        pInputText
+        class="w-full"
+        formControlName="nombreSede"
+        placeholder="Ingrese nombre"
+        maxlength="100"
+      />
+    </div>
+
+    <div style="width: 100%">
+      <label class="font-semibold">Distrito fiscal</label>
+      <p-dropdown
+        [options]="distritos"
+        formControlName="idDistritoFiscal"
+        placeholder="Seleccionar"
+        optionLabel="nombre"
+        optionValue="id"
+        class="w-full"
+        emptyMessage="No se encontraron registros"
+      ></p-dropdown>
+    </div>
+
+    <div style="width: 100%">
+      <p-button
+        styleClass="btn-mpfn-sad-cancel btn-mpfn-adjust-clean"
+        label="Limpiar filtros"
+        (onClick)="onClearFilters()"
+      >
+      </p-button>
+    </div>
+
+    <div class="col-3"></div>
+  </div>
+</form>

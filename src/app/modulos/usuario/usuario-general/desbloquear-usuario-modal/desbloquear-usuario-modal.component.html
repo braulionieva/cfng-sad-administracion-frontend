@@ -1,0 +1,65 @@
+<div class="agregar-editar-usuario-modal-container">
+  <div class="close-wrapper">
+    <h3>Desbloquear usuario</h3>
+    <div class="cfe-close__document" (click)="closeAction()" (keydown.enter)="$event.preventDefault()"
+      (keydown.space)="$event.preventDefault()">
+      <img [src]="icon('close_new')" class="img-custom" height="35px" alt="" />
+    </div>
+  </div>
+</div>
+<div class="form-wrapper mx-5 mb-5">
+  <div class="grid">
+    <div class="col">
+      <p>Nombre Completo: <b>{{ userDetail.apVPaterno }} {{ userDetail.apVPaterno }},
+          {{ userDetail.noVCiudadano }}</b></p>
+      <p>DNI: <b>{{ userDetail.nuVDocumento }}</b></p>
+      <p>Relación Laboral: <b>{{ userDetail.noVRelacionLaboral }}</b></p>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col">
+      <div class="alert alert-warning">
+        <i class="pi pi-exclamation-circle"></i>
+        <b>Nota:</b> Al desbloquear al usuario, este podrá iniciar sesión con la cuenta MPFN.
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="formGroup">
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="noVObservaciones">
+            <b>
+              Ingrese el motivo para desbloquear al usuario
+            </b>
+          </label>
+          <textarea rows="5" cols="30" pInputTextarea placeholder="Escriba el motivo para desbloquear al usuario"
+            formControlName="noVObservaciones" maxlength="300"></textarea>
+          <div>
+            <div style="float: left;">
+              <small class="error-message"
+                *ngIf="formGroup.get('noVObservaciones').touched&&formGroup.get('noVObservaciones').errors?.['required']">
+                Este campo es requerido</small>
+            </div>
+            <div style="float: right;">
+              <small>{{
+                formGroup.get('noVObservaciones').value ?
+                formGroup.get('noVObservaciones').value.length : 0
+                }}/300</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-content-center mt-4">
+      <p-button (onClick)="cancelAction()" styleClass="btn-mpfn-sad-cancel">
+        Cancelar
+      </p-button>
+
+      <p-button (onClick)="procesarUsuario()" [disabled]="formGroup.invalid" styleClass="btn-mpfn-sad-prime ml-3">
+        {{ isDesbloqueado ? 'Desbloquear usuario' : 'Bloquear usuario' }}
+      </p-button>
+    </div>
+  </form>
+</div>

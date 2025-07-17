@@ -1,0 +1,60 @@
+<!-- Tabla -->
+<link rel="stylesheet" href="tabla.component.scss">
+<div class="grid">
+  <div class="col-12">
+    <p-table [value]="despachos" [paginator]="true" [rows]="10" (onPage)="onPageChange($event)"
+             [(first)]="first"
+      [tableStyle]="{ 'min-width': '50rem' }" [showCurrentPageReport]="true"
+      currentPageReportTemplate="{last} de {{ totalElementos }} registros">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">N°</th>
+          <th scope="col">Código</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Distrito Fiscal</th>
+          <th scope="col">Fiscalía</th>
+          <th scope="col">Creación</th>
+          <th scope="col">Modificación</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-despacho let-i="rowIndex">
+        <tr>
+          <td>{{ i + 1}}</td>
+          <td>{{ despacho.codigo }}</td>
+          <td>{{ despacho.nombre }}</td>
+          <td>{{ despacho.nombreDistritoFiscal }}</td>
+          <td>{{ despacho.nombreDependencia }}</td>
+          <td>
+            {{ despacho.noUserCrea }}
+            <ng-container *ngIf="despacho.noUserCrea">
+              <br>
+            </ng-container>
+            {{ despacho.fechaCreacionFormato }}
+          </td>
+          <td>
+            {{ despacho.noUserModi }}
+            <ng-container *ngIf="despacho.noUserModi">
+              <br>
+            </ng-container>
+            {{ despacho.fechaModificacionFormato }}
+          </td>
+          <td>
+            <div>
+              <p-menu #menu [model]="actionItems" [popup]="true" appendTo="body" [pSelectableRow]="despacho"></p-menu>
+              <p-button icon="pi pi-ellipsis-v" styleClass="p-button-rounded p-button-text"
+                (click)="llenarvariable(despacho);menu.toggle($event)"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Bloque para mostrar el mensaje cuando no haya datos -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8" class="text-center">No se encontraron registros</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

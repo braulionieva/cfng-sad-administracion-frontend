@@ -1,0 +1,33 @@
+:host ::ng-deep.card {
+  background: #fff !important;
+  padding: 0px 1.2rem 1.2rem;
+}
+
+:host ::ng-deep .p-paginator-bottom .p-paginator-current {
+  margin-right: auto;
+  padding-left: 1rem;
+}
+
+:host ::ng-deep .p-dropdown {
+  height: 48px;
+}
+
+:host ::ng-deep .cfe-boton-lg {
+  width: 220px !important;
+  height: 48px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+}
+
+.tituloPage-2 {
+  color: #0E2E4A;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px !important;
+  font-weight: 700;
+  margin: 25px 0 !important;
+}
+
+label {
+  font-weight: 700;
+  font-size: 14px;
+}

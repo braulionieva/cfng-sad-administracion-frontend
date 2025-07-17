@@ -1,0 +1,20 @@
+<div class="cfe-container">
+  <div class="tituloPage">Categorías de aplicaciones ({{ totalRegistros }})</div>
+
+  <app-filtros
+    (obtenerValoresFiltros)="aplicarFiltros($event)"
+    (clickBotonCreacion)="abrirModalAccionAplicaciones()"
+    [dropdownsData]="dropdownsData"
+  />
+
+  <div class="p-2 bg-white border-round">
+    <app-tabla
+      (editCategory)="abrirModalAccionAplicaciones($event)"
+      (editLogo)="openModalLogo($event)"
+      (lazyLoad)="onLazyLoad($event)"
+      [dataTable]="categorias"
+      [totalRegistros]="totalRegistros"
+      [first]="first"
+    />
+  </div>
+</div>

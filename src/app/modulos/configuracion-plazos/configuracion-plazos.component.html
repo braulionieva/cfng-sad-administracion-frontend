@@ -1,0 +1,19 @@
+<div class="cfe-container">
+  <div class="tituloPage">
+    Configuración de Plazos para recibir Casos por Derivación/Acumulación ({{
+      numberCases
+    }})
+  </div>
+  <app-filtros
+    [dropdownsData]="dataDropdowns"
+    (onSelectValue)="getListPlazos($event)"
+    (createPlazo)="actionPlazoConfiguracion()"
+  ></app-filtros>
+  <br />
+  <div class="p-2 bg-white border-round">
+    <app-tabla
+      [dataTable]="plazos"
+      (editPlazo)="actionPlazoConfiguracion($event)"
+    ></app-tabla>
+  </div>
+</div>

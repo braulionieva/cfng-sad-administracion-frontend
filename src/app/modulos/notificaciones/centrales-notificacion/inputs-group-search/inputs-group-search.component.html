@@ -1,0 +1,24 @@
+<form [formGroup]="formGroup" class="flex gap-4">
+  <div class="flex-auto">
+    <label class="font-semibold">Nombre</label>
+    <input
+      type="text"
+      pInputText
+      placeholder="Ingrese nombre"
+      formControlName="nombre"
+      maxlength="100"
+    />
+  </div>
+  <div class="flex-auto">
+    <label class="font-semibold">Distrito fiscal</label>
+    <p-dropdown
+      [options]="distritosFiscales"
+      placeholder="Seleccionar"
+      formControlName="codigo"
+      optionLabel="nombre"
+      optionValue="codigo"
+      appendTo="body"
+      [showClear]="false"
+    ></p-dropdown>
+  </div>
+</form>

@@ -1,0 +1,21 @@
+<div class="cfe-container">
+  <h3>Administrar Plazos</h3>
+  <app-filtros
+    [dropdownsData]="dropdownsData"
+    (obtenerValoresFiltros)="aplicarFiltros($event)"
+    (clickBotonCreacion)="abrirModalAccionPlazo()"
+    (clickBotonExportacion)="exportacionPlazos($event)"
+    [numeroPlazos]="totalRegistros"
+  ></app-filtros>
+  <br />
+  <div class="p-2 bg-white border-round">
+    <app-tabla
+      [dataTable]="plazos"
+      [totalRegistros]="totalRegistros"
+      (cargarDatosPaginados)="obtenerListaPlazos($event)"
+      (eventoEditar)="abrirModalAccionPlazo($event)"
+      (eventoEliminar)="confirmarAccion($event)"
+      [(first)]="first"
+    ></app-tabla>
+  </div>
+</div>

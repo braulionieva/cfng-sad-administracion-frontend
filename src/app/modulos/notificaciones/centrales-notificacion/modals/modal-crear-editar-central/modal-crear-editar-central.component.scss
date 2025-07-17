@@ -1,0 +1,24 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.modal {
+  padding: 1rem;
+  input {
+    width: 100%;
+  }
+  &__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    gap: 10px;
+  }
+}
+.label-error {
+  color: $red;
+}
+
+.cfe-close__document {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}

@@ -1,0 +1,101 @@
+<p-toast></p-toast>
+<p-dialog
+  [header]="'Validación de ' + tituloModal"
+  [(visible)]="visible"
+  [style]="{ width: '65vw' }"
+  [modal]="true"
+  (onHide)="manejarOcultar()"
+  [closable]="false"
+>
+  <div
+    class="cfe-close__document"
+    (click)="closeModal()"
+    style="position: absolute; top: 10px; right: 10px; cursor: pointer"
+  >
+    <img
+      (click)="cierraAddAppModal()"
+      [src]="icon('close_new')"
+      class="img-custom"
+      height="35px"
+      alt="cerrar"
+    />
+  </div>
+  <div style="margin: 0 2rem">
+    <section class="validacion__card">
+      <p class="text-center font-semibold">{{ correo }}</p>
+      <p class="mt-4 text-sm">
+        Su correo electrónico {{ this.tipoCorreo }} aún no ha sido validado. La
+        validación permite aseguranos que usted es propietario de la cuenta y
+        adicionalmente podrá iniciar sesión con este correo en lugar de nombre
+        de usuario
+      </p>
+
+      <div class="flex justify-content-center">
+        <p-button
+          *ngIf="!mostrarSeccionIngresarCodigo"
+          label="Validar correo"
+          styleClass="cfe-boton-lg cfe-boton mt-5"
+          (onClick)="onValidarCorreo()"
+        />
+      </div>
+    </section>
+
+    <section
+      *ngIf="mostrarSeccionIngresarCodigo"
+      class="mt-5 flex flex-column align-items-center"
+    >
+      <p class="m-0">
+        Ingrese el código de 4 dígitos que le ha llegado a su correo electrónico
+      </p>
+      <span
+        class="validacion__enviarCodigo font-semibold cursor-pointer"
+        (click)="generarCodigoValidacion()"
+        >Enviar otro código</span
+      >
+      <span
+        >Tiempo restante:
+        <ng-container *ngIf="cuentaRegresiva">{{
+          cuentaRegresiva
+        }}</ng-container></span
+      >
+
+      <form class="mt-3">
+        <div
+          class="flex flex-column align-items-center gap-1"
+          style="height: 85px"
+        >
+          <div style="width: 14rem" class="flex justify-content-center">
+            <p-inputNumber
+              [useGrouping]="false"
+              placeholder="Código de seguridad"
+              [formControl]="codigoValidacion"
+              [maxlength]="4"
+            />
+          </div>
+          <small
+            style="color: red"
+            *ngIf="codigoValidacion.touched && codigoValidacion.errors?.['required']"
+            >Ingrese el código recibido.</small
+          >
+          <small
+            style="color: red"
+            *ngIf="codigoValidacion.touched && codigoValidacion.errors?.['pattern']"
+            >Código no valido.</small
+          >
+          <small style="color: red" *ngIf="codigoError"
+            >El código ingresado no es válido, por favor intentelo
+            nuevamente.</small
+          >
+        </div>
+        <div class="flex justify-content-center">
+          <p-button
+            label="Confirmar Código"
+            styleClass="cfe-boton-lg cfe-boton mt-2"
+            [disabled]="!codigoValidacion.valid"
+            (onClick)="validarCodigo()"
+          />
+        </div>
+      </form>
+    </section>
+  </div>
+</p-dialog>

@@ -1,0 +1,466 @@
+<!-- filtro -->
+<link rel="stylesheet" href="administrar-dependencia.component.scss">
+<div class="cfe-container">
+  <div class="tituloPage ">Fiscalías ({{ buscarDependenciaResLstTotal }})</div>
+
+  <form [formGroup]="formFiltroBuscar" class="color-filter">
+    <div class="flex">
+      <div class="grow w-full">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="noVEntidad" class="font-bold">Nombre de Fiscalía</label>
+          <input type="text" pInputText formControlName="noVEntidad" placeholder="Ingrese nombre"
+                 class="input-form-search-placeholder" maxlength="100"/>
+        </div>
+      </div>
+      <div class="flex-none mt-5">
+        <p-button styleClass="p-button-lg btn-mpfn-toggle p-2 mx-2 py-2 px-4 font-semibold"
+                  [icon]="this.showMoreFiltro? 'pi pi-angle-double-up': 'pi pi-angle-double-down'"
+                  (onClick)="toggleMasFiltros()">
+        </p-button>
+      </div>
+      <div class="flex-none mt-5">
+        <p-button styleClass="btn-mpfn-sad-cancel w-full text-lg" label="Limpiar filtros"
+                  (onClick)="onClearFiltersAndSearch()">
+        </p-button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="showMoreFiltro">
+      <div class="grid">
+        <div class="col"></div>
+      </div>
+      <div class="grid">
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="coVEntidad" class="font-bold">Código de Fiscalía</label>
+            <input type="text" pInputText formControlName="coVEntidad" placeholder="Ingrese el código de fiscalía"
+                   maxlength="10" class="input-form-search-placeholder" (keypress)="validOnlyNumbersKeypress($event)"
+                   (input)="validOnlyNumbersInput($event)" (paste)="validOnlyNumbersPaste($event,'coVEntidad')"/>
+          </div>
+        </div>
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="idNDistritoFiscal" class="font-bold">Distrito Fiscal</label>
+            <p-dropdown [options]="distritoFiscalLstFilter" formControlName="idNDistritoFiscal"
+                        placeholder="Seleccione el Distrito Fiscal" [required] optionLabel="noVDistritoFiscal"
+                        optionValue="idNDistritoFiscal" (onChange)="onChangeDistritoFiscalFormSearch($event.value)"
+                        class="dropdown-form-search-placeholder" emptyMessage="No se encontraron registros"
+                        appendTo="body"></p-dropdown>
+          </div>
+
+        </div>
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="coVSede" class="font-bold">Sede</label>
+            <p-dropdown [options]="sedeLstFilter" formControlName="coVSede" placeholder="Seleccionar" [required]
+                        optionLabel="noVSede" optionValue="coVSede" appendTo="body"
+                        emptyMessage="No se encontraron registros"></p-dropdown>
+          </div>
+        </div>
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="idNJerarquia" class="font-bold">Jerarquía</label>
+            <p-dropdown [options]="jerarquiaLstFilter" formControlName="idNJerarquia"
+                        placeholder="Seleccione la Jerarquía" [required] optionLabel="noVJerarquia"
+                        optionValue="idNJerarquia"
+                        class="dropdown-form-search-placeholder" appendTo="body"></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="idNTipoEspecialidad" class="font-bold">Tipo de especialidad</label>
+            <p-dropdown [options]="tipoEspecialidadLstFilter" formControlName="idNTipoEspecialidad"
+                        placeholder="Seleccionar" [required] optionLabel="noVTipoEspecialidad"
+                        optionValue="idNTipoEspecialidad"
+                        (onChange)="onChangeTipoEspecialidadFormBuscar($event.value)" appendTo="body"
+                        emptyMessage="No se encontraron registros"></p-dropdown>
+          </div>
+        </div>
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="idVEspecialidad" class="font-bold">Especialidad</label>
+            <p-dropdown [options]="especialidadLstFilter" formControlName="idVEspecialidad" placeholder="Seleccionar"
+                        [required] optionLabel="noVEspecialidad" optionValue="idVEspecialidad" appendTo="body"
+                        emptyMessage="No se encontraron registros"></p-dropdown>
+          </div>
+        </div>
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="deVAcronimo" class="font-bold">Acrónimo</label>
+            <input type="text" pInputText formControlName="deVAcronimo" placeholder="Ingrese el acrónimo" maxlength="20"
+                   class="input-form-search-placeholder"/>
+          </div>
+
+        </div>
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="feDCreacion" class="font-bold">Fecha de creación</label>
+            <p-calendar [showIcon]="true" placeholder="Ingrese la fecha de creación" formControlName="feDCreacion"
+                        icon="cfe-calendar-icon" class="calendar-form-search-placeholder cfe-calendar h-39"
+                        dateFormat="dd/mm/yy" appendTo="body"></p-calendar>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </form>
+
+  <div class="flex justify-content-end w-full my-4">
+
+    <p-button styleClass="btn-mpfn-sad-cancel" label="Exportar Excel" (onClick)="exportarExcelForm()"
+              [disabled]="exportarExcelDisabled">
+      <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px"/>
+    </p-button>
+
+    <p-button styleClass="btn-mpfn-sad-prime ml-3" label="Agregar" (onClick)="agregarDependenciaBtn()">
+    </p-button>
+  </div>
+
+</div>
+
+<!-- Tabla -->
+<div class="grid bg-white border-round">
+  <div class="col-12">
+    <p-table [value]="buscarDependenciaResLst" [lazy]="true" (onLazyLoad)="buscarDependenciaPaginacion($event)"
+             [paginator]="true" [rows]="this.configPage.perPage" [first]="first"
+             [totalRecords]="this.buscarDependenciaResLstTotal" [tableStyle]="{ 'min-width': '50rem' }"
+             [showCurrentPageReport]="true"
+             currentPageReportTemplate="{last} de {{ this.buscarDependenciaResLstTotal }} registros">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">N°</th>
+          <th scope="col">Código</th>
+          <th scope="col">Acrónimo</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Distrito Fiscal</th>
+          <th scope="col">Jerarquía</th>
+          <th scope="col">Tipo / Especialidad</th>
+          <th scope="col">Creación</th>
+          <th scope="col">Modificación</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>{{ item.secuencia }}</td>
+          <td>{{ item.coVEntidad }}</td>
+          <td>{{ item.deVAcronimo }}</td>
+          <td>{{ item.noVEntidad }}</td>
+          <td>{{ item.noVDistritoFiscal }}</td>
+          <td>{{ item.noVJerarquia }}</td>
+          <td>{{ item.noVEspecialidad }}</td>
+          <td>{{ item.usrCrea }} <br>{{ item.feDCreacionStr }}</td>
+          <td>{{ item.usrModifica }} <br>{{ item.feDModificacionStr }}</td>
+          <td>
+            <div>
+
+              <p-menu #menu [model]="actionItems" [popup]="true" appendTo="body" [pSelectableRow]="item"></p-menu>
+              <p-button icon="pi pi-ellipsis-v" styleClass="p-button-rounded p-button-text"
+                        (click)="itemSelected(item); menu.toggle($event)" (keydown.enter)="$event.preventDefault()"
+                        (keydown.space)="$event.preventDefault()" tabindex="0"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Bloque para mostrar el mensaje cuando no haya datos -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8" class="text-center">No se encontraron registros</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<!-- modal -->
+<p-dialog header="" [(visible)]="isVisibleModalNewForm" [modal]="true" [style]="{width: '60%'}"
+          [styleClass]="'p-dialog-custom'" [contentStyleClass]="'p-dialog-content-custom'" [maximizable]="false"
+          [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <ng-container *ngIf="isEditForm==true; then editForm; else newForm"></ng-container>
+    <ng-template #editForm>
+      <span class="p-dialog-header p-dialog-title p-component">Editar Fiscalía</span>
+    </ng-template>
+    <ng-template #newForm>
+      <span class="p-dialog-header p-dialog-title p-component">Nueva Fiscalía</span>
+    </ng-template>
+  </ng-template>
+  <div class="cfe-close__document" (click)="onCloseModal()" (keydown.enter)="$event.preventDefault()"
+       (keydown.space)="$event.preventDefault()">
+    <img [src]="icon('close_new')" class="img-custom" height="35px" alt=""/>
+  </div>
+
+  <form [formGroup]="formGroupDependencia" class="mx-3 mt-0 pt-0">
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="coVEntidad" class="font-bold">Código</label>
+          <input id="coVEntidad" type="text" pInputText formControlName="coVEntidad"
+                 placeholder="Ingrese el código de la fiscalía" maxlength="10"/>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="coVEntidad.touched&&coVEntidad.errors?.['required']">
+                {{ getErrorMessage('coVEntidad', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="coVEntidad.invalid&&coVEntidad.errors?.['maxlength']">
+                {{ getErrorMessage('coVEntidad', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="coVEntidad.invalid&&coVEntidad.errors?.['pattern']">
+                {{ getErrorMessage('coVEntidad', 'pattern') }}
+              </small>
+            </div>
+            <div style="text-align: right;">
+              <small>{{ getLength('coVEntidad') }}/10</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="noVEntidad" class="font-bold">Nombre</label>
+          <input id="noVEntidad" type="text" pInputText formControlName="noVEntidad"
+                 placeholder="Ingrese el nombre de la fiscalía" maxlength="100"/>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="noVEntidad.touched&&noVEntidad.errors?.['required']">
+                {{ getErrorMessage('noVEntidad', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="noVEntidad.invalid&&noVEntidad.errors?.['maxlength']">
+                {{ getErrorMessage('noVEntidad', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="noVEntidad.invalid&&noVEntidad.errors?.['pattern']">
+                {{ getErrorMessage('noVEntidad', 'pattern') }}
+              </small>
+            </div>
+            <div style="text-align: right;">
+              <small>{{ getLength('noVEntidad') }}/100</small>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-wrap gap-3">
+          <label htmlFor="flCCorporativa" class="font-bold">¿Es fiscalía corporativa?</label>
+          <div *ngFor="let flCCorporativa of flCCorporativaLst" class="field-checkbox">
+            <div class="flex align-items-center">
+              <p-radioButton class="custom-radio" [inputId]="flCCorporativa.key" [value]="flCCorporativa.key"
+                             formControlName="flCCorporativa"/>
+              <label [for]="flCCorporativa.key" class="ml-2">
+                {{ flCCorporativa.name }}
+              </label>
+            </div>
+          </div>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="flCCorporativa.touched&&flCCorporativa.errors?.['required']">
+                {{ getErrorMessage('flCCorporativa', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="flCCorporativa.invalid&&flCCorporativa.errors?.['maxlength']">
+                {{ getErrorMessage('flCCorporativa', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="flCCorporativa.invalid&&flCCorporativa.errors?.['pattern']">
+                {{ getErrorMessage('flCCorporativa', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="idNDistritoFiscal" class="font-bold">Distrito Fiscal</label>
+          <p-dropdown [options]="distritoFiscalLst" formControlName="idNDistritoFiscal" placeholder="Seleccionar"
+                      [required] optionLabel="noVDistritoFiscal" optionValue="idNDistritoFiscal"
+                      [ngClass]="{'p-disabled': formGroupDependencia.get('idNDistritoFiscal').disabled}"
+                      [class.ng-invalid]="formGroupDependencia.get('idNDistritoFiscal').invalid"
+                      (onChange)="onChangeDistritoFiscal($event.value)" emptyMessage="No se encontraron registros"
+                      appendTo="body"></p-dropdown>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="idNDistritoFiscal.touched&&idNDistritoFiscal.errors?.['required']">
+                {{ getErrorMessage('idNDistritoFiscal', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="idNDistritoFiscal.invalid&&idNDistritoFiscal.errors?.['maxlength']">
+                {{ getErrorMessage('idNDistritoFiscal', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="idNDistritoFiscal.invalid&&idNDistritoFiscal.errors?.['pattern']">
+                {{ getErrorMessage('idNDistritoFiscal', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="coVSede" class="font-bold">Sede</label>
+          <p-dropdown [options]="sedeLst" formControlName="coVSede" placeholder="Seleccionar" [required]
+                      optionLabel="noVSede" optionValue="coVSede"
+                      [ngClass]="{'p-disabled': formGroupDependencia.get('coVSede').disabled}" appendTo="body"
+                      emptyMessage="No se encontraron registros"></p-dropdown>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="coVSede.touched&&coVSede.errors?.['required']">
+                {{ getErrorMessage('coVSede', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="coVSede.invalid&&coVSede.errors?.['maxlength']">
+                {{ getErrorMessage('coVSede', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="coVSede.invalid&&coVSede.errors?.['pattern']">
+                {{ getErrorMessage('coVSede', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="idNJerarquia" class="font-bold">Jerarquía</label>
+          <p-dropdown [options]="jerarquiaLst" formControlName="idNJerarquia" placeholder="Seleccionar" [required]
+                      optionLabel="noVJerarquia" optionValue="idNJerarquia"
+                      [ngClass]="{'p-disabled': formGroupDependencia.get('idNJerarquia').disabled}"
+                      (onChange)="onChangeJerarquia($event.value)" appendTo="body"
+                      emptyMessage="No se encontraron registros"></p-dropdown>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="idNJerarquia.touched&&idNJerarquia.errors?.['required']">
+                {{ getErrorMessage('idNJerarquia', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="idNJerarquia.invalid&&idNJerarquia.errors?.['maxlength']">
+                {{ getErrorMessage('idNJerarquia', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="idNJerarquia.invalid&&idNJerarquia.errors?.['pattern']">
+                {{ getErrorMessage('idNJerarquia', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="idNTipoEspecialidad" class="font-bold">Tipo Especialidad</label>
+          <p-dropdown [options]="tipoEspecialidadLst" formControlName="idNTipoEspecialidad" placeholder="Seleccionar"
+                      [required] optionLabel="noVTipoEspecialidad" optionValue="idNTipoEspecialidad"
+                      [ngClass]="{'p-disabled': formGroupDependencia.get('idNTipoEspecialidad').disabled}"
+                      (onChange)="onChangeTipoEspecialidadForm($event.value)" appendTo="body"
+                      emptyMessage="No se encontraron registros"></p-dropdown>
+          <div>
+            <div style="float: left;">
+              <small class="error-message"
+                     *ngIf="idNTipoEspecialidad.touched&&idNTipoEspecialidad.errors?.['required']">
+                {{ getErrorMessage('idNTipoEspecialidad', 'required') }}
+              </small>
+              <small class="error-message"
+                     *ngIf="idNTipoEspecialidad.invalid&&idNTipoEspecialidad.errors?.['maxlength']">
+                {{ getErrorMessage('idNTipoEspecialidad', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="idNTipoEspecialidad.invalid&&idNTipoEspecialidad.errors?.['pattern']">
+                {{ getErrorMessage('idNTipoEspecialidad', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="idVEspecialidad" class="font-bold">Especialidad</label>
+          <p-dropdown [options]="especialidadLst" formControlName="idVEspecialidad" placeholder="Seleccionar" [required]
+                      optionLabel="noVEspecialidad" optionValue="idVEspecialidad"
+                      [ngClass]="{'p-disabled': formGroupDependencia.get('idVEspecialidad').disabled}" appendTo="body"
+                      emptyMessage="No se encontraron registros"></p-dropdown>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="idVEspecialidad.touched&&idVEspecialidad.errors?.['required']">
+                {{ getErrorMessage('idVEspecialidad', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="idVEspecialidad.invalid&&idVEspecialidad.errors?.['maxlength']">
+                {{ getErrorMessage('idVEspecialidad', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="idVEspecialidad.invalid&&idVEspecialidad.errors?.['pattern']">
+                {{ getErrorMessage('idVEspecialidad', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!----<div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="coVEntidadPadre" class="font-bold">Fiscalía padre</label>
+          <p-dropdown
+            [options]="dependenciaPadreLst"
+            formControlName="coVEntidadPadre"
+            placeholder="Seleccionar"
+            optionLabel="noVEntidad"
+            optionValue="coVEntidad"
+            appendTo="body"
+            emptyMessage="No se encontraron registros"
+            [showClear]="true"
+            [ngClass]="{'p-disabled': formGroupDependencia.get('coVEntidadPadre').disabled}"
+          ></p-dropdown>
+
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="coVEntidadPadre.touched&&coVEntidadPadre.errors?.['required']">
+                {{ getErrorMessage('coVEntidadPadre', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="coVEntidadPadre.invalid&&coVEntidadPadre.errors?.['maxlength']">
+                {{ getErrorMessage('coVEntidadPadre', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="coVEntidadPadre.invalid&&coVEntidadPadre.errors?.['pattern']">
+                {{ getErrorMessage('coVEntidadPadre', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>---->
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="deVAcronimo" class="font-bold">Acrónimo</label>
+          <input id="deVAcronimo" type="text" pInputText formControlName="deVAcronimo" placeholder="Ingrese el acrónimo"
+                 maxlength="20"/>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="deVAcronimo.touched&&deVAcronimo.errors?.['required']">
+                {{ getErrorMessage('deVAcronimo', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="deVAcronimo.invalid&&deVAcronimo.errors?.['maxlength']">
+                {{ getErrorMessage('deVAcronimo', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="deVAcronimo.invalid&&deVAcronimo.errors?.['pattern']">
+                {{ getErrorMessage('deVAcronimo', 'pattern') }}
+              </small>
+            </div>
+            <div style="text-align: right;">
+              <small>{{ getLength('deVAcronimo') }}/20</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-content-center my-4">
+      <p-button (onClick)="cancelarAddDependenciaForm()" styleClass="btn-mpfn-sad-cancel">Cancelar
+      </p-button>
+      <p-button *ngIf="isEditForm==false" (onClick)="agregarDependenciaForm()" styleClass="btn-mpfn-sad-prime ml-3"
+                [disabled]="formGroupDependencia.invalid">Guardar
+      </p-button>
+      <p-button *ngIf="isEditForm==true" (onClick)="editDependenciaForm()" styleClass="btn-mpfn-sad-prime ml-3"
+                [disabled]="formGroupDependencia.invalid">Guardar
+      </p-button>
+    </div>
+  </form>
+
+</p-dialog>

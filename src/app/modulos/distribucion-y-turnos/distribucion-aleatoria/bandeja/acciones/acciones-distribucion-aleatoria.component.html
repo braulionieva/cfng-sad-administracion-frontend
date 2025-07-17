@@ -1,0 +1,32 @@
+<div class="grid">
+  <div class="col-12">
+    <div>
+      <span><strong> Configuraciones({{ totalElementos }})</strong></span>
+      <br />
+    </div>
+  </div>
+  <div class="grid w-full mr-0" >
+      <div class=" align-content-center" style="width:50%;">
+        <div class="grid ml-3 mt-3 align-content-center" *ngIf="inNotaPeriodo">
+          <div class="vence mr-2 "></div>
+          <div class="label-min"><span>Periodo próximo a vencer</span></div>
+        </div>
+      </div>
+ 
+      <div class="flex justify-content-end mr-0" style="width:50%; align-items: end;">
+        <p-button (onClick)="exportarBandeja()" 
+          class="mr-3" label="" 
+          styleClass="btn-mpfn-sad-cancel">
+          <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px"/>
+          Exportar Excel
+        </p-button>
+   
+        <p-button
+          styleClass="btn-mpfn-sad-prime"
+          label="Agregar"
+          (onClick)="onOpenAgregarGrupoModal()"
+        >
+        </p-button>
+      </div>
+  </div>
+</div>

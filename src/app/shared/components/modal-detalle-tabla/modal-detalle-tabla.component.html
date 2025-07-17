@@ -1,0 +1,33 @@
+<div class="detalle-menu-modal-container">
+  <h3>{{titulo}}</h3>
+  <span
+    class="close"
+    (click)="close()"
+  >X</span>
+
+  <div class="grid mt-3">
+    <div class="col-12">
+      <p-table 
+        [columns]="cols" 
+        [value]="rows" 
+        [paginator]="showPagination"
+        [rows]="rowsPerPage"
+        [tableStyle]="{ 'min-width': '50rem' }">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columns">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+              <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,408 @@
+<div class="agregar-editar-modal-container">
+  <h3>{{ getTitulo() }}</h3>
+  <div class="close" (click)="close()" onkeypress="">
+    <img [src]="icon('close_new')" alt="Close Icon" />
+  </div>
+  <div class="grid mt-3">
+    <div class="col-12">
+      <form [formGroup]="agregarGrupoForm" class="modal__form">
+        <!--INICIO CAMPOS INPUTS FORMULARIO-->
+        <div class="grid">
+          <div class="col-12">
+            <div class="font-semibold mb-2">Nombre del grupo aleatorio</div>
+            <input
+              type="text"
+              pInputText
+              class="p-inputtext-lg w-full mt-2"
+              formControlName="nombreGrupoAleatorio"
+            />
+          </div>
+          <div class="col-12">
+            <div class="font-semibold">Tipo de distribución</div>
+            <p-dropdown
+              #dropdownTipoDistribucion
+              formControlName="idTipoDistribucion"
+              [options]="tipoDistribucion"
+              optionLabel="nombre"
+              optionValue="id"
+              emptyMessage="Sin resultados"
+              styleClass="p-inputtext-lg mt-2"
+              placeholder="Seleccione el tipo de distribución"
+              (onShow)="onShowTipoDistribucion()"
+              (onChange)="onChangeTipoDistribucion($event)"
+              appendTo="body"
+            >
+            </p-dropdown>
+          </div>
+          <div class="col-12">
+            <hr class="m-0 p-0 mt-2" />
+          </div>
+          <div class="col-12">
+            <p class="font-semibold mb-3">
+              {{
+                selectedTipoDistribucion
+                  ? getNombreDistribucion(selectedTipoDistribucion)
+                  : ""
+              }}
+            </p>
+            <div class="flex">
+              <div class="align-content-center font-semibold">
+                Diferencia máxima:
+              </div>
+              <div>
+                <input
+                  pInputText
+                  class="p-inputtext-lg cfe-input-lg align-content-center"
+                  style="width: 45px"
+                  placeholder="0"
+                  formControlName="diferenciaMaxima"
+                  (keypress)="validOnlyNumbersDM($event) && lenDiferencia()"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="w-full ml-4">
+            <div class="grid w-full">
+              <div class="w-60px">
+                <div class="grid mr-1 mt-3">
+                  <div class="font-semibold">Período:&nbsp;</div>
+                  <div class="tooltip">
+                    <span
+                      class="tooltiptext"
+                      [style]="{ 'background-color': '#BFE0FD' }"
+                    >
+                      <div class="flex">
+                        <img
+                          [src]="icon('info-i')"
+                          color="#2B8DE3DD"
+                          width="25px"
+                          alt=""
+                        />
+                        <div class="ml-2">
+                          <b>Nota: </b> {{ mensajePeriodo }}
+                        </div>
+                      </div>
+                    </span>
+                    <img
+                      src="../../../assets/images/infoblue.png"
+                      width="25px"
+                      height="25px"
+                      alt="i"
+                    />
+                  </div>
+                </div>
+                <div class="grid mr-1 mt-3">
+                  <div class="w-50px mt-1">
+                    <div class="font-min-bolder">Fecha inicio:</div>
+                    <div class="mr-2 mt-1">
+                      <p-calendar
+                        [showTime]="true"
+                        class="cfe-calendar mt-1"
+                        dateFormat="dd/mm/yy"
+                        width="55px"
+                        [showIcon]="true"
+                        icon="cfe-calendar-icon"
+                        placeholder="DD/MM/AAAA HH:MM"
+                        formControlName="fechaInicio"
+                        (change)="verificaLapso()"
+                        (onSelect)="verificaLapso()"
+                      ></p-calendar>
+                    </div>
+                  </div>
+                  <div class="w-50px mt-1">
+                    <div class="font-min-bolder">Fecha fin:</div>
+                    <div class="mt-1">
+                      <p-calendar
+                        [showTime]="true"
+                        width="55px"
+                        class="cfe-calendar"
+                        dateFormat="dd/mm/yy"
+                        [showIcon]="true"
+                        icon="cfe-calendar-icon"
+                        placeholder="DD/MM/AAAA HH:MM"
+                        (onSelect)="verificaLapso()"
+                        (change)="verificaLapso()"
+                        formControlName="fechaFin"
+                      ></p-calendar>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="width-250px">
+                <div class="tool-articulo">
+                  <div class="flex">
+                    <div class="font-semibold">Artículo:&nbsp;</div>
+                    <div class="tooltip">
+                      <span
+                        class="tooltiptext"
+                        [style]="{ 'background-color': '#BFE0FD' }"
+                      >
+                        <div class="flex">
+                          <img
+                            [src]="icon('info-i')"
+                            color="#2B8DE3DD"
+                            width="25px"
+                            alt=""
+                          />
+                          <div class="ml-2">
+                            <b>Nota: </b>{{ mensajeArticulo }}
+                          </div>
+                        </div>
+                      </span>
+                      <img
+                        src="../../../assets/images/infoblue.png"
+                        width="25px"
+                        height="25px"
+                        alt="i"
+                      />
+                    </div>
+                  </div>
+
+                  <p-multiSelect
+                    [options]="listaArticulos"
+                    formControlName="selectedArticulos"
+                    optionLabel="nombre"
+                    placeholder="Seleccione artículo(s)"
+                    styleClass="mt-3"
+                  >
+                  </p-multiSelect>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 mt-2">
+            <label for="extras" class="font-semibold">Distrito Fiscal</label>
+            <p-dropdown
+              formControlName="idDistritoFiscal"
+              [options]="distritoFiscal"
+              emptyMessage="Sin resultados"
+              styleClass="p-inputtext-lg mt-2"
+              placeholder="Seleccione el Distrito Fiscal"
+              (onChange)="onChangeDistritoFiscal($event.value)"
+              [required] appendTo="body"
+              optionLabel="nombre"
+              optionValue="id"
+            >
+            </p-dropdown>
+          </div>
+          <div class="col-6 mt-2">
+            <label for="coVSede" class="font-semibold">Sede</label>
+            <p-dropdown
+              id="coVSede"
+              formControlName="coVSede"
+              [options]="sedeLst"
+              emptyMessage="Sin resultados"
+              styleClass="p-inputtext-lg mt-2"
+              placeholder="Seleccione la Sede"
+              [required] appendTo="body"
+              optionLabel="noVSede"
+              optionValue="coVSede"
+            >
+            </p-dropdown>
+          </div>
+          <div class="col-6 mt-2">
+            <label for="extras" class="font-semibold">Tipo Especialidad</label>
+            <p-dropdown
+              formControlName="idTipoEspecialidad"
+              [options]="tipoEspecialidad"
+              emptyMessage="Sin resultados"
+              styleClass="p-inputtext-lg mt-2"
+              placeholder="Seleccione el Tipo especialidad"
+              (onChange)="onChangeTipoEspecialidad($event.value)"
+              [required] appendTo="body"
+              optionLabel="nombre"
+              optionValue="id"
+            >
+            </p-dropdown>
+          </div>
+          <div class="col-6 mt-2">
+            <label for="extras" class="font-semibold">Especialidad</label>
+            <p-dropdown
+              formControlName="idEspecialidad"
+              [options]="especialidad"
+              emptyMessage="Sin resultados"
+              styleClass="p-inputtext-lg mt-2"
+              placeholder="Seleccione la Especialidad"
+              (onChange)="onChangeEspecialidad($event)"
+              [required] appendTo="body"
+              optionLabel="nombre"
+              optionValue="id"
+            >
+            </p-dropdown>
+          </div>
+          <div *ngIf="showCboDistrito" class="col-6">
+            <label for="extras" class="font-semibold">Distrito</label>
+            <p-dropdown
+              formControlName="idDistrito"
+              [options]="distrito"
+              emptyMessage="Sin resultados"
+              styleClass="p-inputtext-lg"
+              placeholder="Seleccione el Distrito"
+              (onChange)="onChangeDistrito($event)"
+              [required] appendTo="body"
+              optionLabel="nombre"
+              optionValue="id"
+            >
+            </p-dropdown>
+          </div>
+        </div>
+        <!--FIN CAMPOS INPUTS FORMULARIO-->
+        <hr class="mt-2 mb-2 p-0" />
+        <div>
+          <div class="flex justify-content-center mt-2">
+            <p-button
+              styleClass="btn-mpfn-sad-prime"
+              label="Agregar fiscalía"
+              [disabled]="!habilitaAgregar"
+              (onClick)="onAgregarEditarFiscalia(false)"
+            >
+            </p-button>
+          </div>
+        </div>
+
+        <br />
+        <app-nota-info-distribucion *ngIf="flagGuardado" [nota]="'GUARDADO'" />
+        <app-nota-info-distribucion *ngIf="flagFalta" [nota]="'FALTA'" />
+
+        <p class="font-semibold">Fiscalías:</p>
+        <div class="grid">
+          <div class="col-12">
+            <div class="p-2 bg-white border-round">
+              <p-table [value]="listaFiscaliasAgregar" editMode="row">
+                <ng-template pTemplate="header">
+                  <tr *ngIf="selectedTipoDistribucion == 1">
+                    <!--distibucion despacho-->
+                    <td style="text-align: center; width: 50px">Número</td>
+                    <td style="text-align: center; width: 150px">
+                      Distrito Fiscal
+                    </td>
+                    <td style="text-align: center; width: 150px">
+                      Especialidad
+                    </td>
+                    <td style="text-align: center; width: 150px">Fiscalía</td>
+                    <td style="text-align: center; width: 150px">
+                      Despachos<br />activos
+                    </td>
+                    <td style="text-align: center; width: 150px">
+                      Última modificación
+                    </td>
+                    <td style="text-align: center; width: 150px">Acciones</td>
+                  </tr>
+                  <tr *ngIf="selectedTipoDistribucion == 2">
+                    <!--distibucion fiscal-->
+                    <td style="text-align: center; width: 50px">Número</td>
+                    <td style="text-align: center; width: 150px">
+                      Distrito Fiscal
+                    </td>
+                    <td style="text-align: center; width: 150px">
+                      Especialidad
+                    </td>
+                    <td style="text-align: center; width: 200px">Fiscalía</td>
+                    <td style="text-align: center; width: 150px">Despachos</td>
+                    <td style="text-align: center; width: 200px">
+                      Fiscales<br />activos
+                    </td>
+                    <td style="text-align: center; width: 150px">
+                      Última modificación
+                    </td>
+                    <td style="text-align: center; width: 100px">Acciones</td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-fiscalia let-i="rowIndex">
+                  <tr *ngIf="selectedTipoDistribucion == 1" class="">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ fiscalia.nombreDistritoFiscal | titlecase }}</td>
+                    <td>{{ fiscalia.nombreEspecialidad | titlecase }}</td>
+                    <td>{{ fiscalia.nombreFiscalia | titlecase }}</td>
+                    <td style="text-align: center">
+                      {{ getDespachosActivos(fiscalia) }}/{{
+                        fiscalia.despachos.length
+                      }}
+                    </td>
+                    <td style="text-align: center"></td>
+                    <td style="width: 5%; text-align: center">
+                      <div>
+                        <p-menu
+                          #menu
+                          [model]="actionItemsMenu"
+                          [popup]="true"
+                          appendTo="body"
+                          [pSelectableRow]="fiscalia"
+                        ></p-menu>
+                        <p-button
+                          icon="pi pi-ellipsis-v"
+                          styleClass="p-button-rounded p-button-text"
+                          (onClick)="
+                            setRowSelected(fiscalia, i); menu.toggle($event)
+                          "
+                        ></p-button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr *ngIf="selectedTipoDistribucion == 2">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ fiscalia.nombreDistritoFiscal | titlecase }}</td>
+                    <td>{{ fiscalia.nombreEspecialidad | titlecase }}</td>
+                    <td>{{ fiscalia.nombreFiscalia | titlecase }}</td>
+                    <td>
+                      <div *ngFor="let despacho of fiscalia.despachos">
+                        {{ despacho.nombreDespacho | titlecase }}
+                      </div>
+                    </td>
+                    <td style="text-align: center">
+                      <div *ngFor="let despacho of fiscalia.despachos">
+                        {{ getFiscalesActivos(despacho) }}/{{
+                          despacho.fiscales.length
+                        }}
+                        <!-- {{ despacho.canFiscalesActivos }}/{{ despacho.fiscales.length }} -->
+                      </div>
+                    </td>
+                    <td></td>
+                    <td style="width: 5%; text-align: center">
+                      <div>
+                        <p-menu
+                          #menu
+                          [model]="actionItemsMenu"
+                          [popup]="true"
+                          appendTo="body"
+                          [pSelectableRow]="fiscalia"
+                        ></p-menu>
+                        <p-button
+                          icon="pi pi-ellipsis-v"
+                          styleClass="p-button-rounded p-button-text"
+                          (onClick)="
+                            setRowSelected(fiscalia, i); menu.toggle($event)
+                          "
+                        ></p-button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+            <div class="col">
+              <hr class="m-0 p-0" />
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="showUpLoad" class="m-2">
+          <app-uploadSustento
+            [idGrupoAleatorio]="grupoAleatorio?.id"
+            (onFile)="onFile($event)"
+          ></app-uploadSustento>
+        </div>
+
+        <div class="flex justify-content-center mt-4">
+          <p-button
+            styleClass="btn-mpfn-sad-prime px-6 py-2"
+            [disabled]="!validaAgregarGrupoForm"
+            label="Guardar Grupo Aleatorio"
+            (onClick)="confirmarGuardarGrupoAleatorio()"
+          ></p-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

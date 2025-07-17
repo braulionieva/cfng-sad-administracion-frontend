@@ -1,0 +1,151 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+.padre {
+  display: flex;
+  align-items: center;
+}
+
+.titleAF{
+    color: #0E2E4A;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.agregar-editar-modal-container {
+    background-color: $white;
+    border-radius: 15px;
+    padding: 30px 25px;
+    min-width: 800px;
+
+    h3 {
+        color: #0E2E4A;
+        columns: black;
+        font-family: $font-semi-bold;
+        font-weight: 700;
+        font-size: 1.6em;
+        line-height: 20px;
+        letter-spacing: 1%;
+    }
+
+    hr {
+        border: 1px solid;
+        color: rgba(209, 210, 210, 1);
+    }
+}
+
+.close {
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    img{
+      width: 30px;
+  }
+}
+.font-min-bolder {
+    color: #000;
+    font-weight: 600;
+    font-size: 14px;
+
+}
+.font-label {
+    columns: #1B1C1E;
+    font-weight: 700;
+    font-size: 1.05em;
+    line-height: 20px;
+    letter-spacing: 2%;
+}
+.tool-articulo{
+    padding: 4px;
+    margin-top: 38px;
+    margin-left: 30px;
+    padding-left: 10px;
+}
+
+:host::ng-deep .p-steps .p-steps-item .p-menuitem-link:not(.p-disabled):focus {
+    box-shadow: none !important;
+}
+
+:host::ng-deep .cfe-calendar .p-calendar-w-btn .p-inputtext {
+    border-right: none;
+    width: 150px;
+    height: 40px;
+    font-size: 12px;
+    padding: 4px;
+}
+
+:host::ng-deep .cfe-calendar .p-button-icon-only {
+    background: var(--mpfn-white);
+    border-top: 1px solid var(--mpfn-gray10);
+    border-bottom: 1px solid var(--mpfn-gray10);
+    border-right: 1px solid var(--mpfn-gray10);
+    border-left: none;
+    width: 30px !important;
+}
+:host::ng-deep .cfe-calendar-icon {
+    width: 20px!important;
+    height: 20px!important;
+    background-image: url(../../../../../assets/images/calendartime.png) !important;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+:host::ng-deep .p-multiselect .p-multiselect-label {
+    padding: 0.5rem 0.75rem;
+    transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+    font-size: 12px;
+}
+:host::ng-deep .p-multiselect-panel .p-multiselect-items {
+    padding: 0.5rem 0;
+    font-size: 10px;
+}
+
+.handCursor{
+    cursor: pointer;
+}
+/******calendar reduce ********/
+:host::ng-deep .p-datepicker table td {
+    padding: 0rem;
+    height: 30px;
+    width: 30px;
+}
+/*******multiselect********/
+:host::ng-deep .p-multiselect {
+    display: inline-flex;
+    cursor: pointer;
+    position: relative;
+    -webkit-user-select: none;
+    user-select: none;
+    width: 180px !important;
+    height: 40px !important;
+}
+/*********/
+:host::ng-deep .p-inputtext{
+    background: #fff !important;
+}
+/*****************************/
+/*********** Tooltip container *********/
+.tooltip {
+    position: relative;
+    display: inline-block;
+    //border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 440px;
+    color: #000;
+    text-align: left;
+    padding: 10px 10px;
+    border-radius: 6px;
+    opacity: 1.0;
+    position: absolute;
+    z-index: 1;
+    top: -60px;
+    left: -10%;
+    margin-top: 15px;
+  }
+
+  .tooltip:hover .tooltiptext{
+    visibility: visible;
+  }

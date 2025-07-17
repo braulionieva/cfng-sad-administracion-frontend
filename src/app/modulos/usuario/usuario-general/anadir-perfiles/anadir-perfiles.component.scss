@@ -1,0 +1,31 @@
+:host ::ng-deep p-treetabletoggler:first-child svg {
+  display: none !important;
+}
+:host ::ng-deep p-treetabletoggler:last-child {
+  float: right !important;
+}
+
+.cfe-close__document {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}

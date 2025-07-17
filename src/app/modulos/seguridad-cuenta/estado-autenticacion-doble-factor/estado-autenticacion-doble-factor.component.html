@@ -1,0 +1,186 @@
+<p-toast></p-toast>
+<p-dialog
+  [header]="accionTitulo + ' autenticación con doble factor (2FA)'"
+  [(visible)]="visible"
+  [style]="{ width: '50vw' }"
+  [modal]="true"
+  (onHide)="ocultarDialogo()"
+  [closable]="false"
+>
+  <div
+    class="cfe-close__document"
+    (click)="closeModal()"
+    style="position: absolute; top: 10px; right: 10px; cursor: pointer"
+  >
+    <img
+      (click)="cierraAddAppModal()"
+      [src]="icon('close_new')"
+      class="img-custom"
+      height="35px"
+      alt="cerrar"
+    />
+  </div>
+  <ng-container *ngIf="!verificarSeccionActiva()">
+    <div>
+      <p>
+        La autenticación de doble factor, o conocido como autenticación en dos
+        pasos, evita que otras personas puedan acceder a tu cuenta, incluso
+        hayan averiguado la contraseña utilizada. De esta forma incluso si tu
+        dispositivo se pierde, siempre se tiene esta autenticación al iniciar
+        sesión.
+      </p>
+      <!-- Google authenticator -->
+      <div class="cuenta__card">
+        <div class="cuenta__card--header"><h6>Google authenticator</h6></div>
+        <div class="cuenta__card--content">
+          <div class="grid">
+            <div class="col-1">
+              <img
+                src="assets/images/gear.png"
+                alt="Gear"
+                style="width: 2.5rem"
+              />
+            </div>
+            <div class="col-11">
+              <p>
+                La autenticación de Google genera códigos de verificación en su
+                teléfono. Esta autenticación, genera una segunda verificación al
+                iniciar sesión; brindando mayor seguridad.
+              </p>
+              <p-button
+                *ngIf="!metodoGoogleAuth.estadoMetodo"
+                label="Activar"
+                styleClass="cfe-boton-lg cfe-boton mt-3"
+                (onClick)="onCambiarEstadoGoogleAuth()"
+              />
+              <div
+                *ngIf="metodoGoogleAuth.estadoMetodo"
+                class="flex gap-2 align-items-center"
+              >
+                <p-inputSwitch
+                  [formControl]="googleAuthSwitch"
+                  (onChange)="onCambiarEstadoGoogleAuth($event)"
+                ></p-inputSwitch>
+                <span class="texto-resaltado m-0">Activado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Correo personal -->
+      <div class="cuenta__card">
+        <div class="cuenta__card--header"><h6>Correo personal</h6></div>
+        <div class="cuenta__card--content">
+          <div class="grid">
+            <div class="col-1">
+              <img
+                src="assets/images/email-1.svg"
+                alt="Email"
+                style="width: 2.5rem"
+              />
+            </div>
+            <div class="col-11">
+              <p>{{ correoPersonal }}</p>
+              <p>
+                Usaremos su dirección de correo electrónico para comunicarnos
+                contigo y a la vez mantener su cuenta segura . Se enviará un
+                código de verificación a su correo, al momento de iniciar sesión
+                en el sistema.
+              </p>
+              <p-button
+                *ngIf="!metodoCorreoPersonal.estadoMetodo"
+                label="Activar"
+                styleClass="cfe-boton-lg cfe-boton mt-3"
+                (onClick)="onCambiarEstadoCorreoPersonal()"
+              />
+              <div
+                *ngIf="metodoCorreoPersonal.estadoMetodo"
+                class="flex gap-2 align-items-center"
+              >
+                <p-inputSwitch
+                  [formControl]="correoPersonalSwitch"
+                  (onChange)="onCambiarEstadoCorreoPersonal($event)"
+                ></p-inputSwitch>
+                <span class="texto-resaltado m-0">Activado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Correo institucional -->
+      <div class="cuenta__card">
+        <div class="cuenta__card--header"><h6>Correo institucional</h6></div>
+        <div class="cuenta__card--content">
+          <div class="grid">
+            <div class="col-1">
+              <img
+                src="assets/images/email-1.svg"
+                alt="Email"
+                style="width: 2.5rem"
+              />
+            </div>
+            <div class="col-11">
+              <p>{{ correoInstitucional }}</p>
+              <p>
+                Usaremos su dirección de correo electrónico para comunicarnos
+                contigo y a la vez mantener su cuenta segura . Se enviará un
+                código de verificación a su correo, al momento de iniciar sesión
+                en el sistema.
+              </p>
+              <p-button
+                *ngIf="!metodoCorreoInstitucional.estadoMetodo"
+                label="Activar"
+                styleClass="cfe-boton-lg cfe-boton mt-3"
+                (onClick)="onCambiarEstadoCorreoInstitucional()"
+              />
+              <div
+                *ngIf="metodoCorreoInstitucional.estadoMetodo"
+                class="flex gap-2 align-items-center"
+              >
+                <p-inputSwitch
+                  [formControl]="correoInstitucionalSwitch"
+                  (onChange)="onCambiarEstadoCorreoInstitucional($event)"
+                ></p-inputSwitch>
+                <span class="texto-resaltado m-0">Activado</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="verificarSeccionActiva()">
+    <ng-container *ngIf="mostrarSeccionGoogleAuth">
+      <app-accion-google
+        [usuarioActual]="usuarioActual"
+        [metodo]="metodoGoogleAuth"
+        [informacionDispositivo]="informacionDispositivo"
+        (codigoGenerado)="mostrarMensajeToast($event)"
+        (codigoAccion)="onCodigoAccion($event)"
+      ></app-accion-google>
+    </ng-container>
+
+    <ng-container *ngIf="mostrarSeccionCorreoPersonal">
+      <app-accion-correo
+        [usuarioActual]="usuarioActual"
+        [correo]="correoPersonal"
+        [metodo]="metodoCorreoPersonal"
+        [informacionDispositivo]="informacionDispositivo"
+        (codigoGenerado)="mostrarMensajeToast($event)"
+        (codigoAccion)="onCodigoAccion($event)"
+      ></app-accion-correo>
+    </ng-container>
+
+    <ng-container *ngIf="mostrarSeccionCorreoInstitucional">
+      <app-accion-correo
+        [usuarioActual]="usuarioActual"
+        [correo]="correoInstitucional"
+        [metodo]="metodoCorreoInstitucional"
+        [informacionDispositivo]="informacionDispositivo"
+        (codigoGenerado)="mostrarMensajeToast($event)"
+        (codigoAccion)="onCodigoAccion($event)"
+      ></app-accion-correo>
+    </ng-container>
+  </ng-container>
+</p-dialog>

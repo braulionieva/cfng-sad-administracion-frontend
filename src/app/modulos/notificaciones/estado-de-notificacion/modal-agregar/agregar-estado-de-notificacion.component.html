@@ -1,0 +1,211 @@
+<div class="agregar-estado-modal-container">
+  <h3>{{ getTitulo() }}</h3>
+  <span class="close" (click)="close()">X</span>
+
+  <div class="grid mt-3">
+    <div class="col-12">
+      <form
+        [formGroup]="formularioEstado"
+        (ngSubmit)="onSubmit()"
+        class="form-container-filter"
+      >
+        <div class="grid">
+          <div class="col-12">
+            <label for="extras" class="font-label">Estado de la Cédula</label>
+            <input
+              type="text"
+              #nombreEstado
+              pInputText
+              class="p-inputtext-lg w-full"
+              formControlName="nombreEstado"
+              maxlength="100"
+            />
+            <div style="text-align: right">
+              <small>
+                {{
+                  formularioEstado.get("nombreEstado").value
+                    ? formularioEstado.get("nombreEstado").value.length
+                    : 0
+                }}/100</small
+              >
+            </div>
+          </div>
+          <div class="col-12">
+            <app-nota-info [description]="getDescripcionTop()"></app-nota-info>
+          </div>
+          <div class="clas-12 mb-2">
+            <hr />
+          </div>
+          <div class="col-12">
+            <label for="extras" class="font-label"
+              >Seleccione para activar el estado de la cédula de Notificación y
+              Citación:</label
+            >
+          </div>
+          <div class="col-12 ml-2 mt-2 mb-2">
+            <div class="grid">
+              <div>
+                <p-checkbox
+                  formControlName="chkNotif"
+                  [binary]="true"
+                  inputId="binary"
+                  value="chkNotificacion"
+                  (onChange)="notOnChange($event)"
+                />
+                <label for="noy" class="font-label pl-1">Notificación</label>
+              </div>
+              <div class="ml-5">
+                <p-checkbox
+                  formControlName="chkCitac"
+                  [binary]="true"
+                  inputId="binary"
+                  [(ngModel)]="chkCitacion"
+                  value="chkCitacion"
+                  (onChange)="citOnChange($event)"
+                />
+                <label for="cit" class="font-label pl-1">Citación</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="extras" class="font-label"
+              >Etiqueta de filtro en el Generador de Notificaciones</label
+            >
+            <input
+              type="text"
+              #genNotificaciones
+              pInputText
+              class="p-inputtext-lg w-full"
+              formControlName="genNotificaciones"
+              maxlength="45"
+            />
+            <div style="text-align: right">
+              <small
+                >{{
+                  formularioEstado.get("genNotificaciones").value
+                    ? formularioEstado.get("genNotificaciones").value.length
+                    : 0
+                }}/100</small
+              >
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="extras" class="font-label"
+              >Etiqueta de filtro en el Generador de Citaciones</label
+            >
+            <input
+              type="text"
+              #genCitaciones
+              pInputText
+              class="p-inputtext-lg w-full"
+              formControlName="genCitaciones"
+              maxlength="45"
+            />
+            <div style="text-align: right">
+              <small
+                >{{
+                  formularioEstado.get("genCitaciones").value
+                    ? formularioEstado.get("genCitaciones").value.length
+                    : 0
+                }}/100</small
+              >
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="extras" class="font-label"
+              >Etiqueta de filtro en el Central de Notificaciones</label
+            >
+            <input
+              type="text"
+              #centNotificaciones
+              pInputText
+              class="p-inputtext-lg w-full"
+              formControlName="centNotificaciones"
+              maxlength="45"
+            />
+            <div style="text-align: right">
+              <small
+                >{{
+                  formularioEstado.get("centNotificaciones").value
+                    ? formularioEstado.get("centNotificaciones").value.length
+                    : 0
+                }}/100</small
+              >
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="extras" class="font-label"
+              >Etiqueta de filtro en el Aplicativo móvil Notificador</label
+            >
+            <input
+              type="text"
+              #appNotificador
+              pInputText
+              class="p-inputtext-lg w-full"
+              formControlName="appNotificador"
+              maxlength="45"
+              (keyup)="onkeyupEtiquetaApp($event)"
+            />
+            <div style="text-align: right">
+              <small
+                >{{
+                  formularioEstado.get("appNotificador").value
+                    ? formularioEstado.get("appNotificador").value.length
+                    : 0
+                }}/100</small
+              >
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <p-checkbox
+              formControlName="chkEditInApp"
+              [binary]="true"
+              inputId="binary"
+              (onChange)="editAppOnChange($event)"
+            />
+            <label for="noy" for="extras" class="font-label pl-1"
+              >Permite editar en el App Notificador</label
+            >
+          </div>
+          <div class="col-12">
+            <label for="extras" class="font-label">Observaciones</label>
+            <input
+              type="text"
+              #nombreEstado
+              pInputText
+              class="p-inputtext-lg w-full"
+              formControlName="observacion"
+              maxlength="300"
+            />
+            <div style="text-align: right">
+              <small
+                >{{
+                  formularioEstado.get("observacion").value
+                    ? formularioEstado.get("observacion").value.length
+                    : 0
+                }}/100</small
+              >
+            </div>
+          </div>
+        </div>
+        <div class="grid mt-3">
+          <div class="col">
+            <p-button
+              styleClass="p-button-lg w-full font-semibold p-button-secondary"
+              label="Cancelar"
+              (click)="close()"
+            ></p-button>
+          </div>
+          <div class="col">
+            <p-button
+              type="submit"
+              styleClass="p-button-lg w-full font-semibold p-button-primary"
+              [disabled]="formularioEstado.invalid"
+              label="{{ lblButtonSubmit }}"
+            ></p-button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

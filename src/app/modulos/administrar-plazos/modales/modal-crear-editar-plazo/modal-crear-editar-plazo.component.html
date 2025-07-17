@@ -1,0 +1,148 @@
+<div class="cfe-close__document" (click)="cierraAddAppModal()">
+  <img [src]="icon('close_new')" class="img-custom" height="35px" (click)="cierraAddAppModal()" alt="cerrar" />
+</div>
+<section class="modal">
+  <form class="flex flex-column gap-3" [formGroup]="crearEditarFormGroup">
+    <div class="grid">
+      <div class="col-12 flex gap-5">
+        <div class="flex gap-3">
+          <span class="font-semibold">¿Se considera días calendario?</span>
+          <div class="flex gap-2">
+            <p-radioButton inputId="diasCalendarioSi" name="diasCalendario" value="1" formControlName="diasCalendario">
+            </p-radioButton>
+            <label for="diasCalendarioSi" class="ml-2">Si</label>
+          </div>
+          <div class="flex gap-2">
+            <p-radioButton inputId="diasCalendarioNo" name="diasCalendario" value="0" formControlName="diasCalendario">
+            </p-radioButton>
+            <label for="diasCalendarioNo" class="ml-2">No</label>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <span class="font-semibold">¿Es restrictivo?</span>
+          <div class="flex gap-2">
+            <p-radioButton inputId="restrictivoSi" name="restrictivo" value="1" formControlName="restrictivo">
+            </p-radioButton>
+            <label for="restrictivoSi" class="ml-2">Si</label>
+          </div>
+          <div class="flex gap-2">
+            <p-radioButton inputId="restrictivoNo" name="restrictivo" value="0" formControlName="restrictivo">
+            </p-radioButton>
+            <label for="restrictivoNo" class="ml-2">No</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="modal__message flex align-items-center line-height-3 p-3 text-lg border-round mb-3">
+          <i class="pi pi-info-circle text-lg mr-2"></i>
+          <p>
+            <b>Restrictivo:</b> Al seleccionar <b>SI,</b> en la funcionalidad
+            correspondiente, no se podrá registrar un plazo que exceda al plazo
+            establecido. Si selecciona <b>NO,</b> solo se mostrará una alerta
+            que indique que el plazo ha sido superado; permitiendo el registro
+            sin restricciones.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="modal__message flex align-items-center line-height-3 p-3 text-lg border-round mb-3">
+          <i class="pi pi-info-circle text-lg mr-2"></i>
+          <p>
+            <b>Días Calendario:</b> seleccionar <b>SI,</b> serán considerados
+            los 365 días del año (366 si es bisiesto) para el cómputo del plazo.
+            Si marca <b>NO,</b> se considera solo los días hábiles. Es decir, de
+            lunes a viernes a excepción de los feriados y días no laborables
+            declarados para el sector público.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <hr />
+      </div>
+
+      <div class="col-12">
+        <label for="" class="p-0 mb-3">
+          <b>Ingresar el plazo:</b>
+        </label>
+        <div class="grid">
+          <div class="col-4">
+            <div class="flex flex-column gap-2">
+              <label for="">Plazo</label>
+              <p-inputNumber
+                placeholder="Ingrese el plazo"
+                [useGrouping]="false"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="0"
+                [max]="9999"
+                formControlName="plazo"
+                [inputStyle]="{ width: '100%' }"
+              ></p-inputNumber>
+              <div style="text-align: right">
+                <small>{{ plazoInputLength }}/4</small>
+              </div>
+              <small *ngIf="campoPlazo.touched && campoPlazo!.hasError('required')" class="p-error">Plazo es
+                requerido.</small>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="flex flex-column gap-2">
+              <label for="">Unidad de medida</label>
+              <p-dropdown [options]="dropdownsData?.unidades_medida" optionLabel="nombre" optionValue="id"
+                placeholder="Seleccione la unidad de medida" formControlName="tipoUnidadPlazo"
+                appendTo="body"></p-dropdown>
+              <small *ngIf="
+                  campoTipoUnidadPlazo.touched &&
+                  campoTipoUnidadPlazo!.hasError('required')
+                " class="p-error">Unidad de medida es requerido.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label for="" class="p-0 mb-3" [ngClass]="{ 'p-disabled': plazo }"><b>
+            Seleccione si el plazo aplica para:</b>
+        </label>
+        <div class="col-12 flex gap-5">
+          <div class="flex gap-3">
+            <div class="flex gap-2">
+              <p-radioButton inputId="preEtapa" name="plazoAplica" [value]="1" formControlName="plazoAplica"
+                [styleClass]="plazo ? 'cursor-auto' : ''">
+              </p-radioButton>
+              <label for="preEtapa" class="ml-2" [ngClass]="{ 'p-disabled': plazo }">Pre-Etapa</label>
+            </div>
+            <div class="flex gap-2">
+              <p-radioButton inputId="etapaTramite" name="plazoAplica" [value]="4" formControlName="plazoAplica"
+                [styleClass]="plazo ? 'cursor-auto' : ''">
+              </p-radioButton>
+              <label for="etapaTramite" class="ml-2" [ngClass]="{ 'p-disabled': plazo }">Etapa/Trámite</label>
+            </div>
+          </div>
+        </div>
+        <div class="px-3 mt-4">
+          <!-- seccion nivel etapa -->
+          <ng-container *ngIf="campoPlazoAplica.value === 1">
+            <app-seccion-nivel-etapa [dropdownsData]="dropdownsData"
+              [plazoAplica]="campoPlazoAplica.value"></app-seccion-nivel-etapa>
+          </ng-container>
+
+          <ng-container *ngIf="campoPlazoAplica.value === 4">
+            <app-seccion-nivel-tramite [dropdownsData]="dropdownsData" [plazoAplica]="campoPlazoAplica.value"
+              [accionPlazo]="accionPlazo"></app-seccion-nivel-tramite>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal__actions">
+      <p-button type="button" label="Cancelar" styleClass="cfe-boton-lg cfe-boton-secondary"
+        (onClick)="cerrarModal()" />
+      <p-button type="button" label="Registrar" styleClass="cfe-boton-lg" (onClick)="evaluacionCampos()" />
+    </div>
+  </form>
+  <!-- {{ crearEditarFormGroup.value | json }} -->
+  <!-- {{ seleccionPlazoConfiguradoComponent?.plazoConfigFormGroup.value | json }} -->
+</section>

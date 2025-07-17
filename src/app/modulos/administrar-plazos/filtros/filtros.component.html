@@ -1,0 +1,187 @@
+<form [formGroup]="formularioFiltros">
+  <div class="filter">
+    <div class="grid">
+      <div class="col-4">
+        <p-dropdown
+          [options]="dropdownsData?.tipos"
+          optionLabel="nombre"
+          optionValue="id"
+          placeholder="Seleccione el tipo"
+          formControlName="tipo"
+          (onChange)="obtenerFiltros()"
+          appendTo="body"
+        ></p-dropdown>
+      </div>
+      <div class="col-4">
+        <p-inputNumber
+          placeholder="Ingrese el plazo"
+          [useGrouping]="false"
+          formControlName="plazo"
+          (keyup.enter)="obtenerFiltros()"
+          [inputStyle]="{ width: '100%' }"
+        ></p-inputNumber>
+      </div>
+      <div class="col-4">
+        <div class="flex gap-3 justify-content-end">
+          <div [@stateFilter]="indiceActivo === 0 ? 'expanded' : 'collapsed'">
+            <p-button
+              type="button"
+              styleClass="cfe-boton-secondary"
+              [icon]="
+                indiceActivo
+                  ? 'pi pi-angle-double-down'
+                  : 'pi pi-angle-double-up'
+              "
+              (click)="mostrarOcultarFiltros(0)"
+            />
+          </div>
+          <div style="width: 100%">
+            <p-button
+              type="button"
+              label="Limpiar filtros"
+              styleClass="cfe-boton-lg cfe-boton-secondary clear-button"
+              (onClick)="limpiarFiltros()"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="grid filter__collapsed m-0"
+        [ngClass]="{ active: indiceActivo }"
+        [@stateFilter]="indiceActivo === 0 ? 'expanded' : 'collapsed'"
+      >
+        <div class="col-4">
+          <p-dropdown
+            [options]="dropdownsData?.distritos_fiscales"
+            optionLabel="nombre"
+            optionValue="id"
+            placeholder="Seleccione el distrito fiscal"
+            formControlName="distritoFiscal"
+            (onChange)="obtenerFiltros()"
+            appendTo="body"
+          ></p-dropdown>
+        </div>
+        <div class="col-4">
+          <p-dropdown
+            [options]="dropdownsData?.tipos_especialidad"
+            optionLabel="nombre"
+            optionValue="id"
+            placeholder="Seleccionar el tipo especialidad"
+            formControlName="tipoEspecialidad"
+            (onChange)="obtenerFiltros()"
+            appendTo="body"
+          ></p-dropdown>
+        </div>
+        <div class="col-4">
+          <p-dropdown
+            [options]="especialidadesDropdown"
+            optionLabel="nombre"
+            optionValue="id"
+            placeholder="Seleccionar la especialidad"
+            formControlName="especialidad"
+            (onChange)="obtenerFiltros()"
+            appendTo="body"
+            emptyMessage="Sin resultados"
+          ></p-dropdown>
+        </div>
+        <div class="col-4">
+          <p-dropdown
+            [options]="dropdownsData?.preEtapas_etapas"
+            optionLabel="Descripcion"
+            optionValue="idItem"
+            placeholder="Seleccione la etapa/pre-etapa"
+            formControlName="etapaPreEtapa"
+            (onChange)="obtenerFiltros()"
+            appendTo="body"
+          ></p-dropdown>
+        </div>
+        <div class="col-4">
+          <input
+            type="text"
+            pInputText
+            placeholder="Ingrese el código del trámite"
+            formControlName="codigoTramite"
+            (keyup.enter)="obtenerFiltros()"
+          />
+        </div>
+        <div class="col-4">
+          <input
+            type="text"
+            pInputText
+            placeholder="Ingrese el trámite"
+            formControlName="tramite"
+            (keyup.enter)="obtenerFiltros()"
+          />
+        </div>
+        <div class="col flex gap-5">
+          <div class="flex gap-3">
+            <span class="font-semibold">¿Días calendario?</span>
+            <div class="flex gap-2">
+              <p-radioButton
+                inputId="diasCalendarioSi"
+                name="diasCalendario"
+                value="1"
+                formControlName="diasCalendario"
+                (onClick)="obtenerFiltros()"
+              >
+              </p-radioButton>
+              <label for="diasCalendarioSi" class="ml-2">Si</label>
+            </div>
+            <div class="flex gap-2">
+              <p-radioButton
+                inputId="diasCalendarioNo"
+                name="diasCalendario"
+                value="0"
+                formControlName="diasCalendario"
+                (onClick)="obtenerFiltros()"
+              >
+              </p-radioButton>
+              <label for="diasCalendarioNo" class="ml-2">No</label>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <span class="font-semibold">¿Es restrictivo?</span>
+            <div class="flex gap-2">
+              <p-radioButton
+                inputId="restrictivoSi"
+                name="restrictivo"
+                value="1"
+                formControlName="restrictivo"
+              >
+              </p-radioButton>
+              <label for="restrictivoSi" class="ml-2">Si</label>
+            </div>
+            <div class="flex gap-2">
+              <p-radioButton
+                inputId="restrictivoNo"
+                name="restrictivo"
+                value="0"
+                formControlName="restrictivo"
+              >
+              </p-radioButton>
+              <label for="restrictivoNo" class="ml-2">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- {{ formularioFiltros.value | json }} -->
+<div class="filter__options">
+  <h6>Plazos ({{ numeroPlazos }})</h6>
+  <div class="flex flex-end gap-3">
+    <p-button
+      icon="pi pi-file-excel"
+      styleClass="cfe-boton-lg cfe-boton-secondary cfe-boton-icono-derecha"
+      label="Exportar Excel"
+      (click)="exportarExcel()"
+    ></p-button>
+    <p-button
+      icon="pi pi-plus"
+      label="Nuevo Plazo"
+      styleClass="cfe-boton-lg cfe-boton cfe-boton-icono-derecha"
+      (click)="showModalCreationPlazo()"
+    ></p-button>
+  </div>
+</div>

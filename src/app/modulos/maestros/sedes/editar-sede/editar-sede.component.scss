@@ -1,0 +1,33 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.agregar-menu-modal-container {
+    background-color: $white;
+    border-radius: 15px;
+    padding: 30px 25px;
+    min-width: 300px;
+
+    h3 {
+        color: #0E2E4A;
+        columns: black;
+        font-family: $font-semi-bold;
+        font-weight: 700;
+        font-size: 1.6em;
+        line-height: 20px;
+        letter-spacing: 1%;
+    }
+}
+
+.close {
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 20px;
+}
+
+.font-label {
+    columns: #1B1C1E;
+    font-weight: 700;
+    font-size: 1.25em;
+    line-height: 20px;
+    letter-spacing: 2%;
+}

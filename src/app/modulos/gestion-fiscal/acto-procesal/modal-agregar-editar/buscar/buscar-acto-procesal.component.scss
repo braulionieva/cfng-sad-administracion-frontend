@@ -1,0 +1,34 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.notificacion-container{
+    /**padding: 40px;**/
+    background-color: #F7EED4;
+    display: flex;
+    padding: 10px 21px;
+    border-radius: 5px;
+    .notificacion-icon{
+        /** width: 100%;**/
+        display: flex;
+        justify-content: center;
+        /** margin-bottom: 25px;**/
+        img{
+            width: 25px;
+        }
+        margin-right: 10px;
+    }
+    .notificacion-description{
+        width: 100%;
+        text-align: left;
+        font-family: $font-regular;
+        font-size: 1.05em;
+        /** margin: 15px 0 0 0;**/
+    }
+}
+
+.font-label{
+    font-family: $font-regular;
+    font-weight: 600;
+    font-size: 1.05em;
+    color: #1B1C1E;
+}
+

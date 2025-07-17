@@ -1,0 +1,29 @@
+<div class="cfe-container">
+
+  <!--INICIO DE CONTENEDOR DE FILTROS-->
+  <!--<app-filtro-generico [tituloPage]="tituloPage" (filter)="onFilterOld($event)" [actoProcesal]="actoProcesal"
+    [carpetaCuaderno]="carpetaCuaderno" [tipoEspecialidad]="tipoEspecialidad" [bEspecialidad]="true"
+    [jerarquia]="jerarquia" [tipoProceso]="tipoProceso" [bEtapas]="true" />-->
+  <!--<app-filtro-generico [tituloPage]="tituloPage" (filter)="onFilterOld($event)" />-->
+
+  <app-filtros (filter)="onFilter($event)"></app-filtros>
+  <!--FIN DE CONTENEDOR DE FILTROS-->
+
+
+  <br />
+
+  <app-acto-procesal-acciones
+    [totalElementos]="totalActosProcesales" (refrescar)="refrescarBandeja()" (exportar)="exportExcel()" />
+
+  <br />
+
+  <div class="p-2 bg-white border-round">
+    <!--INICIO DE CONTENEDOR TABLA-->
+    <app-acto-procesal-tabla
+      [detalleActoProcesal]="detalleActoProcesal"
+      [totalElementos]="totalActosProcesales"
+      [loading]="loading"
+      (clickedRefrescar)="refrescarBandeja()" />
+    <!--FIN DE CONTENEDOR TABLA-->
+  </div>
+</div>

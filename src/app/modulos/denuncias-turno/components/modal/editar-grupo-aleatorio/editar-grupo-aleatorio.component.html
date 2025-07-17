@@ -1,0 +1,96 @@
+<section class="p-3 px-6">
+  <div class="formgrid grid font-semibold">
+    <div class="field col-12">
+      <label for="" class="mb-2">Nombre del grupo aleatorio</label>
+      <input pInputText class="w-full" />
+    </div>
+
+    <div class="field col-12">
+      <label for="">Tipo de distribución</label>
+      <p-dropdown [options]="tiposDistribucion" optionLabel="name" placeholder="Seleccione una opción"></p-dropdown>
+    </div>
+
+    <div class="field col-12">
+      <label for="" style="min-width: 150px">Diferencia máxima:</label>
+      <p-inputNumber styleClass="w-full"></p-inputNumber>
+    </div>
+
+    <div class="field col-12 md:col-6">
+      <label for="">Disrito fiscal</label>
+      <p-dropdown [options]="distritosFiscales" optionLabel="name" placeholder="Seleccione una opción"></p-dropdown>
+    </div>
+
+    <div class="field col-12 md:col-6">
+      <label for="">Especialidad</label>
+      <p-dropdown [options]="especialidades" optionLabel="name" placeholder="Seleccione una opción"></p-dropdown>
+    </div>
+  </div>
+
+  <hr class="hr my-3" />
+
+  <p-button styleClass="font-semibold" (click)="onOpenAgregarFiscaliaModal()">Agregar fiscalía</p-button>
+
+  <div class="mt-5">
+    <p class="font-semibold">Fiscalias</p>
+    <p-table *ngIf="!loading || (loading)"
+      [tableStyle]="{ 'min-width': '50rem' }" class="mt-5">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col" class="text-center">N°</th>
+          <th scope="col" class="text-center">Distrito Fiscal</th>
+          <th scope="col" class="text-center">Especialidad</th>
+          <th scope="col" class="text-center">Fiscalía</th>
+          <th scope="col" class="text-center">Despachos activos</th>
+          <th scope="col" class="text-center">Última modificación</th>
+          <th scope="col" class="text-center">Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-fiscalia>
+        <tr>
+          <td class="text-center">{{ fiscalia?.id }}</td>
+          <td class="text-center">{{ fiscalia?.distrito_fiscal }}</td>
+          <td class="text-center">{{ fiscalia?.especialidad }}</td>
+          <td class="text-center">{{ fiscalia?.fiscalia }}</td>
+          <td class="text-center">{{ fiscalia?.despachos_activos }}</td>
+          <td class="text-center">
+            <div class="flex flex-column">
+              <span>{{ fiscalia?.ultima_modificacion[0].nombre_usuario }}</span>
+              <span>
+                {{
+                fiscalia?.ultima_modificacion[0].fecha_modificacion
+                | date : "dd/MM/yyyy"
+                }}
+              </span>
+            </div>
+          </td>
+          <td>
+            <div class="flex gap-2 justify-content-center">
+              <p-button icon="pi pi-pencil" styleClass="p-button-rounded p-button-text"></p-button>
+              <p-button icon="pi pi-file-pdf" styleClass="p-button-rounded p-button-text"></p-button>
+              <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-text"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <!-- spinner -->
+    <div *ngIf="loading">
+      <div class="spinner flex align-items-center justify-content-center" style="min-height: 200px">
+        <p-progressSpinner styleClass="w-4rem h-4rem"></p-progressSpinner>
+      </div>
+    </div>
+
+    <!-- sin datos mensaje -->
+    <div *ngIf="!loading">
+      <div class="spinner flex align-items-center justify-content-center" style="min-height: 200px">
+        <p>No hay datos disponibles</p>
+      </div>
+    </div>
+
+    <div class="flex justify-content-center mt-5">
+      <p-button styleClass="font-semibold text-center px-8 py-3">Guardar</p-button>
+    </div>
+  </div>
+</section>

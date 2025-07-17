@@ -1,0 +1,59 @@
+<div class="alert-container">
+	<div (click)="closeAction()" class="cfe-close">
+		<img [src]="closeIcon" class="img-custom" alt="" />
+	</div>
+
+	<div class="alert-icon">
+		<img [src]="alertIcon" alt="Alert Icon" />
+	</div>
+
+	<h3 class="alert-title">{{ title }}</h3>
+
+	<p *ngIf="showDescription" [innerHTML]="getDescription()" class="alert-description"></p>
+
+	<div class="col m-4 mb-0 pb-0 pt-0">
+		<div class="subtitle">{{ subtitle }}</div>
+		<div>
+			<p-table styleClass="mt-3; width:90%;" [value]="noRegistradosList" editMode="row"
+				[tableStyle]="{ 'min-width': '50rem' }" [style]="{ width: '500' }">
+				<ng-template pTemplate="header">
+					<tr>
+						<th style="width: 10px">N°</th>
+						<th *ngIf="!turno" style="width:40%;">
+							<small>Nombre del día festivo</small>
+						</th>
+						<th *ngIf="turno" style="width:20%;">
+							<small>Dependencia</small>
+						</th>
+						<th *ngIf="turno" style="width:20%">
+							<small>despacho</small>
+						</th>
+						<th style="width: 15%"><small>Fila en el archivo</small></th>
+						<th style="width: 35%"><small>Descripción del error</small></th>
+					</tr>
+				</ng-template>
+
+				<ng-template pTemplate="body" let-item let-i="rowIndex">
+					<tr>
+						<td>{{ i + 1 }}</td>
+						<td *ngIf="!turno">{{ item?.nombre | titlecase }}</td>
+						<td *ngIf="turno">{{ item?.dependencia | titlecase }}</td>
+						<td *ngIf="turno">{{ item?.despacho | titlecase }}</td>
+						<td>{{ item?.fila }}</td>
+						<td>{{ item?.error | titlecase }}</td>
+					</tr>
+				</ng-template>
+			</p-table>
+			<hr class="mt-0 pt-0" />
+		</div>
+		<div class="col-12 alert-options" *ngIf="!ocultarBotones">
+			<div class="flex justify-content-center">
+				<p-button *ngIf="confirm" (click)="cancelAction()"
+					styleClass="btn-mpfn-default font-semibold text-center px-8 py-2" [label]="cancelButtonText" />
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<p-button (click)="confirmAction()" styleClass="btn-mpfn-primary font-semibold text-center px-8 py-2"
+					label="{{ confirmButtonText }}"></p-button>
+			</div>
+		</div>
+	</div>
+</div>

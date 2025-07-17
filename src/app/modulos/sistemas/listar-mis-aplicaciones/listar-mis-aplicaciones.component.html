@@ -1,0 +1,50 @@
+<div class="cfe-container">
+  <div class="grid mt-4">
+    <div class="col-12">
+      <h3 class="tituloPage">Lista de Sistemas</h3>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-3">
+      <div class="navegar-opciones-contenedor">
+        <ul>
+          <li *ngFor="let categoria of categorias; let i = index" [ngClass]="{'selected': isSelected(i)}">
+            <a (click)="irListarSistemas(categoria, i)">{{ categoria.nombre }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-9">
+      <div style="min-height: 450px; background-color: white; padding: 20px 25px;">
+        <h5 style="padding: 10px 25px 20px 0px;">{{ categoriaSeleccionada?.nombre }}</h5>
+        <div class="grid">
+          <a class="col-4 tooltip" *ngFor='let sistema of sistemas' style="cursor: pointer;"
+            (click)="navegarAUrl(sistema)" target="_blank" rel="noopener">
+
+            <span class="tooltiptext" [style]="{'background-color': sistema.deClaseColor}">{{ sistema.nombre }}</span>
+            <div [style]="{'background-color': sistema.deClaseColor, 'padding': '25px 15px 25px 15px'}">
+              <div class="grid" style="min-height: 100px;">
+                <div class="col-4" style="width: 100px; height: 100px;">
+                  <div class="image-container">
+                    <img alt="No Disponible" [src]="sistema.image" />
+                  </div>
+                </div>
+                <div class="col-8">
+                  <div class="row">
+                    <h5 [style]="{'color': '#FFFFFF', 'margin-bottom': '5px'}">{{sistema.nombreCorto}}</h5>
+                  </div>
+                  <div class="row" style="margin-bottom: 0px,">
+                    <h4 [style]="{'color': '#FFFFFF', 'margin-bottom': '0px'}"><b>{{sistema.sigla}}</b></h4>
+                  </div>
+                </div>
+              </div>
+              <hr style="margin-top: 0px; margin-bottom: 10px;">
+              <p [style]="{'color': '#FFFFFF', 'font-size':'14px', 'margin-bottom':'0px'}">Ult acceso: {{
+                sistema.ultimoAcceso }}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

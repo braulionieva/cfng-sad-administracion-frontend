@@ -1,0 +1,178 @@
+<p-dialog
+  [header]="'Validaciones de ' + tituloModal"
+  [(visible)]="visible"
+  [style]="{ width: '75vw' }"
+  [modal]="true"
+  (onHide)="manejarOcultar()"
+  [closable]="false"
+>
+  <div
+    class="cfe-close__document"
+    (click)="closeModal()"
+    style="position: absolute; top: 10px; right: 10px; cursor: pointer"
+  >
+    <img
+      (click)="cierraAddAppModal()"
+      [src]="icon('close_new')"
+      class="img-custom"
+      height="35px"
+      alt="cerrar"
+    />
+  </div>
+  <div style="margin: 0 2rem">
+    <div class="card mb-3">
+      <form [formGroup]="formularioFiltro">
+        <div class="grid">
+          <div class="col-8">
+            <input
+              type="text"
+              pInputText
+              placeholder="Buscar por correo"
+              formControlName="correoValidar"
+              (keyup.enter)="aplicarFiltros()"
+              (blur)="aplicarFiltros()"
+            />
+          </div>
+          <div class="col-4">
+            <div class="flex gap-3 justify-content-end">
+              <div
+                [@stateFilter]="indiceActivo === 0 ? 'expanded' : 'collapsed'"
+              >
+                <p-button
+                  type="button"
+                  styleClass="cfe-boton-secondary"
+                  [icon]="
+                    indiceActivo
+                      ? 'pi pi-angle-double-down'
+                      : 'pi pi-angle-double-up'
+                  "
+                  (click)="alternarBotonFiltro(0)"
+                />
+              </div>
+              <p-button
+                type="button"
+                label="Limpiar filtros"
+                styleClass="cfe-boton-lg cfe-boton-secondary"
+                (onClick)="limpiarFiltros()"
+              />
+            </div>
+          </div>
+          <div
+            class="grid filter m-0"
+            [ngClass]="{ active: indiceActivo }"
+            [@stateFilter]="indiceActivo === 0 ? 'expanded' : 'collapsed'"
+          >
+            <div class="col-4">
+              <p-calendar
+                placeholder="Fecha inicio"
+                [showIcon]="true"
+                appendTo="body"
+                [showClear]="true"
+                [readonlyInput]="true"
+                formControlName="fechaInicio"
+                (onSelect)="aplicarFiltros()"
+                (onClear)="aplicarFiltros()"
+                dateFormat="dd/mm/yy"
+              />
+            </div>
+            <div class="col-4">
+              <p-calendar
+                placeholder="Fecha fin"
+                [showIcon]="true"
+                appendTo="body"
+                [showClear]="true"
+                [readonlyInput]="true"
+                formControlName="fechaFin"
+                (onSelect)="aplicarFiltros()"
+                (onClear)="aplicarFiltros()"
+                [minDate]="fechaMinima"
+                dateFormat="dd/mm/yy"
+              />
+            </div>
+            <div class="col-4">
+              <input
+                type="text"
+                pInputText
+                placeholder="Buscar por dispositivo"
+                formControlName="dispositivo"
+                (keyup.enter)="aplicarFiltros()"
+                (blur)="aplicarFiltros()"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="flex justify-content-end">
+      <p-button
+        label="Exportar Excel"
+        icon="pi pi-file-excel"
+        styleClass="cfe-boton-lg cfe-boton-secondary cfe-boton-icono-derecha"
+        (onClick)="descargarExcel()"
+      />
+    </div>
+
+    <div class="mb-3">
+      <p-table
+        #tableRef
+        [value]="datosTabla"
+        [tableStyle]="{ 'min-width': '20rem' }"
+        [loading]="cargandoTabla"
+        [rows]="filasTabla"
+        [paginator]="true"
+        [lazy]="true"
+        (onLazyLoad)="obtenerListaHistorialValidacionCorreo($event)"
+        [totalRecords]="registrosTotales"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col">Nº</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Dispositivo</th>
+            <th scope="col">Sistema Operativo</th>
+            <th scope="col">Navegador</th>
+            <th scope="col">IP</th>
+            <th scope="col">Tipo IP</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-registro>
+          <tr>
+            <td style="width: 0.5rem">
+              {{ registro.numeracion }}
+            </td>
+            <td>
+              {{ registro.fecha | date : "dd/MM/yyyy HH:mm" }}
+            </td>
+            <td>
+              {{ registro.correo }}
+            </td>
+            <td>
+              {{ registro.dispositivo }}
+            </td>
+            <td>
+              {{ registro.sistemaOperativo }}
+            </td>
+            <td>
+              {{ registro.navegador }}
+            </td>
+            <td>
+              {{ registro.ip }}
+            </td>
+            <td>
+              {{ registro.tipoIp }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="100%">
+              <p style="text-align: center">No hay datos.</p>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</p-dialog>

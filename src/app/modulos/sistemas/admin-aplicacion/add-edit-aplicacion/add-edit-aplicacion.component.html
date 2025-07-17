@@ -1,0 +1,365 @@
+<!-- dialogo para nueva aplicacion -->
+<p-dialog header=""
+          [(visible)]="dataModal.isVisible"
+          [modal]="true"
+          [style]="{width: '60%'}"
+          [styleClass]="'p-dialog-custom'" [contentStyleClass]="'p-dialog-content-custom'"
+          [draggable]="false" [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <ng-container *ngIf="isEditForm==true; then editForm; else newForm"></ng-container>
+    <ng-template #editForm>
+      <span class="p-dialog-header p-dialog-title p-component font-bold">Editar aplicación</span>
+    </ng-template>
+    <ng-template #newForm>
+      <span class="p-dialog-header p-dialog-title p-component">Nueva aplicación</span>
+    </ng-template>
+  </ng-template>
+
+  <div class="cfe-close__document" (click)="closeModalForm()">
+    <img [src]="icon('close_new')" class="img-custom" height="35px" alt=""/>
+  </div>
+
+  <form [formGroup]="formGroup" class="mx-3 mt-0 pt-0">
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="coVAplicacion" class="font-bold">Código</label>
+          <input class="inputformulario"
+            pInputText
+            id="coVAplicacion"
+            formControlName="coVAplicacion"
+            placeholder="Ingrese código"
+            maxlength="10"
+          />
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="coVAplicacion.touched&&coVAplicacion.errors?.['required']">
+                {{ getErrorMessage('coVAplicacion', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="coVAplicacion.invalid&&coVAplicacion.errors?.['maxlength']">
+                {{ getErrorMessage('coVAplicacion', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="coVAplicacion.invalid&&coVAplicacion.errors?.['pattern']">
+                {{ getErrorMessage('coVAplicacion', 'pattern') }}
+              </small>
+            </div>
+            <div style="text-align: right;">
+              <small>{{ getLength('coVAplicacion') }}/10</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="noVAplicacion" class="font-bold">Nombre</label>
+          <input
+            pInputText
+            id="noVAplicacion"
+            formControlName="noVAplicacion"
+            placeholder="Ingrese nombre"
+            maxlength="90"
+          />
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="noVAplicacion.touched&&noVAplicacion.errors?.['required']">
+                {{ getErrorMessage('noVAplicacion', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="noVAplicacion.invalid&&noVAplicacion.errors?.['maxlength']">
+                {{ getErrorMessage('noVAplicacion', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="noVAplicacion.invalid&&noVAplicacion.errors?.['pattern']">
+                {{ getErrorMessage('noVAplicacion', 'pattern') }}
+              </small>
+            </div>
+            <div style="text-align: right;">
+              <small>{{ getLength('noVAplicacion') }}/90</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="deVSiglas" class="font-bold">Siglas</label>
+          <input
+            pInputText
+            id="deVSiglas"
+            formControlName="deVSiglas"
+            placeholder="Ingrese siglas"
+            maxlength="20"
+          />
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="deVSiglas.touched&&deVSiglas.errors?.['required']">
+                {{ getErrorMessage('deVSiglas', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="deVSiglas.invalid&&deVSiglas.errors?.['maxlength']">
+                {{ getErrorMessage('deVSiglas', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="deVSiglas.invalid&&deVSiglas.errors?.['pattern']">
+                {{ getErrorMessage('deVSiglas', 'pattern') }}
+              </small>
+            </div>
+            <div style="text-align: right;">
+              <small>{{ getLength('deVSiglas') }}/20</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="idNAplicacionPadre" class="font-bold">Aplicación padre (opcional)</label>
+          <p-dropdown [options]="aplicacionPadreLst" formControlName="idNAplicacionPadre" id="idNAplicacionPadre"
+                      optionLabel="noVAplicacion" optionValue="idNAplicacion" placeholder="Seleccionar"
+                      [required] appendTo="body"
+                      [class.ng-invalid]="idNAplicacionPadre.invalid"  [showClear]="true"
+                      emptyMessage="No se encontraron registros"
+          ></p-dropdown>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="idNAplicacionPadre.touched&&idNAplicacionPadre.errors?.['required']">
+                {{ getErrorMessage('idNAplicacionPadre', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="idNAplicacionPadre.invalid&&idNAplicacionPadre.errors?.['maxlength']">
+                {{ getErrorMessage('idNAplicacionPadre', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="idNAplicacionPadre.invalid&&idNAplicacionPadre.errors?.['pattern']">
+                {{ getErrorMessage('idNAplicacionPadre', 'pattern') }}
+              </small>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="deVRuta" class="font-bold">Ruta</label>
+          <input
+            pInputText
+            id="deVRuta"
+            formControlName="deVRuta"
+            placeholder="Ingrese Ruta"
+            maxlength="400"
+          />
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="deVRuta.touched&&deVRuta.errors?.['required']">
+                {{ getErrorMessage('deVRuta', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="deVRuta.invalid&&deVRuta.errors?.['maxlength']">
+                {{ getErrorMessage('deVRuta', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="deVRuta.invalid&&deVRuta.errors?.['pattern']">
+                {{ getErrorMessage('deVRuta', 'pattern') }}
+              </small>
+            </div>
+            <div style="text-align: right;">
+              <small>{{ getLength('deVRuta') }}/400</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="deVClaseColor" class="font-bold">Color</label>
+          <input
+            pInputText
+            id="deVClaseColor"
+            formControlName="deVClaseColor"
+            placeholder="Ingrese color en hexadecimal"
+            maxlength="7"
+          />
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="deVClaseColor.touched&&deVClaseColor.errors?.['required']">
+                {{ getErrorMessage('deVClaseColor', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="deVClaseColor.invalid&&deVClaseColor.errors?.['maxlength']">
+                {{ getErrorMessage('deVClaseColor', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="deVClaseColor.invalid&&deVClaseColor.errors?.['pattern']">
+                {{ getErrorMessage('deVClaseColor', 'pattern') }}
+              </small>
+            </div>
+            <div style="text-align: right;">
+              <small>{{ getLength('deVClaseColor') }}/7</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="feDLanzto" class="font-bold">Fecha de lanzamiento</label>
+          <p-calendar
+            [showIcon]="true"
+            dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa"
+            formControlName="feDLanzto" id="feDLanzto"
+            icon="cfe-calendar-icon" appendTo="body"
+            class="calendar-form-search-placeholder cfe-calendar h-39"
+          ></p-calendar>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="feDLanzto.touched&&feDLanzto.errors?.['required']">
+                {{ getErrorMessage('feDLanzto', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="feDLanzto.invalid&&feDLanzto.errors?.['maxlength']">
+                {{ getErrorMessage('feDLanzto', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="feDLanzto.invalid&&feDLanzto.errors?.['pattern']">
+                {{ getErrorMessage('feDLanzto', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="deVVersion" class="font-bold">Versión</label>
+          <input
+            pInputText
+            id="deVVersion"
+            formControlName="deVVersion"
+            placeholder="Ingrese versión"
+            maxlength="12"
+          />
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="deVVersion.touched&&deVVersion.errors?.['required']">
+                {{ getErrorMessage('deVVersion', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="deVVersion.invalid&&deVVersion.errors?.['maxlength']">
+                {{ getErrorMessage('deVVersion', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="deVVersion.invalid&&deVVersion.errors?.['pattern']">
+                {{ getErrorMessage('deVVersion', 'pattern') }}
+              </small>
+            </div>
+            <div style="text-align: right;">
+              <small>{{ getLength('deVVersion') }}/12</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="feDVersion" class="font-bold">Fecha de versión</label>
+          <p-calendar
+            [showIcon]="true"
+            dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa"
+            formControlName="feDVersion" id="feDVersion"
+            icon="cfe-calendar-icon" appendTo="body"
+            class="calendar-form-search-placeholder cfe-calendar h-39"
+          ></p-calendar>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="feDVersion.touched&&feDVersion.errors?.['required']">
+                {{ getErrorMessage('feDVersion', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="feDVersion.invalid&&feDVersion.errors?.['maxlength']">
+                {{ getErrorMessage('feDVersion', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="feDVersion.invalid&&feDVersion.errors?.['pattern']">
+                {{ getErrorMessage('feDVersion', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="idNDisponibilidad" class="font-bold">Disponibilidad (opcional)</label>
+          <p-dropdown [options]="disponibilidadLst" formControlName="idNDisponibilidad" id="idNDisponibilidad"
+                      optionLabel="noVDescripcion" optionValue="idNCatalogo" placeholder="Seleccionar"
+                      [required] appendTo="body"  [showClear]="true"
+                      [class.ng-invalid]="idNDisponibilidad.invalid"></p-dropdown>
+
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="idNDisponibilidad.touched&&idNDisponibilidad.errors?.['required']">
+                {{ getErrorMessage('idNDisponibilidad', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="idNDisponibilidad.invalid&&idNDisponibilidad.errors?.['maxlength']">
+                {{ getErrorMessage('idNDisponibilidad', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="idNDisponibilidad.invalid&&idNDisponibilidad.errors?.['pattern']">
+                {{ getErrorMessage('idNDisponibilidad', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="flCVer" class="font-bold">Estado</label>
+          <p-inputSwitch formControlName="flCVer" id="flCVer"
+                         [falseValue]="'0'" [trueValue]="'1'"></p-inputSwitch>
+          <small *ngIf="flCVer.value==true">Activado</small>
+          <small *ngIf="flCVer.value==false">Desactivado</small>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="flCVer.touched&&flCVer.errors?.['required']">
+                {{ getErrorMessage('flCVer', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="flCVer.invalid&&flCVer.errors?.['maxlength']">
+                {{ getErrorMessage('flCVer', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="flCVer.invalid&&flCVer.errors?.['pattern']">
+                {{ getErrorMessage('flCVer', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="idNCategoria" class="font-bold">Categoría</label>
+          <p-dropdown [options]="categoriaLst" formControlName="idNCategoria" id="idNCategoria"
+                      optionLabel="noVCategoria" optionValue="idNCategoria" placeholder="Seleccionar"
+                      [required] appendTo="body"
+                      [class.ng-invalid]="idNCategoria.invalid"></p-dropdown>
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="idNCategoria.touched&&idNCategoria.errors?.['required']">
+                {{ getErrorMessage('idNCategoria', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="idNCategoria.invalid&&idNCategoria.errors?.['maxlength']">
+                {{ getErrorMessage('idNCategoria', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="idNCategoria.invalid&&idNCategoria.errors?.['pattern']">
+                {{ getErrorMessage('idNCategoria', 'pattern') }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-content-center my-4">
+      <p-button (onClick)="closeModalForm()"
+                styleClass="btn-mpfn-sad-cancel"
+      >Cancelar
+      </p-button>
+      <p-button
+                (onClick)="saveModalForm()"
+                styleClass="btn-mpfn-sad-prime ml-3"
+                [disabled]="isFormUnchanged || formGroup.invalid"
+      >Guardar
+      </p-button>
+    </div>
+  </form>
+
+</p-dialog>
+

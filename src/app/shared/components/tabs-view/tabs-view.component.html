@@ -1,0 +1,28 @@
+<div style="overflow-x: auto; overflow-y: hidden;" class="scrollbar scrollbar-bg-white">
+  <div class="flex justify-content-start align-items-center">
+    <div
+      *ngFor="let tab of tabs; let index = index"
+      [ngClass]="{
+      'tab-first-element': index === 0,
+      'tab-element': !tab.color && index > 0,
+      'tab-element-green': tab.color && tab.color ==='green' && index > 0,
+      'tab-focused': indexSeleccionado === index
+      }"
+      [ngStyle]="{'min-width': tab.ancho ? tab.ancho+'px' : '100px', 'white-space':'nowrap'}"
+      [hidden]="tab.oculto?tab.oculto:false"
+      (click)="eventSeleccionar(index)"
+      [class]="classContainer"
+    >
+        <span *ngIf="!tab.icono">
+          {{ tab.titulo }} <div *ngIf="tab.cantidad && tab.cantidad > 0" class="counter">{{ tab.cantidad }}</div>
+        </span>
+      <fn-icon
+        *ngIf="tab.icono"
+        class="icono"
+        [ico]="obtenerIcono(tab.icono)"
+        height="1.55rem"
+      >
+      </fn-icon>
+    </div>
+  </div>
+</div>

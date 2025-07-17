@@ -1,0 +1,21 @@
+<div class="flex justify-content-center mb-4">
+  {{ nombreUsuario }}
+</div>
+
+<p class="text-lg text-center my-2">Selección de Dependencia</p>
+<p class="">
+  {{ textoSeleccionDependencia }}
+</p>
+
+<form [formGroup]="myForm">
+  <p-dropdown [options]="tiposDistribucion" formControlName="dependenciaUsuario" placeholder="Seleccione" />
+
+  <div class="my-6"></div>
+
+  <p class="text-center my-2">
+    {{ textoWarnig }}
+  </p>
+
+  <button pButton pRipple type="submit" label="Ingresar" class="w-full my-2"></button>
+  <button pButton pRipple type="submit" label="Cancelar" class="w-full"></button>
+</form>

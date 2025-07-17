@@ -1,0 +1,14 @@
+.form-container-filter {
+  background: rgba(51, 51, 51, 0.1);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.tituloPage {
+  font-size: 20px;
+}
+
+:host::ng-deep .p-calendar .p-inputtext {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}

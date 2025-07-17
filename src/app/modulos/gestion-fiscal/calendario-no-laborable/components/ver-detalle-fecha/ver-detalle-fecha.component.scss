@@ -1,0 +1,40 @@
+
+.crime-parts-container{
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 20px 30px;
+  width: 1300px;
+  h3{
+      color: #ccc;
+      /*font-family: $font-semi-bold;*/
+      font-size: 2em;
+  }
+}
+.feriado {
+  background:  #C1292E;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+.laborable {
+  background:  #0075BF;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+.fin {
+  background:  #BEBEBE;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+.pointer{
+  cursor: pointer;
+}
+.chip{
+  background:  #E7EAED;
+  border-radius: 20px;
+  padding: 10px 16px;
+  width: auto;
+  height: auto;
+}

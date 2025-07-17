@@ -1,0 +1,37 @@
+:host::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    font-size: small;
+    padding: 1rem 1rem;
+}
+:host::ng-deep .p-tag.p-tag-success {
+    background-color: #3CC85A;
+    color: #ffffff;
+    border-radius: 5px;
+}
+:host::ng-deep .p-tag.p-tag.p-tag-danger {
+    background-color: #5F6062;
+    color: #ffffff;
+    border-radius: 5px;
+}
+.circle-foto {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+::ng-deep .p-menu .p-menuitem-link{
+    border: #5F6062!important;
+    border-bottom: 1px solid #5F6062 !important;
+}
+::ng-deep .p-menuitem:last-child {
+    border-bottom: none!important;
+    padding: 0px!important;
+}
+
+::ng-deep .p-menu {
+    width:250px;
+    padding: 0;
+    background-color: #f8f9fa;
+    border-radius: 0px;
+    box-shadow: 10px 10px 5px #9c9fa0!important;
+}

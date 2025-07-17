@@ -1,0 +1,55 @@
+<div class="col-12 mb-2">
+  <div class="grid">
+    <div [ngClass]="showActions ? 'col-11' : 'col-12'" style="align-content: center;">
+      <label for="extras" class="font-label">Configuraciones del acto procesal</label>
+    </div>
+    <div class="col-1" style="align-content: center;" *ngIf="showActions">
+
+      <p-button type="button" (click)="mostrarModalConfiguracion()"
+                styleClass=" p-button-text p-button-rounded">
+        <img
+          [src]="icon('add-fill')"
+          alt="Addfill Icon"/></p-button>
+    </div>
+  </div>
+</div>
+<div class="col-12 mb-3">
+  <div class="p-2 bg-white border-round">
+    <!--INICIO DE CONTENEDOR TABLA-->
+    <p-table
+      [value]="detalleActoProcesal"
+      [paginator]="false"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th id style="width:10%">Código</th>
+          <th id style="width:15%">Carpeta/cuaderno</th>
+          <th id style="width:10%">Tipo especialidad</th>
+          <th id style="width:10%">Especialidad</th>
+          <th id style="width:10%">Jerarquía</th>
+          <th id style="width:10%">Tipo proceso</th>
+          <th id style="width:20%">Subtipo proceso</th>
+          <th id style="width:15%">Etapa</th>
+          <th id *ngIf="showActions">Acción</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-detalle>
+        <tr>
+          <td>{{ detalle.codigo }}</td>
+          <td>{{ detalle.tipoCarpetaCuaderno }}</td>
+          <td>{{ detalle.tipoEspecialidad }}</td>
+          <td>{{ detalle.especialidad }}</td>
+          <td>{{ detalle.jerarquia }}</td>
+          <td>{{ detalle.tipoProceso }}</td>
+          <td>{{ detalle.subTipoProceso }}</td>
+          <td>{{ detalle.etapa }}</td>
+          <td *ngIf="showActions">
+            <p-button type="button" (onClick)="onDelete(detalle.codigo)" icon="pi pi-trash"
+                      styleClass=" p-button-text p-button-rounded mr-5"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

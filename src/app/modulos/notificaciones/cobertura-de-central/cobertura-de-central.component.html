@@ -1,0 +1,294 @@
+<div class="cfe-container">
+  <div class="tituloPage">Cobertura de Centrales</div>
+  <div class="grid">
+    <section class="col" style="width: 50%">
+      <form [formGroup]="formCobertura">
+        <div class="card">
+          <h3 class="tituloPage-2">
+            Centrales de Notificación por Cobertura Geográfica
+          </h3>
+
+          <p>Filtrar por:</p>
+
+          <div class="grid">
+            <div class="col">
+              <label for="departamento">Departamento</label>
+              <p-dropdown
+                (onChange)="handleSelectDepartamento($event)"
+                [options]="departamentosDropdown"
+                formControlName="departamento"
+                id="departamento"
+                optionLabel="name"
+                optionValue="value"
+                placeholder="Departamento"
+                emptyMessage="No se encontraron registros"
+              />
+            </div>
+
+            <div class="col">
+              <label for="">Provincia</label>
+              <p-dropdown
+                (onChange)="handleSelectProvincia($event)"
+                [options]="provinciasDropdown"
+                formControlName="provincia"
+                id="provincia"
+                optionLabel="name"
+                optionValue="value"
+                placeholder="Provincia"
+                emptyMessage="No se encontraron registros"
+              />
+            </div>
+          </div>
+
+          <div class="flex justify-content-end" style="margin-top: 14px">
+            <p-button
+              (click)="clearFiltros('cobertura')"
+              styleClass="cfe-boton-lg cfe-boton-secondary"
+              label="Limpiar filtros"
+            />
+          </div>
+
+          <ng-container *ngIf="departamentoField.value && provinciaField.value">
+            <div class="mt-4">
+              <p-table
+                (onLazyLoad)="loadDistritos($event)"
+                [value]="distritosFormArray?.controls"
+                [tableStyle]="{ 'min-width': '15rem' }"
+                [paginator]="true"
+                [rows]="filasPorPagina"
+                [lazy]="true"
+                [totalRecords]="totalRegistrosGeografico"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="{last} de {{
+                  totalRegistrosGeografico
+                }} registros"
+              >
+                <ng-template pTemplate="header">
+                  <tr style="background-color: #f1f6f6">
+                    <th scope="col" style="color: #000 !important">
+                      NOMBRE DISTRITO
+                    </th>
+
+                    <th scope="col" style="color: #000 !important">
+                      CENTRAL NOTIF UBIGEO INEI
+                    </th>
+
+                    <th scope="col" style="color: #000 !important">
+                      CENTRAL NOTIF UBIGEO RENIEC
+                    </th>
+
+                    <th scope="col" style="color: #000 !important">EXCLUIR</th>
+                  </tr>
+                </ng-template>
+
+                <ng-template
+                  pTemplate="body"
+                  let-distritoFormGroup
+                  let-i="rowIndex"
+                >
+                  <tr [formGroup]="distritoFormGroup">
+                    <td>
+                      {{ distritoFormGroup.get("distrito").value }}
+                    </td>
+
+                    <td>
+                      <div style="max-width: 30rem">
+                        <p-dropdown
+                          (onChange)="asignarCentralCoberturas(i, 'inei')"
+                          [options]="centralesCoberturaDropdown"
+                          formControlName="idCentralInei"
+                          optionLabel="name"
+                          optionValue="value"
+                          placeholder="Seleccione..."
+                          appendTo="body"
+                          [showClear]="true"
+                          emptyMessage="No se encontraron registros"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div style="max-width: 30rem">
+                        <p-dropdown
+                          (onChange)="asignarCentralCoberturas(i, 'reniec')"
+                          [options]="centralesCoberturaDropdown"
+                          formControlName="idCentralReniec"
+                          optionLabel="name"
+                          optionValue="value"
+                          appendTo="body"
+                          [showClear]="true"
+                          emptyMessage="No se encontraron registros"
+                          placeholder="Seleccione..."
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <p-checkbox
+                        (onChange)="asignarCentralCoberturas(i)"
+                        formControlName="estado"
+                        [binary]="true"
+                      />
+                    </td>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="100%">
+                      <p style="text-align: center">
+                        No se encontraron registros
+                      </p>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </ng-container>
+        </div>
+      </form>
+    </section>
+
+    <section class="col" style="width: 50%">
+      <form [formGroup]="formFiscalia">
+        <div class="card">
+          <h3 class="tituloPage-2">Centrales de Notificación por Fiscalía</h3>
+
+          <p>Filtrar por:</p>
+
+          <div class="grid">
+            <div class="col-6">
+              <label for="distritoFiscal">Distrito Fiscal</label>
+              <p-dropdown
+                (onChange)="handleSelectDistritoFiscal($event)"
+                [options]="distritosFiscalesDropdown"
+                formControlName="distritoFiscal"
+                id="distritoFiscal"
+                optionLabel="name"
+                optionValue="value"
+                placeholder="Distrito Fiscal"
+                emptyMessage="No se encontraron registros"
+              />
+            </div>
+
+            <div class="col-6">
+              <label for="sede">Sede</label>
+              <p-dropdown
+                (onChange)="handleSelectSede($event)"
+                [options]="sedesDropdown"
+                formControlName="sede"
+                id="sede"
+                optionLabel="name"
+                optionValue="value"
+                placeholder="Sede"
+                emptyMessage="No se encontraron registros"
+              />
+            </div>
+
+            <div class="col-6">
+              <label for="codigo">Código</label>
+              <input
+                (keyup.enter)="getFiscaliasNotificacionFiscalia()"
+                (blur)="getFiscaliasNotificacionFiscalia()"
+                formControlName="codigo"
+                id="codigo"
+                type="text"
+                pInputText
+                placeholder="Código"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="col-6">
+              <label for="nombre">Nombre</label>
+              <input
+                (keyup.enter)="getFiscaliasNotificacionFiscalia()"
+                (blur)="getFiscaliasNotificacionFiscalia()"
+                formControlName="nombre"
+                id="nombre"
+                placeholder="Nombre"
+                autocomplete="off"
+                type="text"
+                pInputText
+              />
+            </div>
+          </div>
+
+          <div class="flex justify-content-end" style="margin-top: 14px">
+            <p-button
+              (click)="clearFiltros('fiscalia')"
+              styleClass="cfe-boton-lg cfe-boton-secondary"
+              label="Limpiar filtros"
+            />
+          </div>
+
+          <ng-container *ngIf="distritoFiscalField.value">
+            <div class="mt-4">
+              <p-table
+                (onLazyLoad)="loadFiscalias($event)"
+                [value]="fiscaliasFormArray?.controls"
+                [tableStyle]="{ 'min-width': '15rem' }"
+                [paginator]="true"
+                [rows]="filasPorPagina"
+                [lazy]="true"
+                [totalRecords]="totalRegistrosFiscalia"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="{last} de {totalRecords} registros"
+              >
+                <ng-template pTemplate="header">
+                  <tr style="background-color: #f1f6f6">
+                    <th
+                      scope="col"
+                      style="max-width: 10rem; color: #000 !important"
+                    >
+                      NOMBRE
+                    </th>
+                    <th scope="col" style="color: #000 !important">
+                      CENTRAL DE NOTIFICACIÓN
+                    </th>
+                  </tr>
+                </ng-template>
+
+                <ng-template
+                  pTemplate="body"
+                  let-fiscaliaFormGroup
+                  let-i="rowIndex"
+                >
+                  <tr [formGroup]="fiscaliaFormGroup">
+                    <td style="max-width: 13.5rem">
+                      {{ fiscaliaFormGroup.get("nombreEntidad").value }}
+                    </td>
+
+                    <td>
+                      <div>
+                        <p-dropdown
+                          (onChange)="asignarCentralFiscalias(i)"
+                          [options]="centralesFiscaliaDropdown"
+                          formControlName="idDependenciaCentral"
+                          optionLabel="name"
+                          optionValue="value"
+                          placeholder="Seleccione..."
+                          appendTo="body"
+                          [showClear]="true"
+                          emptyMessage="No se encontraron registros"
+                        />
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="100%">
+                      <p style="text-align: center">
+                        No se encontraron registros
+                      </p>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </ng-container>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>

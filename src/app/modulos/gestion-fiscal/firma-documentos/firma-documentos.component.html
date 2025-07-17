@@ -1,0 +1,18 @@
+
+<div class="cfe-container">
+  <app-filtros
+    [totalElementos]="firmaDocumentoResponse?firmaDocumentoResponse.totalElementos:0"
+    (filter)="onFilter($event)">
+  </app-filtros>
+ <br />
+ <app-acciones
+   (exportar)="exportToExcel()"
+ ></app-acciones>
+ <br />
+ <div class="p-2 bg-white border-round">
+   <app-tabla
+     [firmaDocumentoLista]="firmaDocumentoTabla"
+     (clicked)="actualizarTabla()"
+   ></app-tabla>
+ </div>
+</div>

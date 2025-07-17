@@ -1,0 +1,245 @@
+<!-- dialogo de confirmacion -->
+<p-toast />
+<p-confirmDialog [style]="{ width: '50vw' }" />
+
+<!-- filtro -->
+<div class="cfe-container">
+  <div class="tituloPage">
+    Dependencias de Apoyo al Trabajo Fiscal ({{ dependenciaAtfTRowLstTotal }})
+  </div>
+
+  <form [formGroup]="formFiltroBuscar" class="color-filter">
+    <div class="flex">
+      <div class="grow w-full">
+        <div class="p-inputgroup">
+          <input type="text" pInputText formControlName="noVDependenciaAtf"
+            placeholder="Ingrese nombre de la sede (dependencia IML)" class="input-form-search-placeholder"
+            (keyup)="buscarDependenciaATFFormFiltro()" />
+        </div>
+      </div>
+
+      <div class="flex-none">
+        <p-button styleClass="p-button-lg btn-mpfn-toggle btn-mpfn-sad-filtrar p-2 mx-2 py-2 px-4 font-semibold"
+          icon="pi {{ toggleIcon }}" (onClick)="toggleMasFiltros()" />
+      </div>
+
+      <div class="flex-none">
+        <p-button styleClass="btn-mpfn-sad-cancel btn-mpfn-sad-filtrar w-full text-lg" label="Limpiar filtros"
+          (onClick)="onClearFilters()" />
+      </div>
+    </div>
+
+    <ng-container *ngIf="showMoreFiltro">
+      <div class="grid">
+        <div class="col"></div>
+      </div>
+
+      <div class="grid">
+        <div class="col">
+          <p-dropdown (onChange)="onChangeRegionFilter($event.value)" [options]="regionATFLst"
+            formControlName="coNRegion" optionLabel="noVRegion" optionValue="coNRegion"
+            placeholder="Seleccionar región" />
+        </div>
+
+        <div class="col">
+          <p-dropdown [options]="departamentoATFLst" formControlName="coNDepartamento" optionLabel="noVDepartamento"
+            optionValue="coNDepartamento" placeholder="Seleccionar departamento" (onChange)="onChangeDepartmentFilter($event.value)"  />
+        </div>
+      </div>
+    </ng-container>
+  </form>
+
+  <div class="flex justify-content-end w-full my-4">
+    <p-button (onClick)="exportarExcel()" styleClass="btn-mpfn-sad-cancel" label="Exportar Excel">
+      <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px" />
+    </p-button>
+
+    <p-button (onClick)="openModalNewForm()" styleClass="btn-mpfn-sad-prime ml-3" label="Agregar" />
+  </div>
+
+</div>
+
+<!-- tabla resultados  -->
+<div class="grid bg-white border-round">
+  <div class="col">
+    <div class="mr-2 p-3 bg-white border-round">
+
+      <p-table (onLazyLoad)="buscarDependenciaATFPaginacion($event)" [value]="this.dependenciaAtfTRowLst" [lazy]="true"
+        [paginator]="true" [rows]="this.configPage.perPage" [totalRecords]="this.dependenciaAtfTRowLstTotal"
+        [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col">N°</th>
+            <th scope="col">Código</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Región</th>
+            <th scope="col">Departamento</th>
+            <th scope="col">Sede/Dependencia</th>
+            <th scope="col">Creación</th>
+            <th scope="col">Modificación</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>{{ item.secuencia }}</td>
+            <td>{{ item.coNDependencia }}</td>
+            <td>{{ item.tipoAtf }}</td>
+            <td>{{ item.noVRegion }}</td>
+            <td>{{ item.noVDepartamento }}</td>
+            <td>{{ item.noVDependenciaAtf }}</td>
+            <td>{{ item.usrCrea }} <br> {{ item.feDCreacionStr }}</td>
+            <td>{{ item.usrModifica }} <br> {{ item.feDModificacionStr }}</td>
+            <td>
+              <div>
+                <p-menu #menu [model]="actionItems" [popup]="true" appendTo="body" [pSelectableRow]="item" />
+
+                <p-button icon="pi pi-ellipsis-v" styleClass="p-button-rounded p-button-text"
+                  (click)="itemSelected(item); menu.toggle($event)" />
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- modal form-->
+<p-dialog (onHide)="onCloseModalForm()" header="" [(visible)]="isVisibleModalNewForm" [modal]="true"
+  [maximizable]="false" [draggable]="false" [resizable]="false" [style]="{width: '50vw'}">
+
+  <ng-template pTemplate="header">
+    <ng-container *ngIf="isEditForm; then editForm; else newForm" />
+
+    <ng-template #editForm>
+      <span class="text-xl font-bold">Editar dependencia de ATF</span>
+    </ng-template>
+
+    <ng-template #newForm>
+      <span class="text-xl font-bold">Nueva dependencia de ATF</span>
+    </ng-template>
+  </ng-template>
+
+  <form [formGroup]="formGroup" class="mx-5">
+    <div class="grid">
+      <div class="col-12 sm:col-offset-2 sm:col-8">
+        <div class="flex flex-column gap-2">
+          <label for="coNTipo" class="ml-2">Tipo ATF</label>
+          <p-dropdown [options]="tipoATFLst" formControlName="coNTipo" placeholder="Seleccionar" optionLabel="noVTipo"
+            optionValue="coNTipo" id="coNTipo" [ngClass]="{'p-disabled': formGroup.get('coNTipo').disabled}" />
+          <div>
+            <div style="text-align: left;">
+              <small
+                *ngIf="formGroup.get('coNTipo').touched && formGroup.get('coNTipo').invalid && formGroup.get('coNTipo')!.hasError('required')"
+                class="error-message">
+                Este campo es requerido
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-12 sm:col-offset-2 sm:col-8">
+        <div class="flex flex-column gap-2">
+          <label for="coNRegion" class="ml-2">Región</label>
+          <p-dropdown [options]="regionATFLst" formControlName="coNRegion" placeholder="Seleccionar"
+            optionLabel="noVRegion" optionValue="coNRegion" id="coNRegion"
+            (onChange)="onChangeRegionFormNewEdit($event.value)" />
+          <div>
+
+            <div style="text-align: left;">
+              <small
+                *ngIf="formGroup.get('coNRegion').touched && formGroup.get('coNRegion').invalid && formGroup.get('coNRegion')!.hasError('required')"
+                class="error-message">
+                Este campo es requerido
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-12 sm:col-offset-2 sm:col-8">
+        <div class="flex flex-column gap-2">
+          <label for="coNDepartamento" class="ml-2">Departamento</label>
+          <p-dropdown [options]="departamentoATFLst" formControlName="coNDepartamento" placeholder="Seleccionar"
+            optionLabel="noVDepartamento" optionValue="coNDepartamento" id="coNDepartamento" />
+          <div>
+            <div style="text-align: left;">
+              <small
+                *ngIf="formGroup.get('coNDepartamento').touched && formGroup.get('coNDepartamento').invalid && formGroup.get('coNDepartamento')!.hasError('required')"
+                class="error-message">
+                Este campo es requerido
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-12 sm:col-offset-2 sm:col-8">
+        <div class="flex flex-column gap-2">
+          <label for="noVDependenciaAtf" class="ml-2">Sede</label>
+          <input formControlName="noVDependenciaAtf" placeholder="Ingrese sede (nombre dependencia IML)"
+            id="noVDependenciaAtf" pInputText />
+          <div>
+            <div style="text-align: right;">
+              <small>
+                {{ formGroup.get('noVDependenciaAtf').value ?
+                formGroup.get('noVDependenciaAtf').value.length : 0 }}/100</small>
+            </div>
+            <div style="text-align: left;">
+              <small
+                *ngIf="formGroup.get('noVDependenciaAtf').touched && formGroup.get('noVDependenciaAtf').invalid&&formGroup.get('noVDependenciaAtf')!.hasError('required')"
+                class="error-message">
+                Este campo es requerido
+              </small>
+
+              <small
+                *ngIf="formGroup.get('noVDependenciaAtf').invalid && formGroup.get('noVDependenciaAtf').errors?.['maxlength']"
+                class="error-message">
+                Exceso de caracteres
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <ng-container *ngIf="isEditForm then editForm; else newForm" />
+
+    <ng-template #newForm>
+      <div class="flex justify-content-center">
+        <p-button (click)="onCloseModalForm()" styleClass="btn-mpfn-secondary mr-2 p-button px-8">
+          Cancelar
+        </p-button>
+
+        <p-button (click)="addFormBtn()" styleClass="btn-mpfn-primary text-center px-8 py-2">
+          Guardar
+        </p-button>
+      </div>
+    </ng-template>
+
+    <ng-template #editForm>
+      <div class="flex justify-content-center">
+        <p-button (click)="onCloseModalForm()" styleClass="btn-mpfn-secondary mr-2 p-button px-8">
+          Cancelar
+        </p-button>
+
+        <p-button (click)="updFormBtn()" styleClass="btn-mpfn-primary text-center px-8 py-2">
+          Guardar
+        </p-button>
+      </div>
+    </ng-template>
+  </form>
+
+  <br>
+</p-dialog>

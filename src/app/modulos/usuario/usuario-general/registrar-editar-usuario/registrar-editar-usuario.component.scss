@@ -1,0 +1,194 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.agregar-editar-usuario-modal-container {
+  background-color: $white;
+  border-radius: 15px;
+  padding: 30px 25px;
+  min-width: 300px;
+
+  h3 {
+    columns: black;
+    font-family: $font-semi-bold;
+    font-size: 1.25em;
+  }
+}
+
+.close-wrapper{
+  position:relative;
+  .cfe-close__document{
+    position: absolute;
+    top: -17px;
+    right: -17px;
+    cursor: pointer;
+  }
+}
+/******************************/
+.square-btn {
+  width: 20px;       /* Ancho del botón */
+  height: 20px;      /* Altura igual al ancho para hacerlo cuadrado */
+  background-color: #D9D9D9; /* Color de fondo */
+  //color: white;       /* Color del texto */
+  border: 1px solid #5F6062;       /* Quitar bordes */
+  border-radius: 2px;   /* Asegurarse de que no tenga bordes redondeados */
+  cursor: pointer;    /* Cambia el cursor a "pointer" para dar efecto de botón */
+  font-size: 16px;    /* Tamaño del texto */
+}
+
+.square-btn:hover {
+  border-color: var(--mpfn-lightblue-dark) !important;
+  //background-color: #3F9FD6; /* Efecto hover */
+}
+/******************************/
+/*:host::ng-deep.p-checkbox-box {
+  background-color: #D9D9D9 !important;
+  border-color: #5F6062 !important;
+}
+
+:host::ng-deep.p-checkbox-box.p-highlight {
+  background-color: #3CC85A !important;  // Fondo cuando está seleccionado
+  border-color: #3CC85A !important;  // Borde cuando está seleccionado
+}
+
+:host::ng-deep.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box .p-highlight:hover {
+  border-color: #3CC85A!important;
+  background: #3CC85A!important;
+  color: #ffffff!important;
+}*/
+/**********tooltipo ****/
+.tooltip {
+  position: relative;
+  display: inline-block;
+  //border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 70%;
+  color: #000;
+  text-align: left;
+  padding: 10px 0;
+  border-radius: 6px;
+  opacity: 1.0;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 20%;
+  margin-top: 15px;
+}
+/*
+.tooltip .tooltiptext{
+  visibility: visible;
+}*/
+/**********head table******ld*/
+/**********************************/
+.p-inputtext {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  color: #495057;
+  background: #ffffff;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ced4da;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+  border-radius: 4px;
+}
+/**********************************/
+//:host::ng-deep .p-disabled, .p-disabled * {
+//  background: #E0E0E080 !important;
+//  border-color: #D1D2D2 !important;
+//}
+
+:host::ng-deep .p-dropdown .p-disabled * {
+  background: #E0E0E080 !important;
+  border-color: #D1D2D2 !important;
+}
+
+:host::ng-deep .p-inputtext {
+  background: #fff ;
+}
+/*****************/
+::ng-deep .p-button .p-button-icon-only2 {
+  width: 2.357rem;
+  height: 2rem!important;
+  padding: 0.5rem 0;
+}
+/***************/
+
+/*.custom-radio {
+  .p-radiobutton-box {
+    border: 2px solid #3F9FD6;
+    background-color: #fff;
+
+    !* Nuevo: eliminar el outline y shadow cuando tiene focus *!
+    &:focus,
+    &:focus-within {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    &.p-highlight {
+      background-color: #3F9FD6;
+      border-color: #3F9FD6;
+    }
+  }
+
+  .p-radiobutton-icon {
+    width: 13px;
+    height: 13px;
+    background-color: white;
+    border-radius: 50%;
+    margin: auto;
+    display: block;
+  }
+}*/
+
+/********************/
+::ng-deep .btn_ico{
+  width: 40px!important;
+  height: 40px!important;
+  margin-top: 29px!important;
+}
+/********************/
+:host::ng-deep .p-dropdown-panel{
+  width: 100%!important;
+  max-width: 600px!important;
+
+}
+/*******************/
+/*:host::ng-deep .p-checkbox .p-checkbox-box {
+  border: 2px solid #5F6062!important;
+  background: #E0E0E080!important;
+  width: 25px;
+  height: 25px;
+  color: #212529!important;
+  border-radius: 2px!important;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}*/
+
+/* Agregar estilos globales para el radio button */
+:host ::ng-deep {
+  .p-radiobutton {
+    &:focus-within {
+      .p-radiobutton-box {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+    }
+
+    /* Estilo sutil para el estado focus por accesibilidad */
+    &:focus-within:not(.p-radiobutton-disabled) .p-radiobutton-box {
+      border-color: #3F9FD6;
+    }
+
+    /* Eliminar el outline predeterminado del navegador */
+    input:focus {
+      outline: none !important;
+    }
+  }
+}
+
+.p-checkbox .p-checkbox-box.p-highlight,
+.p-radiobutton .p-radiobutton-box.p-highlight {
+  border-color: var(--mpfn-lightblue) !important;
+  background-color: var(--mpfn-lightblue) !important;
+}

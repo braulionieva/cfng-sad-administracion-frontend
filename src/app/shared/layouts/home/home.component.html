@@ -1,0 +1,25 @@
+<div>
+  <app-header></app-header>
+  <app-tab-navigation></app-tab-navigation>
+  <div class="main__container-z grid grid-nogutter">
+    <div
+      class="main-left__container-z col-fixed sidebar-width"
+      [ngClass]="{ 'sidebar-collapse': sidebarCollapsed }"
+    >
+      <app-sidebar
+        [collapsed]="sidebarCollapsed"
+        (onSidebarCollapse)="actualizarSidebarCollapsed($event)"
+      ></app-sidebar>
+    </div>
+    <div
+      class="col main-section"
+      [ngClass]="{
+        'main-right__extended': sidebarCollapsed
+      }"
+    >
+      <div class="px-4">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

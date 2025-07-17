@@ -1,0 +1,113 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [draggable]="false"
+  [closable]="false"
+  [style]="{ width: '90vw', 'border-radius': '10px', overflow: 'hidden' }"
+  [contentStyle]="{ 'max-height': 'calc(100vh - 20px)', 'overflow-y': 'auto' }"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">SELECCIÓN DE PERFILES DEL SISTEMA</span>
+
+    <div (click)="handleHide()" class="cfe-close" (keypress)="handleHide()">
+      <img [src]="closeIcon" class="img-custom" alt="" />
+    </div>
+  </ng-template>
+
+  <div class="grid">
+    <div class="col-12">
+      <label for=""
+        >Perfil: <strong>{{ descripcionPerfil }}</strong></label
+      >
+    </div>
+  </div>
+
+  <div class="card" style="padding: 1rem">
+    <p-treeTable
+      [value]="arbol"
+      [scrollable]="true"
+      [tableStyle]="{ 'min-width': '40rem' }"
+      [loading]="loading"
+      scrollHeight="500px"
+    >
+      <!-- Indicador de carga -->
+      <ng-template pTemplate="loadingBody">
+        <tr>
+          <td colspan="2">
+            <div class="text-center">
+              <p-spinner />
+              <p>Cargando datos...</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-container *ngIf="existeArbol">
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col" colspan="2">Seleccionar:</th>
+          </tr>
+        </ng-template>
+      </ng-container>
+
+      <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr>
+          <td
+            style="
+              border: none !important;
+              padding-bottom: 0px;
+              padding-top: 0px;
+            "
+          >
+            <p-treeTableToggler [rowNode]="rowNode" />
+
+            <img
+              [src]="icon('folder')"
+              style="vertical-align: sub"
+              alt="Folder Icon"
+              class="img-custom mr-2"
+            />
+            {{ rowData.nomOpcion }}
+          </td>
+
+          <td
+            style="
+              border: none !important;
+              padding-bottom: 0px;
+              padding-top: 0px;
+            "
+          >
+            <p-checkbox
+              (onChange)="onCheckboxChange(rowData)"
+              [(ngModel)]="rowData.esEstado"
+              [binary]="true"
+            />
+            {{ rowData.codOpcion }}
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="100%">
+            <p style="text-align: center">No hay datos para seleccionar.</p>
+          </td>
+        </tr>
+      </ng-template>
+    </p-treeTable>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-center mt-2">
+      <p-button
+        (click)="grabarOpcionesMenuPerfil()"
+        [disabled]="!esBotonGrabarHabilitado()"
+        styleClass="font-semibold text-center px-8 py-2"
+      >
+        GRABAR
+      </p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-toast />

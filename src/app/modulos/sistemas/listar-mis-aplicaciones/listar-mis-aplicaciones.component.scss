@@ -1,0 +1,169 @@
+hr{
+  height: 2px;
+  background-color: white;
+}
+
+// p-card-body{
+//   padding: 0px !important;
+// }
+
+.image-container {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;     /* Centra verticalmente */
+  //height: 1000hv;           /* Ajusta la altura del contenedor según sea necesario */
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto; /* Asegura que la imagen mantenga sus proporciones */
+}
+
+.navegar-opciones-contenedor {
+  // position: absolute;
+  // background-color: var(--mpfn-white);
+  // left: 34px;
+  // top: 34px;
+  // z-index: 1000;
+  // border-radius: 10px;
+  // box-shadow: 10px 10px 86px -22px var(--mpfn-black);
+  // -webkit-box-shadow: 10px 10px 86px -22px var(--mpfn-black);
+  // -moz-box-shadow: 10px 10px 86px -22px var(--mpfn-black);
+  // width: 635px;
+  // overflow: hidden;
+  min-height: 450px;
+  background-color: white;
+  padding-top: 10px;
+  border-right: 1px solid var(--mpfn-gray2);
+
+  // &.opciones-activo {
+  //     display: block;
+  // }
+
+  // h4 {
+  //     //color: var(--mpfn-primary);
+  //     color: #0E2E4A;
+  //     font-family: var(--mpfn-font-semi-bold);
+  //     padding: 20px 25px;
+  //     margin: 0;
+  // }
+
+  ul {
+      list-style: none;
+      padding-left: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0;
+
+      li {
+          width: 100%;
+          //border: 1px solid var(--mpfn-gray3);
+
+          a {
+              width: 100%;
+              height: 100%;
+              display: inline-block;
+              padding: 10px 15px;
+              font-family: var(--mpfn-font-regular);
+              background-color: var(--mpfn-white);
+              transition: 300ms background-color ease;
+              cursor: pointer;
+
+              &:hover {
+                  background-color: var(--mpfn-background);
+              }
+          }
+
+          &.selected a {
+            //border-right: 2px solid var(--blue-700); // Agregar borde cuando el elemento está seleccionado
+            border-right: 2px solid #204794;
+          }
+
+          // &:nth-child(odd) {
+          //     border-top: none;
+          // }
+
+          // &:nth-child(even) {
+          //     border-top: none;
+          //     border-left: none;
+          // }
+
+          // &:nth-child(1) {
+          //     border-top: 1px solid var(--mpfn-gray3);
+          // }
+
+          // &:nth-child(2) {
+          //     border-top: 1px solid var(--mpfn-gray3);
+          // }
+      }
+  }
+
+  // .opciones-cerrar {
+  //     position: absolute;
+  //     right: 5px;
+  //     top: 10px;
+  //     cursor: pointer;
+  // }
+}
+
+/*.p-tooltip-text {
+  font: 2em sans-serif;
+}
+
+.p-tooltip .p-tooltip-text {
+  background-color: aliceblue !important;
+  color: green !important;
+  font-size: large;
+}
+
+.p-tooltip-text {
+  font: 20px sans-serif;
+}
+
+.p-tooltip .p-tooltip-text {
+  background-color: aliceblue !important;
+  color: green !important;
+}*/
+
+/*::ng-deep .custom-tooltip .ui-tooltip{
+  background-color: #ff0000 !important;  // Cambia el color de fondo
+  color: #ffffff !important;  // Cambia el color del texto
+  border-radius: 5px;  // Opcional: cambia el borde
+  padding: 10px;  // Opcional: cambia el relleno
+}
+
+::ng-deep .tooltip-inner {
+  background-color:#707070!important
+}*/
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  //border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 100%;
+  //background-color: black;
+  //border: 1px solid black;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 6px;
+  opacity: 0.7;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+  top: 98%;
+  left: 19%;
+  margin-left: -60px;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

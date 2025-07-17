@@ -1,0 +1,19 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.validacion {
+  &__card {
+    background-color: $lightblue-background;
+    border: 2px solid #ececec;
+    padding: 2rem;
+    & > p {
+      max-width: 37rem;
+      margin: 0 auto;
+    }
+    & button {
+      margin: 0 auto;
+    }
+  }
+  &__enviarCodigo {
+    color: $lightblue;
+  }
+}

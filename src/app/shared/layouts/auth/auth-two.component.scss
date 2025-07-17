@@ -1,0 +1,83 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.container {
+  background-image: url(./../../../../assets/images/Fondo.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+
+.login {
+  padding: 0 2rem;
+
+  &__container {
+    width: 465px;
+    border: 2.5px solid rgb(214, 214, 214);
+    background-color: #ffffff; // Color de fondo blanco
+    padding: 2rem; // Espacio alrededor del contenido
+    // border-radius: 8px; // Bordes redondeados para un diseño más suave
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); // Sombra para diferenciarlo del fondo
+    opacity: 1; // Asegura que no sea transparente
+  }
+
+  &__actions {
+    &--google {
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
+      color: var(--mpfn-primary);
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    &--forgot {
+      text-decoration: underline !important;
+      color: var(--mpfn-gray-1);
+      padding: 0;
+    }
+  }
+
+  &__profile {
+    background: $gray9;
+
+    & img {
+      width: 2rem;
+      border-radius: 6px;
+    }
+  }
+}
+
+:host ::ng-deep.p-password {
+  flex-direction: row-reverse;
+}
+
+:host ::ng-deep.p-element.p-icon-wrapper {
+  right: 1rem;
+}
+
+:host ::ng-deep.p-button {
+  &:disabled {
+    background: $gray5;
+    border-color: $gray5;
+  }
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.captcha {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row-reverse;
+  font-size: 17px;
+  color: rgb(1 117 192 / 80%);
+  font-weight: 700;
+  cursor: pointer;
+}

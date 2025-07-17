@@ -1,0 +1,24 @@
+<form [formGroup]="formGroup" (ngSubmit)="submit()">
+  <p class="text-center text-lg mt-3">Recuperar contraseña</p>
+  <div class="text-xs">
+    <p class="m-0">
+      Para recuperar su contraseña, por favor ingrese un correo electrónico de recuperación válido. Tener en cuenta, que
+      este correo debe estar registrado en nuestro sistema; a donde se le enviará un link de recuperación.
+    </p>
+  </div>
+
+  <div class="flex flex-column mt-3">
+    <fn-input label="Correo electrónico" formControlName="emailUsuario">
+    </fn-input>
+
+    <p *ngIf="mensajeErrorPersonalizado" class="p-error text-s mb-5 text-center">{{mensajeErrorPersonalizado}}</p>
+  </div>
+
+  <!-- INI COMPONENTE PARA CONTINUAR CON LA VALIDACIÓN DE PASSWORD-->
+  <div class="flex flex-column gap-4">
+    <button pButton pRipple type="submit" label="Recuperar contraseña" class="w-full" [loading]="isLoading"
+            [disabled]="isLoading || formGroup.invalid"></button>
+
+  </div>
+
+</form>

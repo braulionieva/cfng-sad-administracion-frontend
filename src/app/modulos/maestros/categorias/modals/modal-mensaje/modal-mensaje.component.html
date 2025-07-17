@@ -1,0 +1,30 @@
+<div (click)="closeModal()" class="cfe-close__document">
+  <img (click)="closeModal()" [src]="iconX('close_new')" class="img-custom" height="35px" alt="img" />
+</div>
+
+<section class="modal">
+  <div *ngIf="icon" class="modal__icon">
+    <img *ngIf="setData" [src]="alertIcon" alt="img" />
+  </div>
+
+  <div class="modal__text">
+    <h3>{{ title }}</h3>
+    <p *ngIf="subTitle" [innerHTML]="subTitle">
+      {{ subTitle }}
+    </p>
+  </div>
+
+  <div class="flex modal__actions">
+    <!-- Botón secundario, mostrado solo si hay textButtonSecondary y se indica mostrar solo el secundario -->
+    <p-button *ngIf="textButtonSecondary && (showOnlySecondaryButton || textButton === '')"
+      (click)="closeModal()" styleClass="cfe-boton-lg cfe-boton-secondary">
+      {{ textButtonSecondary }}
+    </p-button>
+
+    <!-- Botón primario, mostrado solo si no se debe mostrar solo el secundario y textButton no es vacío -->
+    <p-button *ngIf="!showOnlySecondaryButton && textButton !== ''" (click)="clickAction()"
+      styleClass="cfe-boton-lg cfe-boton">
+      {{ textButton }}
+    </p-button>
+  </div>
+</section>

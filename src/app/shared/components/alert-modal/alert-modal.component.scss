@@ -1,0 +1,79 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.alert-container {
+    padding: 40px;
+    padding-bottom: 20px;
+
+    .alert-icon {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 25px;
+
+        img {
+            width: 65px;
+        }
+    }
+
+    .alert-title {
+        color: #0e2e4a;
+        width: 100%;
+        text-align: center;
+        font-family: $font-semi-bold;
+        font-size: 1.3em;
+        margin: 0;
+    }
+
+    .alert-description {
+        width: 100%;
+        text-align: center;
+        font-family: $font-regular;
+        user-select: text!important;
+        font-size: 1em;
+        margin: 15px 0 0 0;
+    }
+
+    .alert-options {
+        display: flex;
+        justify-content: center;
+        margin-top: 25px;
+    }
+}
+
+.close {
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+    top: 20px;
+
+    img {
+        width: 18px;
+    }
+}
+
+:host ::ng-deep .cfe-boton-opcion {
+    &:nth-child(2) {
+        margin-left: 12px;
+    }
+}
+
+:host ::ng-deep .bold {
+    font-family: $font-semi-bold;
+}
+
+.mainColor {
+    background-color: #0075bf;
+    color: aliceblue;
+    border-color: #0075bf;
+}
+
+.cfe-close {
+    position: absolute;
+    top: 25px;
+    right: 40px;
+    cursor: pointer;
+}
+
+.img-custom {
+    height: 40px;
+}

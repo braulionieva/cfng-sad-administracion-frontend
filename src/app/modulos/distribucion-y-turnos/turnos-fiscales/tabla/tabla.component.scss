@@ -1,0 +1,95 @@
+.handCursor {
+  cursor: pointer;
+}
+
+/*********circle***********/
+.novigente {
+  background:  #C83C3C;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+}
+.vigente {
+  background:  #33CC85;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+}
+.p-table {
+  font-size: 11px;
+}
+.fontVigente{
+  font-size: 11px;
+  min-width: 150px;
+}
+.acciones{
+  min-width: 150px;
+}
+:host ::ng-deep .row-edit {
+  background-color: #33CC851A !important;
+}
+
+/*********** Tooltip container *********/
+.tooltip {
+  position: relative;
+  display: inline-block;
+  //border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 510px;
+  color: #000;
+  text-align: left;
+  padding: 10px 0;
+  border-radius: 6px;
+  opacity: 1.0;
+  position: absolute;
+  z-index: 1;
+  top: -20%;
+  left: -20%;
+  margin-top: 15px;
+}
+
+.tooltip:hover .tooltiptext{
+  visibility: visible;
+}
+/**********tooltipo acciones****/
+.tooltip-acciones {
+  position: relative;
+  display: inline-block;
+  //border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+.tooltip-acciones .tooltiptext-acciones {
+  visibility: hidden;
+  width: 250px;
+  color: #000;
+  text-align: left;
+  padding: 10px 0;
+  border-radius: 6px;
+  opacity: 1.0;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: -100px;
+  margin-top: 15px;
+}
+
+.tooltip-acciones :hover .tooltiptext-acciones{
+  visibility: visible;
+}
+/**********head table*******/
+:host::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  font-size: small;
+  text-align: left;
+  padding: 0.5rem 0.5rem;
+}
+
+:host::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  text-align: left;
+  font-size: small;
+  border: 1px solid #dee2e6;
+  border-width: 1px 0 0 0;
+  padding: 0.5rem 0.5rem;
+}

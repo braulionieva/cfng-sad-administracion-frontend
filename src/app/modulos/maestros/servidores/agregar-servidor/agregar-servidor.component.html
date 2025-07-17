@@ -1,0 +1,164 @@
+<p-dialog [(visible)]="displayModal"
+          [modal]="true"
+          [style]="{width: '95vw', height: '100vw', 'border-radius': '20px'}"
+          [baseZIndex]="10000"
+          [draggable]="false"
+          [resizable]="false"
+          [showHeader]="false"
+          [maximizable]="true"
+          (onHide)="updateVisible()">
+
+
+        <h3 [innerHTML]="getTitulo()"></h3>
+
+
+    <form [formGroup]="formularioServidor">
+
+
+       <div class="field">
+        <label for="">Nombre ( Ruta del servidor)</label>
+        <input
+          type="text"
+          pInputText
+          placeholder="Ingrese el Nombre ( Ruta del servidor)"
+          formControlName="nombreServidor"
+        />
+        </div>
+
+        <div class="formgrid grid">
+
+            <div class="field col">
+                <label for="">Tipo de Servidor</label>
+                <p-dropdown [options]="tipoServidor"
+                        optionValue="codigo"
+                        optionLabel="nombre"
+                        emptyMessage="Sin resultados"
+                        placeholder="Departamento"
+                        formControlName="departamento">
+            </p-dropdown>
+            </div>
+            <div class="field col">
+                <label for="">Disponibilidad</label>
+                <p-dropdown [options]="disponibilidad"
+                        optionValue="codigo"
+                        optionLabel="nombre"
+                        emptyMessage="Sin resultados"
+                        placeholder="Provincia"
+                        formControlName="provincia">
+            </p-dropdown>
+            </div>
+            <div class="field col">
+                <label for="">Ambiente</label>
+                <p-dropdown [options]="ambiente"
+                        optionValue="codigo"
+                        optionLabel="nombre"
+                        emptyMessage="Sin resultados"
+                        placeholder="Distrito"
+                        formControlName="distrito">
+            </p-dropdown>
+            </div>
+
+        </div>
+
+        <div class="field">
+            <label for="">Descripción</label>
+            <textarea rows="5"
+                      cols="30"
+                      pInputTextarea
+                      placeholder="Escriba la descripción"
+                      formControlName="descripcion"></textarea>
+        </div>
+
+        <div class="formgrid grid">
+            <div class="field col-2"><label for="">¿Es central?</label></div>
+            <div class="field col-2">
+        <div class="formgroup-inline">
+            <div class="field-radiobutton">
+                <p-radioButton formControlName="central"></p-radioButton>
+                <label for="">SI</label>
+            </div>
+            <div class="field-radiobutton">
+                <p-radioButton formControlName="nocentral"></p-radioButton>
+                <label for="">NO</label>
+            </div>
+        </div>
+        </div>
+
+       </div>
+
+       <div class="formgrid grid">
+        <div class="field col-2"><label for="">¿Contiene la lista de aplicaciones?</label></div>
+        <div class="field col-2">
+    <div class="formgroup-inline">
+        <div class="field-radiobutton">
+            <p-radioButton formControlName="central"></p-radioButton>
+            <label for="">SI</label>
+        </div>
+        <div class="field-radiobutton">
+            <p-radioButton formControlName="nocentral"></p-radioButton>
+            <label for="">NO</label>
+        </div>
+    </div>
+    </div>
+
+   </div>
+
+
+   <div class="formgrid grid">
+    <div class="field col-2"><label for="">¿Contiene la administración de la cuenta?</label></div>
+    <div class="field col-2">
+<div class="formgroup-inline">
+    <div class="field-radiobutton">
+        <p-radioButton formControlName="central"></p-radioButton>
+        <label for="">SI</label>
+    </div>
+    <div class="field-radiobutton">
+        <p-radioButton formControlName="nocentral"></p-radioButton>
+        <label for="">NO</label>
+    </div>
+</div>
+</div>
+
+</div>
+
+
+<div class="formgrid grid">
+    <div class="field col-2"><label for="">Estado</label></div>
+    <div class="field col-2">
+<div class="formgroup-inline">
+    <div class="field-radiobutton">
+        <p-radioButton formControlName="central"></p-radioButton>
+        <label for="">Activo</label>
+    </div>
+    <div class="field-radiobutton">
+        <p-radioButton formControlName="nocentral"></p-radioButton>
+        <label for="">inactivo</label>
+    </div>
+</div>
+</div>
+
+</div>
+
+
+
+<div class="formgrid grid">
+    <div class="p-col mx-2">
+        <p-button styleClass="p-ripple p-element p-button-lg font-semibold w-full h-full p-component "
+                  (onClick)="updateVisible()"
+                  label="Cancelar">
+        </p-button>
+    </div>
+    <div class="p-col">
+        <p-button styleClass="p-ripple p-element p-button-lg font-semibold w-full h-full p-component "
+                  label="Registrar">
+        </p-button>
+    </div>
+</div>
+
+
+
+
+
+</form>
+</p-dialog>
+

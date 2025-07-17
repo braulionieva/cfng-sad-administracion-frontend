@@ -1,0 +1,8 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.cfe-close__document {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}

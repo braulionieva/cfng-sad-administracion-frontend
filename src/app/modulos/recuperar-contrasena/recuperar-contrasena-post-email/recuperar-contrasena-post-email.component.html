@@ -1,0 +1,80 @@
+<div class="login__profile px-4 py-2 flex align-items-center justify-content-center gap-2">
+  <img src="../../../../../assets/images/profile.svg" alt="profile" />
+  <p *ngIf="usuarioRecuperacionPw" class="font-semibold text-md">
+    {{usuarioRecuperacionPw.nombres}}
+  </p>
+</div>
+
+<p class="text-center text-lg mt-3">Cambiar contraseña</p>
+
+<div class="text-xs">
+  <p class="m-0">
+    Para mayor seguridad, se consideran los siguientes criterios:
+  </p>
+  <ul class="p-0 pl-4">
+    <li>Mínimo 8 caracteres</li>
+    <li>Debe tener al menos una letra mayúscula (A, B, C, ...)</li>
+    <li>Debe tener al menos una letra minúscula (a, b, c, ...)</li>
+    <li>Debe tener al menos un número (1, 2, 3, ...)</li>
+    <li>Debe tener al menos un caracter especial ($, &#64;, #, ...)</li>
+  </ul>
+</div>
+
+<p class="p-error block ng-star-inserted text-m mt-2 text-center">{{mensajeErrorPersonalizado}}</p>
+
+<form [formGroup]="formGroup" class="mt-2">
+  <section class="mt-2 flex flex-column gap-2">
+
+    <div class="flex flex-column gap-1" style="height: 80px">
+      <label class="text-sm">Nueva contraseña</label>
+      <p-password formControlName="controlNuevaContrasena" [feedback]="false" [toggleMask]="true" [ngClass]="{
+          'ng-invalid':
+            campoNuevaContrasena.invalid && campoNuevaContrasena.dirty,
+          'ng-dirty': campoNuevaContrasena.dirty
+        }"></p-password>
+      <small style="color: red" *ngIf="campoNuevaContrasena.touched && campoNuevaContrasena.errors?.['required']">Este
+        campo es requerido.</small>
+      <small style="color: red"
+        *ngIf="campoNuevaContrasena.errors?.['spacesError']">{{campoNuevaContrasena.errors?.['spacesError']}}</small>
+      <small style="color: red" *ngIf="campoNuevaContrasena.errors?.['sameAsCurrent']">La contraseña no debe coincidir
+        con la contraseña actual.</small>
+    </div>
+    <div class="flex flex-column gap-1" style="height: 80px">
+      <label class="text-sm">Repita nueva contraseña</label>
+      <p-password formControlName="controlRepetirNuevaContrasena" [feedback]="false" [ngClass]="{
+          'ng-invalid':
+            campoRepetirNuevaContrasena.invalid &&
+            campoRepetirNuevaContrasena.dirty,
+          'ng-dirty': campoRepetirNuevaContrasena.dirty
+        }"></p-password>
+      <small style="color: red"
+        *ngIf="campoRepetirNuevaContrasena.touched && campoRepetirNuevaContrasena.errors?.['required']">Este campo es
+        requerido.</small>
+      <small style="color: red"
+        *ngIf="campoRepetirNuevaContrasena.errors?.['spacesError']">{{campoRepetirNuevaContrasena.errors?.['spacesError']}}</small>
+      <small style="color: red" *ngIf="campoRepetirNuevaContrasena.errors?.['passwordsDoNotMatch']">La contraseña
+        ingresada no coincide.</small>
+    </div>
+
+    <p class="font-bold m-0">Nivel de seguridad:</p>
+    <div class="mt-1">
+      <ng-container *ngIf="campoNuevaContrasena?.value">
+        <div class="grid justify-content-between mx-5">
+          <div class="col-4">
+            <p class="font-semibold" [style]="{ color: valoresProgreso.color }">
+              {{ valoresProgreso.text }}
+            </p>
+          </div>
+          <div class="col-8 flex flex-column justify-content-center">
+            <p-progressBar [value]="valoresProgreso.number" [showValue]="false" [color]="valoresProgreso.color"
+              [style]="{ height: '8px' }"></p-progressBar>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <p-button [style]="{ width: '100%' }" label="Cambiar contraseña" styleClass="cfe-boton-lg cfe-boton"
+      (onClick)="enviarCambioContrasena()" [disabled]="formGroup.invalid || !valoresProgreso.success" />
+  </section>
+
+</form>

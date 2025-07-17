@@ -1,0 +1,39 @@
+<div class="cfe-container">
+    <div class="w-full">
+      <div class="tituloPage">Gestionar Usuarios ({{ users.length }})</div>
+      <app-filtros-usuario
+      (filter)="onFilter($event)"
+      >
+      </app-filtros-usuario>
+      <br />
+    </div>
+      <div class="flex justify-content-end">
+        <p-button
+        [icon]=""
+          styleClass="btn-mpfn-sad-cancel mr-3"
+          label=""
+          (onClick)="openCargaMasiva()"
+        >
+        <img [src]="icon('data-upload')" height="18px" alt=""/>&nbsp;Carga Masiva
+        </p-button>
+
+        <p-button
+          styleClass="btn-mpfn-sad-cancel mr-3"
+          label=""
+          (onClick)="exportarExcel()"
+          [disabled]="users?.length==0"
+        >
+        <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px"/>Exportar Excel
+        </p-button>
+
+        <p-button
+          styleClass="btn-mpfn-sad-prime"
+          label="Agregar"
+          (onClick)="agregarUsuario()"
+        >
+        </p-button>
+      </div>
+    <br />
+    <app-tabla-list-usuario [users]="users" (refrescarTabla)="refrescarTabla()"></app-tabla-list-usuario>
+    <app-anadir-perfiles></app-anadir-perfiles>
+</div>

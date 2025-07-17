@@ -1,0 +1,166 @@
+<div class="agregar-editar-usuario-modal-container">
+  <div class="close-wrapper p-2">
+    <h5>Editar despacho</h5>
+    <div class="cfe-close__document" (click)="closeAction()"
+         (keydown.enter)="$event.preventDefault()"
+         (keydown.space)="$event.preventDefault()"
+    >
+      <img [src]="icon('close_new')" class="img-custom" height="35px" alt=""/>
+    </div>
+  </div>
+
+  <form [formGroup]="formGroupDespacho" class="px-4 pb-2">
+
+    <div class="grid">
+      <div class="col-12">
+        <div class="flex flex-column gap-2">
+          <label for="nombre"><b>Nombre</b></label>
+          <input
+            type="text"
+            pInputText
+            class="p-inputtext w-full despacho"
+            placeholder="Ingrese nombre"
+            formControlName="nombre"
+            id="nombre" maxlength="100"
+          />
+          <div>
+            <div style="float: left;">
+              <small class="error-message" *ngIf="nombre.touched&&nombre.errors?.['required']">
+                {{ getErrorMessage('nombre', 'required') }}
+              </small>
+              <small class="error-message" *ngIf="nombre.invalid&&nombre.errors?.['maxlength']">
+                {{ getErrorMessage('nombre', 'maxlength') }}
+              </small>
+              <small class="error-message" *ngIf="nombre.invalid&&nombre.errors?.['pattern']">
+                {{ getErrorMessage('nombre', 'pattern') }}
+              </small>
+            </div>
+            <div style="text-align: right;">
+              <small>{{ getLength('nombre') }}/100</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="coDistritoFiscal"><b>Distrito Fiscal</b></label>
+          <p-dropdown class="despacho" formControlName="coDistritoFiscal" id="coDistritoFiscal"
+                      placeholder="Seleccionar" [options]="distritosFiscales"
+                      appendTo="body" emptyMessage="No se encontraron registros"
+
+          ></p-dropdown>
+        </div>
+
+      </div>
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="coSede"><b>Sede</b></label>
+          <p-dropdown class="despacho" formControlName="coSede" id="coSede"
+                      placeholder="Seleccionar" [options]="sedes"
+                      optionLabel="nombre" optionValue="codigo"
+                      appendTo="body" emptyMessage="No se encontraron registros"
+
+          ></p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid mt-2">
+      <div class="col-12 ">
+        <div class="flex flex-column gap-2">
+          <label for="coDependencia"><b>Fiscalía</b></label>
+          <p-dropdown class="despacho" formControlName="coDependencia" id="coDependencia"
+                      placeholder="Seleccionar" [options]="dependencias"
+                      optionLabel="nombre" optionValue="codigo"
+                      appendTo="body" emptyMessage="No se encontraron registros"
+          ></p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col">
+        <div class="mt-2"><b>Código de Despacho</b></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="codigoDependencia" class="font-bold">Código de Fiscalía</label>
+          <input type="text" class="despacho" formControlName="codigoDependencia" id="codigoDependencia"
+                 pInputText class="p-inputtext w-full" placeholder="Ingrese código de fiscalía"
+          />
+        </div>
+
+      </div>
+      <div style="align-content: center;">
+        <i style="font-size: 0.5rem" class="pi pi-minus"></i>
+        <br>
+      </div>
+
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="nuDespacho" class="font-bold">N° de despacho</label>
+          <input type="text"
+                 formControlName="nuDespacho" id="nuDespacho"
+                 pInputText class="p-inputtext w-full"
+                 placeholder="Ingrese N° de despacho" maxlength="11"
+                 (keypress)="validOnlyNumbers($event)"/>
+                 
+          <div style="text-align: right;">
+            <div style="float: left;">
+              <div
+                *ngIf="formGroupDespacho.get('nuDespacho').invalid&&(formGroupDespacho.get('nuDespacho').dirty||formGroupDespacho.get('nuDespacho').touched)">
+                <small class="error-message"
+                       *ngIf="formGroupDespacho.get('nuDespacho').errors?.['required']">
+                  Campo requerido</small>
+                <small class="error-message"
+                       *ngIf="formGroupDespacho.get('nuDespacho').errors?.['pattern']">
+                  Por favor, ingrese solo números</small>
+                <small class="error-message"
+                       *ngIf="formGroupDespacho.get('nuDespacho').errors?.['maxlength']">
+                  Excede límite(11) de campo</small>
+              </div>
+            </div>           
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="grid">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="coTopologia"><b>Topología</b></label>
+
+          <p-dropdown formControlName="coTopologia" id="coTopologia" placeholder="Seleccionar"
+                      [options]="topologias"
+                      appendTo="body" emptyMessage="No se encontraron registros"
+          ></p-dropdown>
+          <small class="error-message"
+                 *ngIf="formGroupDespacho.get('coTopologia').invalid && formGroupDespacho.get('coTopologia').touched">
+            Campo requerido</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-content-center my-4">
+      <p-button (onClick)="cierraUpdAppModal()"
+                styleClass="btn-mpfn-sad-cancel"
+      >Cancelar
+      </p-button>
+      <p-button
+        (onClick)="editarDespacho()"
+        styleClass="btn-mpfn-sad-prime ml-3"
+        [disabled]="formGroupDespacho.invalid"
+      >Guardar
+      </p-button>
+    </div>
+  </form>
+</div>
+

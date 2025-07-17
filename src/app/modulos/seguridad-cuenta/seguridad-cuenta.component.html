@@ -1,0 +1,145 @@
+<div class="cuenta">
+  <div class="cuenta__card">
+    <div class="cuenta__card--header">
+      <h5 class="text-center m-0">Seguridad de la cuenta</h5>
+    </div>
+    <div class="cuenta__card--content">
+      <p class="text-center my-5 text-lg">
+        Configure los controles de seguridad de su cuenta
+      </p>
+      <!-- Contraseña -->
+      <div class="cuenta__card">
+        <div class="cuenta__card--header">Contraseña</div>
+        <div class="cuenta__card--content">
+          <div class="grid">
+            <div class="col-9">
+              <p class="font-bold">
+                Ultimo cambio: {{ fecha | date : "dd/MM/yyyy HH:mm" }}
+              </p>
+              <p>
+                Nuevo cambio programado: A partir del
+                {{ fechaNueva | date : "dd/MM/yyyy HH:mm" }} Por seguridad, se
+                recomienda cambiar su contraseña regularmente. Al cambiarla, se
+                solicitará una contraseña con características seguras.
+              </p>
+            </div>
+            <div class="col-3 flex flex-column gap-3 align-items-end">
+              <p-button label="Cambiar contraseña" icon="pi pi-key"
+                styleClass="cfe-boton-lg cfe-boton cfe-boton-icono-derecha"
+                (onClick)="onOpenModalCambiarContrasena()" />
+              <p-button label="Historial" styleClass="cfe-boton-lg cfe-boton-secondary"
+                (onClick)="onOpenModalHistorialContrasena()" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Correo personal -->
+      <div class="cuenta__card">
+        <div class="cuenta__card--header">Correo personal</div>
+        <div class="cuenta__card--content">
+          <div class="grid">
+            <div class="col-9">
+              <div class="flex gap-2 align-items-center mb-3">
+                <p class="font-semibold m-0">{{ correoPersonal }}</p>
+                <img *ngIf="correoPersonalValidado" src="assets/icons/success.svg" alt="Success Icon"
+                  style="width: 1.4rem" />
+              </div>
+              <p>
+                El proceso de validación del correo se realiza con la finalidad
+                de asegurarnos que usted sea el titular de la cuenta.
+              </p>
+              <div class="flex gap-3 mt-5">
+                <p-inputSwitch [formControl]="correoPersonalSwitch"
+                  (onChange)="onCambiarEstadoCorreoPersonalSwitch($event)"></p-inputSwitch>
+                <p class="text-lg">Iniciar sesión con Google</p>
+              </div>
+            </div>
+            <div class="col-3 flex flex-column gap-3 align-items-end" [ngStyle]="
+                correoPersonalValidado ? { 'justify-content': 'flex-end' } : {}
+              ">
+              <p-button *ngIf="!correoPersonalValidado" label="Validar correo" icon="pi pi-envelope
+                  " styleClass="cfe-boton-lg cfe-boton-secondary cfe-boton-icono-derecha"
+                (onClick)="onOpenModalValidacionCorreo('personal')" />
+              <p-button label="Historial" styleClass="cfe-boton-lg cfe-boton-secondary"
+                (onClick)="onOpenModalHistorialValidacionCorreo('personal')" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Correo institucional -->
+      <div class="cuenta__card">
+        <div class="cuenta__card--header">Correo institucional</div>
+        <div class="cuenta__card--content">
+          <div class="grid">
+            <div class="col-9">
+              <div class="flex gap-2 align-items-center mb-3">
+                <p class="font-semibold m-0">{{ correoInstitucional }}</p>
+                <img *ngIf="correoInstitucionalValidado" src="assets/icons/success.svg" alt="Success Icon"
+                  style="width: 1.4rem" />
+              </div>
+              <p>
+                El proceso de validación del correo se realiza con la finalidad
+                de asegurarnos que usted sea el titular de la cuenta.
+              </p>
+              <div class="flex gap-3 mt-5">
+                <p-inputSwitch [formControl]="correoInstitucionalSwitch"
+                  (onChange)="onCambiarEstadoCorreoInstitucionalSwitch($event)"></p-inputSwitch>
+                <p class="text-lg">Iniciar sesión con Google</p>
+              </div>
+            </div>
+            <div class="col-3 flex flex-column gap-3 align-items-end" [ngStyle]="
+                correoPersonalValidado ? { 'justify-content': 'flex-end' } : {}
+              ">
+              <p-button *ngIf="!correoInstitucionalValidado" label="Validar correo" icon="pi pi-envelope
+                  " styleClass="cfe-boton-lg cfe-boton-secondary cfe-boton-icono-derecha"
+                (onClick)="onOpenModalValidacionCorreo('institucional')" />
+              <p-button label="Historial" styleClass="cfe-boton-lg cfe-boton-secondary" (onClick)="
+                  onOpenModalHistorialValidacionCorreo('institucional')
+                " />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Autenticación con doble factor (2FA) -->
+      <div class="cuenta__card">
+        <div class="cuenta__card--header">
+          Autenticación con doble factor (2FA)
+        </div>
+        <div class="cuenta__card--content">
+          <div class="grid">
+            <div class="col-9">
+              <p>
+                La autenticación en dos pasos evita que otras personas accedan a
+                su cuenta; incluso hayan averiguado la contraseña utilizada. De
+                esta forma, incluso si tu dispositivo se pierde, siempre se
+                tiene esta autenticación al iniciar sesión.
+              </p>
+              <div class="flex gap-3 mt-5">
+                <p-inputSwitch [formControl]="estado2FASwitch"
+                  (onChange)="onCambiarEstado2FASwitch($event)"></p-inputSwitch>
+                <p class="text-lg">Autenticación 2FA</p>
+              </div>
+            </div>
+            <div class="col-3 flex flex-column gap-3 align-items-end justify-content-end">
+              <p-button label="Historial" styleClass="cfe-boton-lg cfe-boton-secondary"
+                (onClick)="onOpenModalHistorialEstados2FA()" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="infoUsuario">
+  <app-cambiar-contrasena />
+  <app-historial-cambios-contrasena />
+
+  <ng-container *ngIf="correoPersonal || correoInstitucional">
+    <app-validacion-correo (onValidarCorreoEstado)="correoEstadoValidado($event)" />
+  </ng-container>
+
+  <app-historial-validacion-correo      />
+  <app-estado-autenticacion-doble-factor/>
+  <app-historial-estados-doble-factor   />
+</ng-container>

@@ -1,0 +1,63 @@
+<div class="detalle-menu-modal-container">
+  <h3>Resetear Contraseña</h3>
+  <div class="cfe-close__document"
+       (click)="close()"
+       (keydown.enter)="close()"
+  >
+    <img [src]="icon('close_new')" class="img-custom" alt="Cerrar" al/>
+  </div>
+<form [formGroup]="resetearContrasenaForm" (ngSubmit)="resetearContrasena()">
+  <div class="grid">
+    <div class="col-12" style="margin-left: 20px">
+      <p style="margin-bottom: 5px "></p>
+      <p style="margin-bottom: 5px"><b>Nombre Completo:&nbsp;&nbsp;</b>{{trabajor.nombrePersona}}</p>
+      <p style="margin-bottom: 5px"><b>Tipo de documento:&nbsp;&nbsp;</b>{{trabajor.descripcionTipoDocumentoIdentidad}}</p>
+      <p style="margin-bottom: 5px"><b>Número de documento:&nbsp;&nbsp;</b>{{trabajor.numeroDocumentoIdentidad}}</p>
+      <p><b>Relación Laboral:&nbsp;&nbsp;</b>{{trabajor.relacionLaboral}}</p>
+    </div>
+    <div class="col-12" style="margin-left: 20px;">
+
+      <div class="alert alert-warning" style="display: flex; align-items: center">
+        <div style="width:4%; display:inline-block;">
+          <i class="pi pi-exclamation-circle"></i>
+        </div>
+        <div style="width:96%; display:inline-block;">
+          <p><b>Nota:</b> {{ getNotaResetearContrasena() }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12" style="margin-left: 20px">
+      <p><b>Seleccione el correo electrónico:</b></p>
+    </div>
+    <div class="col-12" style="margin-left: 30px">
+      <div *ngFor="let correoTrabajador of correosTrabajador" class="field-checkbox">
+        <ng-container *ngIf="correoTrabajador.name">
+          <p-radioButton [inputId]="correoTrabajador.key" [value]="correoTrabajador" formControlName="correo"></p-radioButton>
+          <label [for]="correoTrabajador.key" class="ml-2">{{ correoTrabajador.name }}</label>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-12" style="margin-left: 20px">
+      <p-checkbox
+      inputId="aceptaReseteo"
+      formControlName="aceptaReseteo"
+      [binary]="true"
+      ></p-checkbox>
+      <label for="aceptaReseteo">&nbsp;&nbsp;Acepto reseteo de contraseña de usuario</label>
+    </div>
+    <div class="col-12">
+      <div class="flex justify-content-center">
+        <p-button (click)="close()"
+                  (keydown.enter)="close()"
+                  styleClass="btn-mpfn-default font-semibold text-center px-8 py-2"
+                  label="Cancelar"></p-button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <p-button type="submit" styleClass="btn-mpfn-primary font-semibold text-center px-8 py-2"
+          [disabled]="!validaResetearContrasenaForm()"
+          label="Resetear contraseña"></p-button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>

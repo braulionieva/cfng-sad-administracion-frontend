@@ -1,0 +1,45 @@
+<form [formGroup]="formularioFiltros">
+  <div class="filter">
+    <div class="filter__actions">
+      <div class="filter__dropdown">
+        <p-dropdown
+          [options]="categories"
+          optionLabel="nombreTipoEspecialidad"
+          optionValue="idTipoEspecialidad"
+          placeholder="Categoria"
+          formControlName="tipoEspecialidad" emptyMessage="No se encontraron registros"
+          (onChange)="changeCategory($event)"
+        ></p-dropdown>
+      </div>
+      <div class="filter__dropdown">
+        <p-dropdown
+          [options]="specialties"
+          optionLabel="nombreEspecialidad"
+          optionValue="idEspecialidad"
+          placeholder="Especialidad"
+          formControlName="idEspecialidad" emptyMessage="No se encontraron registros"
+          (onChange)="changeSpecialty($event)"
+        ></p-dropdown>
+      </div>
+    </div>
+
+    <p-button
+      styleClass="cfe-boton-lg cfe-boton-secondary"
+      label="Limpiar filtros"
+      (click)="onClickCleanFilters()"
+    ></p-button>
+  </div>
+</form>
+<div class="options">
+  <p-button
+    icon="pi pi-file-excel"
+    styleClass="cfe-boton-lg cfe-boton-secondary cfe-boton-icono-derecha"
+    label="Exportar Excel"
+    (click)="exportarExcel($event)"
+  ></p-button>
+  <p-button
+    label="Agregar"
+    styleClass="btn-mpfn-sad-prime"
+    (click)="showModalCreationPlazo()"
+  ></p-button>
+</div>

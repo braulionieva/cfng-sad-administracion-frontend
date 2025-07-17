@@ -1,0 +1,116 @@
+<div class="agregar-editar-usuario-modal-container">
+  <div class="close-wrapper p-2">
+    <h6>{{ modalTitle }}</h6>
+    <div class="cfe-close__document" (click)="closeAction()">
+      <img [src]="icon('close_new')" class="img-custom" height="35px" alt="img"/>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="formDepUsGroup" class="mx-3 mt-2">
+  <div class="grid">
+    <div class="col">
+
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-6">
+      <div class="flex flex-column gap-2">
+        <label htmlFor="nuVDocumento" class="font-bold">DNI:</label>
+        <input id="nuVDocumento" type="text" pInputText formControlName="nuVDocumento"/>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="flex flex-column gap-2">
+        <label htmlFor="idNDistritoFiscal" class="font-bold">Distrito Fiscal:</label>
+        <p-dropdown [options]="distritoFiscalLst" formControlName="idNDistritoFiscal"
+                    placeholder="Seleccionar" [required] optionLabel="noVDistritoFiscal"
+                    optionValue="idNDistritoFiscal"
+                    (onChange)="onChangeDistritoFiscal($event.value)"
+                    appendTo="body" emptyMessage="No se encontraron registros"
+        ></p-dropdown>
+        <small id="idNDistritoFiscal-help"></small>
+      </div>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-6">
+      <div class="flex flex-column gap-2">
+        <label htmlFor="coVSede" class="font-bold">Sede:</label>
+        <p-dropdown [options]="sedeLst" formControlName="coVSede" placeholder="Seleccionar" [required]
+                    optionLabel="noVSede" optionValue="coVSede"
+                    [ngClass]="{'p-disabled': formDepUsGroup.get('coVSede').disabled}"
+                    (onChange)="onChangeSedeForm($event.value)"
+                    appendTo="body" emptyMessage="No se encontraron registros"
+        ></p-dropdown>
+        <div>
+          <div class="float-left">
+            <small class="label-error"
+                   *ngIf="formDepUsGroup.get('coVSede').touched&&formDepUsGroup.get('coVSede').errors?.['required']"
+            >Este campo es requerido</small>
+          </div>
+          <div class="float-right"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="flex flex-column gap-2">
+        <label htmlFor="coVEntidad" class="font-bold">Fiscalía:</label>
+        <p-dropdown [options]="dependenciaLst" formControlName="coVEntidad" placeholder="Seleccionar"
+                    [required] optionLabel="noVEntidad" optionValue="coVEntidad"
+                    [ngClass]="{'p-disabled': formDepUsGroup.get('coVEntidad').disabled}"
+                    (onChange)="onChangeFiscaliaForm($event.value)"
+                    appendTo="body" emptyMessage="No se encontraron registros"
+        ></p-dropdown>
+        <small id="coVEntidad-help"></small>
+      </div>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="col-6">
+      <div class="flex flex-column gap-2">
+        <label htmlFor="coVDespacho" class="font-bold">Despacho:</label>
+        <p-dropdown [options]="despachoLst" formControlName="coVDespacho" placeholder="Seleccionar"
+                    [required] optionLabel="noVDespacho" optionValue="coVDespacho"
+                    [ngClass]="{'p-disabled': formDepUsGroup.get('coVDespacho').disabled}"
+                    appendTo="body" emptyMessage="No se encontraron registros"
+        ></p-dropdown>
+        <small id="coVDespacho-help"></small>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="flex flex-column gap-2">
+        <label htmlFor="idNCargo" class="font-bold">Cargo:</label>
+        <p-dropdown [options]="cargoLst" formControlName="idNCargo" placeholder="Seleccionar" [required]
+                    optionLabel="noVCargo" optionValue="idNCargo"
+                    appendTo="body" emptyMessage="No se encontraron registros"
+        ></p-dropdown>
+        <small id="idNCargo-help"></small>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-content-center mt-4">
+    <p-button (onClick)="cancelarAddDepUsSend()"
+              styleClass="btn-mpfn-sad-cancel"
+    >Cancelar
+    </p-button>
+    <ng-container *ngIf="isInsertOrUpdateFormDepUs">
+      <p-button
+        (onClick)="agregarDependenciaUsSend()"
+        styleClass="btn-mpfn-sad-prime ml-3"
+        [disabled]="formDepUsGroup.invalid"
+      >Agregar
+      </p-button>
+    </ng-container>
+    <ng-container *ngIf="!isInsertOrUpdateFormDepUs">
+      <p-button
+        (onClick)="actualizarAddDepUsSend()"
+        styleClass="btn-mpfn-sad-prime ml-3"
+        [disabled]="formDepUsGroup.invalid || formDepUsGroup.pristine"
+      >Actualizar
+      </p-button>
+    </ng-container>
+
+  </div>
+</form>

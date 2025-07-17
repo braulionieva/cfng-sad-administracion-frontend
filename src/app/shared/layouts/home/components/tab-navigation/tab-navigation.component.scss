@@ -1,0 +1,111 @@
+
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.version_ {
+    width: var(--version-width);
+    text-align: right;
+    font-size: 1em;
+    font-family: $font-regular;
+    color: $gray4;
+    justify-content: end;
+    border: 1px;
+}
+.tab_navigation{
+    background-color: $primary;
+    height: 30px;
+    padding-right: 16px;
+    justify-content: end;
+    border: 1px;
+}
+.tab_navigation__container {
+
+    width: 100%;
+    background-color: $primary;
+    color: $white;
+    position: relative;
+
+   /* .toggle {
+        cursor: pointer;
+        text-align: right;
+
+        i {
+            transition: all .5s ease;
+            color: $white;
+            font-size: 22px;
+        }
+    }
+*/
+    .tab_navigation__content {
+        transition: all .5s;
+        background-color: $primary;
+
+        @media (max-width: $tablet) {
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            z-index: 110;
+
+       /*     &.open {
+                height: 400px;
+            }
+
+*/
+        }
+
+        width: calc(100% - var(--version-width));
+
+        .tab_navigation__item {
+            @media (max-width: $tablet) {
+                font-size: 1rem;
+            }
+
+            font-size: 1.35em;
+            padding: 18px 20px;
+            font-family: $font-light;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: $white;
+            transition: 300ms background-color ease;
+
+            img {
+                width: 22px;
+                margin-right: 16px;
+            }
+
+            .counter {
+                font-family: $font-semi-bold;
+                color: $white;
+                background-color: $secondary;
+                font-size: 0.7em;
+                min-width: 22px;
+                height: 22px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 3px;
+                margin-left: 15px;
+            }
+
+            &.route_active {
+                font-family: $font-semi-bold;
+                background-color: $blue-focused;
+            }
+
+            &:hover {
+                background-color: $blue-hover;
+            }
+        }
+    }
+
+    .version {
+        width: var(--version-width);
+        text-align: right;
+        font-size: 1em;
+        font-family: $font-regular;
+        color: $gray4;
+    }
+}

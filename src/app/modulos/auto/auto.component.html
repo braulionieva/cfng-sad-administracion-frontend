@@ -1,0 +1,22 @@
+<p-toast></p-toast>
+<p class="text-5xl font-bold text-center">SAD</p>
+<div [ngClass]="{ 'auto-login': sinAcceso }">
+  <div *ngIf="!sinAcceso" class="lds-ellipsis" style="margin: 0 auto">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div *ngIf="sinAcceso" class="icon-warning flex justify-content-center">
+    <fn-icon
+      [ico]="obtenerIcono('iInfoCircle')"
+      height="3em"
+      [color]="'#D9A927'"
+      style="transform: rotate(180deg)"
+    ></fn-icon>
+  </div>
+  <p style="text-align: center" *ngIf="!sinAcceso">Iniciando sesión ...</p>
+  <p class="sin-acceso" *ngIf="sinAcceso">
+    No cuenta con acceso. Por favor, comuníquese con su administrador.
+  </p>
+</div>

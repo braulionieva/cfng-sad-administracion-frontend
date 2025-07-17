@@ -1,0 +1,25 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+//--------------------------------
+//Alertas solo para baja alta bloqueo desbloqueo
+//--------------------------------
+.alert {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.alert-warning {
+  background-color: #F7EED6;
+}
+
+.alert i {
+  font-size: 1.2rem;
+  color: rgb(175, 108, 25);
+}
+
+.alert b {
+  padding-left: 5px;
+}
+
+//--------------------------------

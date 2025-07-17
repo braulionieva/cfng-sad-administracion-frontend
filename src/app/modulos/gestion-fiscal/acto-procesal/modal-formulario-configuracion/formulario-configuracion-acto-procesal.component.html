@@ -1,0 +1,172 @@
+<div class="agregar-configuracion-modal-container">
+  <h3>Nueva configuración</h3>
+  <span class="close" (click)="close()">
+    <img [src]="icon('close_new')" alt="Close Icon" />
+  </span>
+  <div class="grid mt-3">
+    <div class="col-12 mb-3 mt-3">
+      <label for="extras" class="font-label"
+        >Seleccione si es para carpeta principal o de tipo cuaderno</label
+      >
+    </div>
+  </div>
+  <form
+    [formGroup]="configuracionForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="grid">
+      <div class="col-12">
+        <label
+          for="extras"
+          class="font-label mr-2"
+          style="vertical-align: super"
+        >Carpeta principal</label
+        >
+        <p-inputSwitch
+          formControlName="cuadernoChecked"
+          (onChange)="onChangeCuaderno($event)"
+        ></p-inputSwitch>
+        <label
+          for="extras"
+          class="font-label ml-2"
+          style="vertical-align: super"
+        >Cuaderno</label
+        >
+      </div>
+    </div>
+    <div class="grid" *ngIf="isCuadernoChecked">
+      <div class="col-6">
+        <div class="flex flex-column gap-2">
+          <label for="extras" class="font-label">Tipo Cuaderno</label>
+          <p-dropdown
+            [options]="carpetaCuaderno"
+            formControlName="idCarpetaCuaderno"
+            placeholder="Seleccione carpeta o tipo de cuaderno"
+            optionLabel="nombre"
+            optionValue="id"
+            class="p-inputtext-lg text-lg w-full"
+          ></p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="extras" class="font-label">Tipo Especialidad</label>
+          <p-dropdown
+            [options]="tipoEspecialidad"
+            formControlName="idTipoEspecialidad"
+            placeholder="Seleccione el tipo especialidad"
+            optionLabel="nombre"
+            optionValue="id"
+            class="p-inputtext-lg text-lg w-full"
+          ></p-dropdown>
+        </div>
+
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="extras" class="font-label">Especialidad</label>
+          <p-dropdown
+            [options]="especialidad"
+            formControlName="idEspecialidad"
+            placeholder="Seleccione la especialidad"
+            optionLabel="nombre"
+            optionValue="codigo"
+            class="p-inputtext-lg text-lg w-full"
+          ></p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="extras" class="font-label">Jerarquía</label>
+          <p-dropdown
+            [options]="jerarquia"
+            formControlName="idJerarquia"
+            placeholder="Seleccione la jerarquía"
+            optionLabel="nombre"
+            optionValue="id"
+            class="p-inputtext-lg text-lg w-full"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="extras" class="font-label">Tipo proceso</label>
+          <p-dropdown
+            [options]="tipoProceso"
+            formControlName="idTipoProceso"
+            placeholder="Seleccione el tipo proceso"
+            optionLabel="nombre"
+            optionValue="id"
+            class="p-inputtext-lg text-lg w-full"
+            (onChange)="onChangeTipoProceso($event)"
+          ></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="extras" class="font-label">Subtipo proceso</label>
+          <p-dropdown
+            [options]="subTipoProceso"
+            formControlName="idSubTipoProceso"
+            placeholder="Seleccione el subtipo proceso"
+            optionLabel="nombre"
+            optionValue="id"
+            class="p-inputtext-lg text-lg w-full"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="extras" class="font-label">Etapa</label>
+          <p-dropdown
+            [options]="etapas"
+            formControlName="idEtapa"
+            placeholder="Seleccione la etapa"
+            optionLabel="nombre"
+            optionValue="id"
+            class="p-inputtext-lg text-lg w-full"
+          ></p-dropdown>
+        </div>
+      </div>
+    </div>
+    <!--<div class="grid">
+      <div class="grid mt-3">
+        <div class="col">
+          <p-button
+            styleClass="p-button-lg w-full font-semibold p-button-secondary"
+            label="Cancelar"
+            (click)="close()"
+          ></p-button>
+        </div>
+        <div class="col">
+          <p-button
+            type="submit"
+            styleClass="p-button-lg w-full font-semibold p-button-primary"
+            [disabled]="configuracionForm.invalid"
+            label="Agregar"
+          ></p-button>
+        </div>
+      </div>
+    </div>-->
+
+    <div class="grid">
+      <div class="col">
+        <div class="flex justify-content-center mt-4">
+          <p-button (onClick)="close()" styleClass="btn-mpfn-sad-cancel">Cancelar
+          </p-button>
+          <p-button type="submit" styleClass="btn-mpfn-sad-prime ml-3"
+                    [disabled]="configuracionForm.invalid">Guardar
+          </p-button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

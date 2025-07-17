@@ -1,0 +1,29 @@
+<form [formGroup]="nivelTramiteFormGroup" class="mb-4">
+  <label class="p-0 mb-3" [ngClass]="{ 'p-disabled': accionPlazo === 'editar' }"
+    ><b>Nivel del plazo:</b></label
+  >
+  <div class="col-12 flex gap-5">
+    <label [ngClass]="{ 'p-disabled': accionPlazo === 'editar' }">
+      <b>Nivel de etapa</b>
+    </label>
+    <p-inputSwitch formControlName="nivelPlazo"></p-inputSwitch>
+    <label [ngClass]="{ 'p-disabled': accionPlazo === 'editar' }"
+      ><b>Nivel de tramite</b></label
+    >
+  </div>
+</form>
+
+<ng-container *ngIf="!campoNivelPlazo.value">
+  <app-seleccion-plazo-configurado
+    [dropdownsData]="dropdownsData"
+    [plazoAplica]="plazoAplica"
+  ></app-seleccion-plazo-configurado>
+</ng-container>
+
+<ng-container *ngIf="campoNivelPlazo.value">
+  <app-seleccion-tramite
+    [dropdownsData]="dropdownsData"
+  ></app-seleccion-tramite>
+</ng-container>
+
+<!-- {{ nivelTramiteFormGroup.value | json }} -->

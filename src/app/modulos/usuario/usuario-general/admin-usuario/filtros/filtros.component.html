@@ -1,0 +1,206 @@
+<div>
+  <form [formGroup]="filtroForm" class="form-container-filter">
+    <div class="grid">
+      <div class="col-12">
+        <div class="flex m-1">
+          <input
+            pInputText
+            class="p-inputtext-lg cfe-input-lg"
+            placeholder="Buscar por Nombre completo"
+            formControlName="nombre"
+            (input)="buscarUsuarios()"
+          />
+          <p-button
+            styleClass="p-button-lg btn-mpfn-toggle p-2 ml-2 py-2 px-4 font-semibold"
+            [icon]="getIcon()"
+            (onClick)="toggleFilters()"
+          ></p-button>
+          <p-button
+            label="Limpiar Filtros"
+            styleClass="btn-mpfn-sad-cancel h-56 ml-2"
+            (onClick)="onClearFilters()"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="showAdditionalFilters">
+      <div class="grid">
+        <div class="col-6">
+          <div class="flex flex-column gap-2">
+            <p-dropdown
+              [options]="opcionesDocumento"
+              formControlName="tipoDocumento"
+              placeholder="Buscar por tipo de documento"
+              optionLabel="tipoDocumento"
+              optionValue="idTipoDocumento"
+              emptyMessage="Sin resultados"
+              (onChange)="onChangeTipoDocumento($event)"
+              class="p-inputtext-lg py-3 text-lg w-full"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="flex flex-column gap-2">
+            <input
+              pInputText
+              class="p-inputtext p-inputtext-lg cfe-input-lg mt-3 mb-3 ml-2"
+              placeholder="Buscar por número de documento"
+              formControlName="numeroDocumento"
+              (input)="buscarUsuarios()"
+              maxlength="{{ maxLongitudActual }}"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <p-dropdown
+              [options]="distritosFiscalesList"
+              formControlName="distritoFiscal"
+              placeholder="Buscar por distrito fiscal"
+              emptyMessage="Sin resultados"
+              optionLabel="nombre"
+              optionValue="id"
+              (onChange)="onChangeDistritoFiscal($event)"
+              class="p-inputtext-lg py-3 text-lg w-full"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <p-dropdown
+              [options]="sedesList"
+              formControlName="sede"
+              placeholder="Buscar por sede"
+              emptyMessage="Sin resultados"
+              optionLabel="nombreSede"
+              optionValue="codSede"
+              (onChange)="onChangeSedes($event)"
+              class="p-inputtext-lg py-3 text-lg w-full ml-2"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <p-dropdown
+              [options]="tipoDependenciasList"
+              formControlName="tipoDependencia"
+              placeholder="Buscar por tipo de dependencia"
+              emptyMessage="Sin resultados"
+              optionLabel="nombre"
+              optionValue="id"
+              (onChange)="onChangeTipoDependencia($event)"
+              class="p-inputtext-lg py-3 text-lg w-full ml-2"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <p-dropdown
+              [options]="dependenciasList"
+              formControlName="dependencia"
+              placeholder="Buscar por dependencia"
+              emptyMessage="Sin resultados"
+              optionLabel="nombre"
+              optionValue="codigo"
+              (onChange)="onChangeDependencias($event)"
+              class="p-inputtext-lg py-3 text-lg w-full"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <p-dropdown
+              [options]="despachosList"
+              formControlName="despacho"
+              placeholder="Buscar por despacho"
+              emptyMessage="Sin resultados"
+              optionLabel="noVDespacho"
+              optionValue="coVDespacho"
+              (onChange)="buscarUsuarios()"
+              class="p-inputtext-lg py-3 text-lg w-full ml-2"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <p-dropdown
+              [options]="relacionesLaboralesList"
+              formControlName="relacionLaboral"
+              placeholder="Buscar por relación laboral"
+              emptyMessage="Sin resultados"
+              optionLabel="label"
+              optionValue="value"
+              (onChange)="buscarUsuarios()"
+              class="p-inputtext-lg py-3 text-lg w-full ml-2"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex m-4 ml-0">
+        <div class="flex gap-3">
+          <b>¿Bloqueado?</b>
+          <div class="flex gap-1">
+            <input
+              styleClass="radio-style"
+              id="optionBloqueadoSi"
+              type="radio"
+              class="custom-control-input"
+              value="1"
+              name="optionBloqueado"
+              (change)="buscarUsuarios()"
+              formControlName="optionBloqueado"
+            />
+            <label class="ml-2" for="optionBloqueado">Si</label>
+          </div>
+          <div class="flex gap-1">
+            <input
+              styleClass="radio-style"
+              id="optionBloqueadoNo"
+              type="radio"
+              class="custom-control-input"
+              value="0"
+              name="optionBloqueado"
+              (change)="buscarUsuarios()"
+              formControlName="optionBloqueado"
+            />
+            <label class="ml-2" for="optionBloqueado">No</label>
+          </div>
+          <b class="ml-4">Estado</b>
+          <div class="flex gap-1">
+            <input
+              styleClass="radio-style"
+              id="optionActivo"
+              type="radio"
+              class="custom-control-input"
+              value="1"
+              name="optionEstado"
+              (change)="buscarUsuarios()"
+              formControlName="optionEstado"
+            />
+            <label for="optionEstado">Activo</label>
+          </div>
+
+          <input
+            styleClass="radio-style"
+            id="optionInactivo"
+            type="radio"
+            class="custom-control-input"
+            value="0"
+            name="optionEstado"
+            (change)="buscarUsuarios()"
+            formControlName="optionEstado"
+          />
+          <label for="optionEstado">Inactivo</label>
+        </div>
+      </div>
+    </ng-container>
+    <div class="flex">
+      <div class="grow w-full"></div>
+    </div>
+  </form>
+</div>

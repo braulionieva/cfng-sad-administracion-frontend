@@ -1,0 +1,94 @@
+<form [formGroup]="formGroup">
+  <label for="" class="p-0 mb-3"><b>Plazo configurado por:</b></label>
+  <div class="col-12 flex gap-5">
+    <div class="flex gap-3">
+      <div class="flex gap-2">
+        <p-radioButton inputId="nivelNacional" name="plazoConfigurado" [value]="1" formControlName="plazoConfigurado">
+        </p-radioButton>
+        <label for="nivelNacional" class="ml-2">Nivel Nacional</label>
+      </div>
+      <div class="flex gap-2">
+        <p-radioButton inputId="distritoFiscal" name="plazoConfigurado" [value]="2" formControlName="plazoConfigurado">
+        </p-radioButton>
+        <label for="distritoFiscal" class="ml-2">Distrito Fiscal</label>
+      </div>
+      <div class="flex gap-2">
+        <p-radioButton inputId="tipoEspecialidad" name="plazoConfigurado" [value]="3"
+          formControlName="plazoConfigurado">
+        </p-radioButton>
+        <label for="tipoEspecialidad" class="ml-2">Tipo de Especialidad</label>
+      </div>
+      <div class="flex gap-2">
+        <p-radioButton inputId="especialidad" name="plazoConfigurado" [value]="4" formControlName="plazoConfigurado">
+        </p-radioButton>
+        <label for="especialidad" class="ml-2">Especialidad</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div *ngIf="plazoConfiguradoEvaluado.distrito_fiscal" class="col-6">
+      <div class="flex flex-column gap-2">
+        <label for="">Distrito Fiscal</label>
+        <p-dropdown [options]="dropdownsData?.distritos_fiscales" optionLabel="nombre" optionValue="id"
+          placeholder="Seleccione el distrito fiscal" formControlName="distritoFiscal" appendTo="body">
+        </p-dropdown>
+        <!-- errores -->
+        <small *ngIf="
+            campoDistritoFiscal.touched &&
+            campoDistritoFiscal!.hasError('required')
+          " class="p-error">Distrito fiscal es requerido.</small>
+      </div>
+    </div>
+    <div *ngIf="plazoConfiguradoEvaluado.tipo_especialidad" class="col-6">
+      <div class="flex flex-column gap-2">
+        <label for="">Tipo Especialidad</label>
+        <p-dropdown [options]="dropdownsData?.tipos_especialidad" optionLabel="nombre" optionValue="id"
+          placeholder="Seleccione el tipo especialidad" formControlName="tipoEspecialidad"
+          (onChange)="obtenerEspecialidadesDropdown($event.value)" appendTo="body">
+        </p-dropdown>
+        <!-- errores -->
+        <small *ngIf="
+            campoTipoEspecialidad.touched &&
+            campoTipoEspecialidad!.hasError('required')
+          " class="p-error">Tipo especialidad es requerido.</small>
+      </div>
+    </div>
+    <div *ngIf="plazoConfiguradoEvaluado.especialidad" class="col-6">
+      <div class="flex flex-column gap-2">
+        <label for="">Especialidad</label>
+        <p-dropdown [options]="especialidadesDropdown" optionLabel="nombre" optionValue="id"
+          placeholder="Seleccione la especialidad" formControlName="especialidad" appendTo="body">
+        </p-dropdown>
+        <!-- errores -->
+        <small *ngIf="
+            campoEspecialidad.touched && campoEspecialidad!.hasError('required')
+          " class="p-error">Especialidad es requerido.</small>
+      </div>
+    </div>
+    <div *ngIf="plazoConfiguradoEvaluado.pre_etapa" class="col-6">
+      <div *ngIf="plazoAplica === 1" class="flex flex-column gap-2">
+        <label for="">Pre-Etapa</label>
+        <p-dropdown [options]="dropdownsData?.preEtapas" optionLabel="Descripcion" optionValue="idItem"
+          placeholder="Seleccione la pre-etapa" formControlName="preEtapa" appendTo="body">
+        </p-dropdown>
+        <!-- errores -->
+        <small *ngIf="campoPreEtapa.touched && campoPreEtapa!.hasError('required')" class="p-error">Pre-Etapa es
+          requerido.</small>
+      </div>
+
+      <div *ngIf="plazoAplica === 4" class="flex flex-column gap-2">
+        <label for="">Etapa</label>
+        <p-dropdown [options]="dropdownsData?.etapas" optionLabel="Descripcion" optionValue="idItem"
+          placeholder="Seleccione la etapa" formControlName="etapa" appendTo="body">
+        </p-dropdown>
+        <!-- errores -->
+        <small *ngIf="campoEtapa.touched && campoEtapa!.hasError('required')" class="p-error">Etapa es
+          requerido.</small>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- {{ plazoAplica }} -->
+<!-- {{ etapaFormGroup.value | json }} -->

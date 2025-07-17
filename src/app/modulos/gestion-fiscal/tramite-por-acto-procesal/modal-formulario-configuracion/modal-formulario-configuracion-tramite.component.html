@@ -1,0 +1,98 @@
+<div class="agregar-configuracion-modal-container">
+  <h3>Nueva configuración</h3>
+  <span class="close" (click)="close()">
+    <img
+      [src]="icon('close_new')"
+      alt="Close Icon"/>
+  </span>
+  <div class="grid mt-3">
+    <div class="col-12">
+      <form [formGroup]="configuracionForm" (ngSubmit)="onSubmit()" class="form-container-filter">
+        <div class="grid">
+          <div class="col-6 mb-1 mt-2">
+            <label for="extras" class="font-label">Estado del trámite</label>
+            <p-dropdown
+              [options]="estadoCaso"
+              formControlName="idEstadoCaso"
+              placeholder="Seleccione el estado del trámite"
+              optionLabel="nombre"
+              optionValue="id"
+              class="p-inputtext-lg py-3 text-lg w-full"
+            ></p-dropdown>
+          </div>
+          <div class="col-12">
+            <hr>
+          </div>
+          <div class="col-12">
+            <label for="extras" class="font-label">Información del acto procesal relacionado</label>
+          </div>
+          <div class="col-12 mb-1 mt-2">
+            <label for="extras" class="font-label">Acto Procesal</label>
+            <p-dropdown
+              [options]="actoProcesal"
+              formControlName="idActoProcesal"
+              placeholder="Buscar el acto procesal"
+              optionLabel="nombre"
+              optionValue="id"
+              (onChange)="onChange($event)"
+              class="p-inputtext-lg py-3 text-lg w-full"
+            ></p-dropdown>
+          </div>
+          <div class="col-12 mb-3" *ngIf="actosRelacionados.length > 0">
+            <div class="p-2 bg-white border-round">
+              <!--INICIO DE CONTENEDOR TABLA-->
+              <p-table
+                [value]="actosRelacionados"
+                [paginator]="actosRelacionados.length > 8"
+                [rows]="8"
+                [tableStyle]="{ 'min-width': '50rem' }"
+              >
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="width:5%" *ngIf="showRadioButton"></th>
+                    <th style="width:20%">Código</th>
+                    <th style="width:25%">Carpeta/cuaderno</th>
+                    <th style="width:15%; text-align: center;">Tipo especialidad</th>
+                    <th style="width:20%">Especialidad</th>
+                    <th style="width:20%">Jerarquía</th>
+                    <th style="width:20%">Tipo proceso</th>
+                    <th style="width:20%">Subtipo proceso</th>
+                    <th style="width:20%">Etapa</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-acto>
+                  <tr>
+                    <td *ngIf="showRadioButton">
+                    </td>
+                    <td>{{ acto.codigoConfiguracion }}</td>
+                    <td>{{ acto.cuaderno }}</td>
+                    <td>{{ acto.tipoEspecialidad }}</td>
+                    <td>{{ acto.especialidad }}</td>
+                    <td>{{ acto.jerarquia }}</td>
+                    <td>{{ acto.tipoProceso }}</td>
+                    <td>{{ acto.subTipoProceso }}</td>
+                    <td>{{ acto.etapa }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="col">
+            <div class="flex justify-content-center mt-4">
+              <p-button (onClick)="close()" styleClass="btn-mpfn-sad-cancel">Cancelar
+              </p-button>
+              <p-button type="submit"
+                        styleClass="btn-mpfn-sad-prime ml-3"
+                        [disabled]="configuracionForm.invalid"
+              >Agregar
+              </p-button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

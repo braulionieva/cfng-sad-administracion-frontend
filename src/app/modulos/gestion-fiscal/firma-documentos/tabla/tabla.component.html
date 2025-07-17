@@ -1,0 +1,83 @@
+<!-- Tabla -->
+<div class="grid">
+  <div class="col-12">
+    <p-table
+      class="fontTable"
+      [value]="listaTipoDocumentoFirma"
+      [paginator]="true"
+      [rows]="10"
+      [scrollable]="true"
+      id="idFirmaDocumentoTabla"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="background-color: white" pFrozenColumn>N°</th>
+          <th style="background-color: white" pFrozenColumn>
+            Tipo de documento
+          </th>
+          <th *ngFor="let cargo of listaCargos" class="backGrayGeneral">
+            {{ cargo.abreviatura | titlecase }}
+          </th>
+          <th
+            class="backGray"
+            alignFrozen="right"
+            pFrozenColumn
+            [frozen]="false"
+          >
+            Acciones
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-i="rowIndex;">
+        <tr>
+          <td style="background-color: white" pFrozenColumn>{{ i + 1 }}</td>
+          <td style="background-color: white" pFrozenColumn>
+            {{ item.tipoDocumento | titlecase }}
+          </td>
+          <td *ngFor="let cargo of listaCargos">
+            <div
+              *ngIf="firmaDocumentoCargo(item.idTipoDocumento, cargo.idCargo)"
+            >
+              <input type="checkbox" checked />
+            </div>
+            <div
+              *ngIf="
+                firmaDocumentoCargo(item.idTipoDocumento, cargo.idCargo) ==
+                false
+              "
+            >
+              <input type="checkbox" />
+            </div>
+          </td>
+          <td alignFrozen="right" pFrozenColumn [frozen]="false">
+            <div class="acciones">
+              <i
+                class="fa fa-pencil-square-o px-1 mr-1 filterLink"
+                aria-hidden="true"
+                (click)="onEditarFirmaDocumento(item)"
+                ><img [src]="img('blackpencil')" style="height: 20px" alt=""
+              /></i>
+              <i
+                class="fa filterLink"
+                aria-hidden="true"
+                (click)="confirmaEliminarTipoDocumento(item, i)"
+                ><img
+                  [src]="img('blacktrash')"
+                  style="height: 20px"
+                  class="ml-2"
+                  alt=""
+              /></i>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8" class="text-center">No se encontraron registros</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

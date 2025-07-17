@@ -1,0 +1,21 @@
+<div>
+  <div class="grow w-full tituloPage">Tipo de documento para firma según cargo ({{totalElementos}})</div>
+
+  <form [formGroup]="filtroForm" class="form-container-filter">
+    <div class="flex m-1 ">
+
+        <input pInputText class="p-inputtext-lg cfe-input-lg "
+          placeholder="Ingrese Tipo de Documento"
+          formControlName="inTipoDocumento"
+          (input)="submit()"
+        />
+        <p-button label="Limpiar Filtros"
+          styleClass="btn-mpfn-sad-cancel"
+          class="ml-2"
+          (onClick)="onClearFilters()"
+        ></p-button>
+    </div>
+  </form>
+
+</div>
+

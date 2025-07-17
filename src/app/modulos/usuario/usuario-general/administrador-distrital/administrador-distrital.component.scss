@@ -1,0 +1,106 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+.card_container {
+    background-color: $white;
+    border-radius: 30px 30px 30px 30px;
+    padding: 25px 20px;
+    padding-bottom: 10px;
+    min-width: 900px;
+
+    h3 {
+        color: #0E2E4A;
+        columns: black;
+        font-family: $font-semi-bold;
+        font-weight: 700;
+        font-size: 1.6em;
+        line-height: 20px;
+        letter-spacing: 1%;
+    }
+}
+
+input[type="radio"] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: #FFF;
+  border-color: #5F6062;
+  /* Not removed via appearance */
+  margin: 0;
+
+  font: inherit;
+  color: #0075BF;
+  width: 1.50em;
+  height: 1.50em;
+  border: 0.15em solid #0075BF;
+  border-radius: 50%;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 1.0em;
+  height: 1.0em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #0075BF;
+  /* Windows High Contrast Mode */
+  background-color: #FFF;
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="radio"]:focus {
+  outline: max(2px, 0.15em) solid #8695e78c;//#0075BF;
+  outline-offset: max(1px, 0.15em);
+}
+
+.alert{
+  margin-top:10px; padding:10px; border-radius: 5px;
+}
+.alert-warning{
+  background-color: #F7EED6;
+}
+.alert i{
+  font-size: 1.5rem;
+  //color: rgb(175, 108, 25);
+  color: #F19700;
+}
+.alert b{
+    padding-left: 5px;
+}
+.desactiva{
+    background-color: #C1292E;
+}
+.title {
+    color: #0E2E4A;
+    margin: 10px;
+    font-weight:600;
+    //text-align: center;
+    font-size: 20px;
+  }
+ .subtitle {
+    color: #000000;
+    margin: 10px;
+    font-weight:600;
+    //text-align: center;
+    font-size: 16px;
+  }
+  .parrafo {
+    color: #000000;
+    margin: 10px;
+    font-weight:400;
+    //text-align: center;
+    font-size: 16px;
+  }
+  .cfe-close{
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    cursor: pointer;
+  }

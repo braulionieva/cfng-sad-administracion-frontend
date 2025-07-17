@@ -1,0 +1,61 @@
+<div class="cfe-close__document" (click)="cierraAddAppModal()">
+  <img [src]="icon('close_new')" class="img-custom" height="35px" (click)="cierraAddAppModal()" alt="cerrar" />
+</div>
+<section class="modal">
+  <form class="flex flex-column gap-3" [formGroup]="formGroup">
+    <div class="flex gap-3">
+      <div class="flex-1 flex flex-column gap-2">
+        <label for="">Categoría <span class="required">*</span></label>
+        <p-dropdown [options]="categoriesDropdown" optionLabel="nombreTipoEspecialidad" optionValue="idTipoEspecialidad"
+          placeholder="Seleccione..." formControlName="categoria" (onChange)="onCategoryChange($event)"
+          appendTo="body"></p-dropdown>
+        <!-- errores -->
+        <small *ngIf="categoriaField.touched && categoriaField!.hasError('required')" class="label-error">Categoría es
+          requerido.</small>
+      </div>
+      <div class="flex-1 flex flex-column gap-2">
+        <label for="">Especialidad <span class="required">*</span></label>
+        <p-dropdown [options]="specialtiesDropdown" optionLabel="nombreEspecialidad" optionValue="idEspecialidad"
+          placeholder="Seleccione..." formControlName="especialidad" appendTo="body"></p-dropdown>
+        <!-- errores -->
+        <small *ngIf="
+            especialidadField.touched && especialidadField!.hasError('required')
+          " class="label-error">Especialidad es requerido.</small>
+      </div>
+    </div>
+    <div class="flex gap-3">
+      <div class="flex-1 flex flex-column gap-2">
+        <label for="">Plazo detención (hrs) <span class="required">*</span></label>
+        <p-inputNumber placeholder="Plazo detencion (horas)" [useGrouping]="false"
+          formControlName="plazo_horas"></p-inputNumber>
+        <!-- errores -->
+        <small *ngIf="
+            plazoHorasField.touched && plazoHorasField!.hasError('required')
+          " class="label-error">Plazo detención horas es requerido.</small>
+      </div>
+      <div class="flex-1 flex flex-column gap-2">
+        <label for="">Plazo detención (días) <span class="required">*</span></label>
+        <p-inputNumber placeholder="Plazo detencion (dias)" [useGrouping]="false" [readonly]="true"
+          formControlName="plazo_dias"></p-inputNumber>
+        <!-- errores -->
+        <small *ngIf="plazoDiasField.touched && plazoDiasField!.hasError('required')" class="label-error">Plazo
+          detención días es requerido.</small>
+      </div>
+    </div>
+    <div class="flex flex-column gap-2">
+      <label for="">Descripción</label>
+      <textarea rows="5" cols="8" pInputTextarea [autoResize]="true" formControlName="descripcion"></textarea>
+      <!-- errores -->
+      <small *ngIf="
+          descripcionField.touched && descripcionField!.hasError('required')
+        " class="label-error">Descripción es requerido.</small>
+    </div>
+
+    <div class="modal__actions">
+      <p-button type="button" label="Cancelar" styleClass="btn-mpfn-sad-cancel btn-adjust-cargo"
+        (click)="closeModal()"></p-button>
+      <p-button type="button" label="Guardar" styleClass="btn-mpfn-sad-prime btn-adjust-cargo"
+        (click)="sendPlazoCreateSave()" [disabled]="formGroup.invalid"></p-button>
+    </div>
+  </form>
+</section>

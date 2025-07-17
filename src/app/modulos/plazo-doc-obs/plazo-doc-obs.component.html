@@ -1,0 +1,296 @@
+<!-- dialogo de confirmacion -->
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
+<!-- filtro -->
+<div class="cfe-container">
+  <div class="tituloPage ">Configuración de Plazos para Subsanar un Documento Observado ({{ buscarPlazoResLstTotal }})
+  </div>
+  <form [formGroup]="formFiltroBuscar" class="color-filter">
+    <div class="grid">
+      <div class="col-3">
+        <p-dropdown [options]="tipoConfiguracionPlazoLst" formControlName="idNTipoConfiguracion" [showClear]="true"
+          placeholder="Configurado por" optionLabel="noVDescripcion" optionValue="idNTipoConfiguracion"
+          (onChange)="onChangeTipoConfiguracionFilter($event.value)">
+        </p-dropdown>
+      </div>
+
+      <div class="col-2">
+        <ng-container *ngIf="show_filtro_DistritoFiscal==true">
+          <p-dropdown [options]="distritoFiscalLst" formControlName="idNDistritoFiscal"
+            placeholder="Selecciones Distrito Fiscal" optionLabel="noVDistritoFiscal" optionValue="idNDistritoFiscal"
+            (onChange)="onChangeBuscarXFiltro()"></p-dropdown>
+        </ng-container>
+      </div>
+
+
+      <div class="col-2">
+        <ng-container *ngIf="show_filtro_TipoDeEspecialidad==true">
+          <p-dropdown [options]="tipoEspecialidadLst" formControlName="idNTipoEspecialidad"
+            placeholder="Selecciones Tipo Especialidad" optionLabel="noVTipoEspecialidad"
+            optionValue="idNTipoEspecialidad" (onChange)="onChangeBuscarXFiltro(); onChangeTipoEspecialidad($event.value);"></p-dropdown>
+        </ng-container>
+      </div>
+
+
+      <div class="col-2">
+        <ng-container *ngIf="show_filtro_Especialidad==true">
+          <p-dropdown [options]="especialidadLst" formControlName="idVEspecialidad" placeholder="Selecione Especialidad"
+            optionLabel="noVEspecialidad" optionValue="idVEspecialidad"
+            (onChange)="onChangeBuscarXFiltro()"></p-dropdown>
+        </ng-container>
+      </div>
+
+      <div class="col-3">
+        <p-button label="Limpiar Filtros" styleClass="btn-mpfn-sad-cancel btn-mpfn-sad-filtrar w-full"
+          (onClick)="limpiarFiltrosBusqueda()"></p-button>
+      </div>
+    </div>
+
+  </form>
+  <div class="flex justify-content-end w-full my-4">
+    <p-button
+        styleClass="btn-mpfn-sad-cancel"
+        label="Exportar Excel"
+        (onClick)="exportarExcelForm()"
+        [disabled]="!buscarPlazoResLst || buscarPlazoResLst.length === 0"
+      >
+        <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px"></fn-icon>
+      </p-button>
+
+    <p-button styleClass="btn-mpfn-sad-prime ml-3" label="Agregar" (onClick)="openModalFormNew()">
+    </p-button>
+  </div>
+</div>
+
+<!-- Tabla resultados-->
+<div class="grid bg-white border-round">
+  <div class="col-12">
+    <p-table [value]="buscarPlazoResLst" [paginator]="true" [rows]="10" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">N°</th>
+          <th scope="col">Configurado por</th>
+          <th scope="col">Distrito Fiscal</th>
+          <th scope="col">Tipo Especialidad</th>
+          <th scope="col">Especialidad</th>
+          <th scope="col">Plazo para subsanar(días)</th>
+          <th scope="col">Plazo para mostrar alerta(días)</th>
+          <th scope="col">Creación</th>
+          <th scope="col">Modificación</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>{{ item.secuencia }}</td>
+          <td>{{ item.noVDescripcion }}</td>
+          <td>{{ item.noVDistritoFiscal }}</td>
+          <td>{{ item.noVTipoEspecialidad }}</td>
+          <td>{{ item.noVEspecialidad }}</td>
+          <td>{{ item.nuNPlazoEvaluar }}</td>
+          <td>{{ item.nuNPlazoAlerta }}</td>
+          <td>{{ item.usrCrea }} <br> {{ item.feDCreacionStr }}</td>
+          <td>{{ item.usrModifica }} <br> {{ item.feDModificacionStr }}</td>
+          <td>
+            <div>
+
+              <p-menu #menu [model]="actionItems" [popup]="true" appendTo="body" [pSelectableRow]="item"></p-menu>
+              <p-button icon="pi pi-ellipsis-v" styleClass="p-button-rounded p-button-text"
+                (click)="itemSelected(item);menu.toggle($event)"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<!-- modal -->
+<p-dialog header="" [(visible)]="isVisibleModalNewForm" [modal]="true" [styleClass]="'p-dialog-custom'"
+  [contentStyleClass]="'p-dialog-content-custom'" [maximizable]="false" [draggable]="false" [resizable]="false"
+  (onHide)="onCloseModal()">
+  <ng-template pTemplate="header">
+    <ng-container *ngIf="isEditForm==true; then editForm; else newForm"></ng-container>
+    <ng-template #editForm>
+      <span class="p-dialog-header p-dialog-title p-component">Editar Agregar Plazo para subsanar documento
+        observado</span>
+    </ng-template>
+    <ng-template #newForm>
+      <span class="p-dialog-header p-dialog-title p-component">Nuevo Plazo para subsanar documento observado</span>
+    </ng-template>
+  </ng-template>
+
+  <div class="cfe-close__document" (click)="onCloseModal()">
+    <img [src]="icon('close_new')" class="img-custom" height="35px" alt="" />
+  </div>
+
+  <form [formGroup]="formGroup" class="mx-3 mt-0 pt-0">
+    <div class="grid">
+      <div class="col">
+        <h6>Plazo configurado por</h6>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-wrap gap-3">
+          <div class="flex align-items-center">
+            <input type="radio" value={{idNTipoConfiguracion_DistritoFiscal}} name="idNTipoConfiguracion"
+              inputFormat="number" id="idNTipoConfiguracion_DistritoFiscal" formControlName="idNTipoConfiguracion">
+            <label for="idNTipoConfiguracion_DistritoFiscal" class="ml-2">Distrito Fiscal</label>
+          </div>
+          <div class="flex align-items-center">
+            <input type="radio" value={{idNTipoConfiguracion_TipoDeEspecialidad}} name="idNTipoConfiguracion"
+              inputFormat="number" id="idNTipoConfiguracion_TipoDeEspecialidad" formControlName="idNTipoConfiguracion">
+            <label for="idNTipoConfiguracion_TipoDeEspecialidad" class="ml-2">Tipo de
+              Especialidad</label>
+          </div>
+          <div class="flex align-items-center">
+            <input type="radio" value={{idNTipoConfiguracion_Especialidad}} name="idNTipoConfiguracion"
+              inputFormat="number" id="idNTipoConfiguracion_Especialidad" formControlName="idNTipoConfiguracion">
+            <label for="idNTipoConfiguracion_Especialidad" class="ml-2">Especialidad</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="formGroup.get('idNTipoConfiguracion').value==idNTipoConfiguracion_DistritoFiscal;">
+      <div class="grid">
+        <div class="col-4">
+          <h6>Distrito Fiscal</h6>
+        </div>
+        <div class="col-8">
+          <p-dropdown [options]="distritoFiscalLst" formControlName="idNDistritoFiscal"
+            placeholder="Seleccione Distrito Fiscal" optionLabel="noVDistritoFiscal"
+            optionValue="idNDistritoFiscal"></p-dropdown>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="formGroup.get('idNTipoConfiguracion').value==idNTipoConfiguracion_TipoDeEspecialidad;">
+      <div class="grid">
+        <div class="col-4">
+          <h6>Distrito Fiscal</h6>
+        </div>
+        <div class="col-8">
+          <p-dropdown [options]="distritoFiscalLst" formControlName="idNDistritoFiscal"
+            placeholder="Seleccione Distrito Fiscal" optionLabel="noVDistritoFiscal"
+            optionValue="idNDistritoFiscal"></p-dropdown>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-4">
+          <h6>Tipo de Especialidad</h6>
+        </div>
+        <div class="col-8">
+          <p-dropdown [options]="tipoEspecialidadLst" formControlName="idNTipoEspecialidad"
+            placeholder="Seleccione Tipo Especialidad" optionLabel="noVTipoEspecialidad"
+            optionValue="idNTipoEspecialidad" (onChange)="onChangeTipoEspecialidad($event.value)"></p-dropdown>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="formGroup.get('idNTipoConfiguracion').value==idNTipoConfiguracion_Especialidad;">
+      <div class="grid">
+        <div class="col-4">
+          <h6>Distrito Fiscal</h6>
+        </div>
+        <div class="col-8">
+          <p-dropdown [options]="distritoFiscalLst" formControlName="idNDistritoFiscal"
+            placeholder="Seleccione Distrito Fiscal" optionLabel="noVDistritoFiscal"
+            optionValue="idNDistritoFiscal"></p-dropdown>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-4">
+          <h6>Tipo de Especialidad</h6>
+        </div>
+        <div class="col-8">
+          <p-dropdown [options]="tipoEspecialidadLst" formControlName="idNTipoEspecialidad"
+            placeholder="Seleccione Tipo Especialidad" optionLabel="noVTipoEspecialidad"
+            optionValue="idNTipoEspecialidad" (onChange)="onChangeTipoEspecialidad($event.value)"></p-dropdown>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="col-4">
+          <h6>Especialidad</h6>
+        </div>
+        <div class="col-8">
+          <p-dropdown [options]="especialidadLst" formControlName="idVEspecialidad"
+            placeholder="Seleccione Especialidad" optionLabel="noVEspecialidad"
+            optionValue="idVEspecialidad"></p-dropdown>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="grid">
+      <div class="col">
+        <h6>Plazo para subsanar documento observado (días)</h6>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <input id="nuNPlazoEvaluar" type="number" pInputText formControlName="nuNPlazoEvaluar"
+            placeholder="Plazo días" [ngClass]="{'disabled-input': formGroup.get('nuNPlazoEvaluar').disabled}"
+            [class.ng-invalid]="formGroup.get('nuNPlazoEvaluar').invalid" />
+          <div>
+            <div class="float-left">
+              <small
+                *ngIf="formGroup.get('nuNPlazoEvaluar').touched&&formGroup.get('nuNPlazoEvaluar').errors?.['required']"
+                class="label-error">Este campo es requerido</small>
+            </div>
+            <div class="float-right">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <p-dropdown [options]="tipoDiasLst" formControlName="idNTipoDiasEvaluar" placeholder="Seleccione tipo días"
+            optionLabel="noVDescripcion" optionValue="idNCatalogo"
+            [class.ng-invalid]="formGroup.get('idNDistritoFiscal').invalid"></p-dropdown>
+          <small
+            *ngIf="formGroup.get('idNTipoDiasEvaluar').touched&&formGroup.get('idNTipoDiasEvaluar').errors?.['required']"
+            class="label-error">Este campo es requerido</small>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <h6>Plazo para mostrar alerta de vencimiento para subsanar documento observado (días)</h6>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <input id="nuNPlazoAlerta" type="number" pInputText formControlName="nuNPlazoAlerta" placeholder="Plazo días"
+            [ngClass]="{'disabled-input': formGroup.get('nuNPlazoAlerta').disabled}"
+            [class.ng-invalid]="formGroup.get('nuNPlazoAlerta').invalid" />
+          <small *ngIf="formGroup.get('nuNPlazoAlerta').touched&&formGroup.get('nuNPlazoAlerta').errors?.['required']"
+            class="label-error">Este campo es requerido</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <p-dropdown [options]="tipoDiasLst" formControlName="idNTipoDiasAlerta" placeholder="Seleccione tipo días"
+            optionLabel="noVDescripcion" optionValue="idNCatalogo" appendTo="body"
+            [class.ng-invalid]="formGroup.get('idNTipoDiasAlerta').invalid"></p-dropdown>
+          <small
+            *ngIf="formGroup.get('idNTipoDiasAlerta').touched&&formGroup.get('idNTipoDiasAlerta').errors?.['required']"
+            class="label-error">Este campo es requerido</small>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-center">
+      <p-button (click)="cancelarForm()" styleClass="btn-mpfn-sad-cancel px-8">Cancelar
+      </p-button>
+      <p-button *ngIf="isEditForm==false" (click)="addForm()"
+        styleClass="btn-mpfn-sad-prime width-auto ml-3 px-8">Guardar
+      </p-button>
+      <p-button *ngIf="isEditForm==true" (click)="updForm()"
+        styleClass="btn-mpfn-sad-prime width-auto ml-3 px-8">Guardar
+      </p-button>
+    </div>
+  </ng-template>
+</p-dialog>

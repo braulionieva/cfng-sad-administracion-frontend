@@ -1,0 +1,81 @@
+<div>
+  <p-table
+    class="fontTable"
+    [value]="turnoLista"
+    [paginator]="true"
+    [rows]="10"
+    id="idTurnoTabla"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">N°</th>
+        <th scope="col"></th>
+        <th scope="col">Estado</th>
+        <th scope="col">Distrito Fiscal</th>
+        <th scope="col">Fiscalía</th>
+        <th scope="col">Despacho</th>
+        <th scope="col">Fecha de<br />Inicio</th>
+        <th scope="col">Fecha Fin</th>
+        <th scope="col">Última <br />Modificación</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-i="rowIndex;">
+      <tr [ngClass]="{ 'row-edit': turnoSelected?.idTurno === item?.idTurno }">
+        <td>{{ i + 1 }}</td>
+        <td>
+          <div *ngIf="item.vigente == 1" class="vigente tooltip">
+            <span
+              class="tooltiptext"
+              [style]="{ 'background-color': '#F7EED4' }"
+            >
+              <div class="grid mt-2 ml-3">
+                <div><img [src]="icon('info')" color="#2B8DE3" alt="" /></div>
+                <div class="ml-2"><b>Nota: </b>{{ mensajeSiTurno(item) }}</div>
+              </div></span
+            >
+          </div>
+          <div *ngIf="item.vigente == 0" class="novigente tooltip">
+            <span
+              class="tooltiptext m-2 pl-3"
+              [style]="{ 'background-color': '#F7EED4' }"
+              >{{ mensajeNoTurno() }}</span
+            >
+          </div>
+        </td>
+        <td style="white-space: nowrap; align-items: center">
+          {{ item.vigente == "1" ? "Vigente" : "No Vigente" }}
+        </td>
+        <td>{{ item.distritoFiscal | titlecase }}</td>
+        <td>{{ item.dependencia }}</td>
+        <td style="white-space: nowrap">{{ item.despacho | titlecase }}</td>
+        <td>
+          {{ item.fechaInicio ? formatDateTimeTextCut24H(item.fechaInicio) : "" }}
+        </td>
+        <td>{{ item.fechaFin ? formatDateTimeTextCut24H(item.fechaFin) : "" }}</td>
+        <td>
+          {{ item.nombres | titlecase }} {{ item.paterno | titlecase }}
+          {{ item.materno | titlecase }}&nbsp;
+          {{
+            item.fechaModificacion
+              ? formatDateTimeTextCut24H(item.fechaModificacion)
+              : " "
+          }}
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-center">
+            <p-button
+              type="button"
+              icon="pi pi-ellipsis-v"
+              styleClass="p-button-rounded p-button-text"
+              (onClick)="prepareAndShowMenu($event, item, i)"
+            ></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-menu #menu [model]="actionsitems" [popup]="true" appendTo="body"></p-menu>

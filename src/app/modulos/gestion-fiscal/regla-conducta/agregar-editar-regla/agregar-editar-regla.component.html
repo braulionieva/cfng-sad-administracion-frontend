@@ -1,0 +1,78 @@
+<p-toast></p-toast>
+<p-dialog
+  [header]="data.titulo"
+  [(visible)]="data.isVisible"
+  [modal]="true"
+  [style]="{ width: '70vw', 'border-radius': '10px', overflow: 'hidden' }"
+  [contentStyle]="{ 'max-height': 'calc(100vh - 20px)', 'overflow-y': 'auto' }"
+>
+  <div class="cfe-close__document" (click)="cierraAddAppModal()">
+    <img
+      [src]="icon('close_new')"
+      class="img-custom"
+      (click)="cierraAddAppModal()"
+      alt=""
+    />
+  </div>
+  <form [formGroup]="reglaForm" class="form-container-filter">
+    <div class="grid">
+      <div class="col-12">
+        <label for="nomRegla" class="font-semibold">Descripción</label>
+        <textarea
+          class="p-inputtext w-full"
+          placeholder="Ingrese regla de conducta"
+          formControlName="nomRegla"
+          rows="4"
+          [ngModel]="data.regla.nomRegla"
+        ></textarea>
+        <div style="text-align: right">
+          <div style="float: left">
+            <div
+              *ngIf="
+                reglaForm.get('nomRegla').invalid &&
+                (reglaForm.get('nomRegla').dirty ||
+                  reglaForm.get('nomRegla').touched)
+              "
+            >
+              <small
+                class="error-message"
+                *ngIf="reglaForm.get('nomRegla').errors?.['required']"
+              >
+                Campo requerido</small
+              >
+              <small
+                class="error-message"
+                *ngIf="reglaForm.get('nomRegla').errors?.['maxlength']"
+              >
+                Excede límite(500) de campo</small
+              >
+            </div>
+          </div>
+          <small
+            >{{
+              reglaForm.get("nomRegla")?.value
+                ? reglaForm.get("nomRegla").value.length
+                : 0
+            }}/500</small
+          >
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="flex justify-content-center">
+          <p-button
+            (click)="cierraAddAppModal()"
+            styleClass="btn-mpfn-sad-cancel font-semibold text-center px-8 py-2"
+            label="Cancelar"
+          ></p-button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <p-button
+            (onClick)="GuardarReglaConducta()"
+            styleClass="p-ripple p-element p-button-lg font-semibold w-full h-full p-component"
+            label="Guardar"
+            [disabled]="reglaForm.invalid"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </form>
+</p-dialog>

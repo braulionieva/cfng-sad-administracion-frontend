@@ -1,0 +1,62 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.form-container-filter {
+  background: rgba(51, 51, 51, 0.1);
+  padding: 1rem;
+  //box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+.div-filter {
+  background-color: #33333333;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  padding:2;
+  border:round;
+}
+
+
+:host::ng-deep .fa-id-card:before {
+  content: "\f2c2" !important;
+}
+
+:host::ng-deep.cfe-calendar .p-calendar-w-btn .p-inputtext {
+  border-right: none;
+  width: 200px;
+  font-size: 20px;
+}
+:host::ng-deep .p-dropdown-panel {
+  max-width: 420px;
+}
+/******************************/
+:host::ng-deep .btn-mpfn-sad-cancel{
+  height: 40px;
+}
+/**********botones transparentes************/
+::ng-deep.btn-mpfn-vigencia {
+  background-color: #FFFFFF66;
+  border: 1px solid #e0e0e0;
+  color: #333333;
+  border-radius: 15px;
+  font-family: $font-semi-bold;
+  transition: 300ms background-color ease;
+
+  &:hover {
+    background: #33333333 !important;
+    border: 1px solid #e0e0e0 !important;
+    color: #333333 !important;
+  }
+}
+
+::ng-deep.btn-mpfn-marcado {
+  background-color: #33333333;
+  border: 1px solid #e0e0e0;
+  color: #333333;
+  border-radius: 15px;
+  font-family: $font-semi-bold;
+  transition: 300ms background-color ease;
+
+  &:hover {
+    background: #33333333 !important;
+    border: 1px solid #e0e0e0 !important;
+    color: #333333 !important;
+  }
+}

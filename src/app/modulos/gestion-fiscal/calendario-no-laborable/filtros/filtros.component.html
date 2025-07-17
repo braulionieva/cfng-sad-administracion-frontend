@@ -1,0 +1,119 @@
+<form [formGroup]="filtroForm" class="form-container-filter">
+  <!--INICIO PRIMERA FILA-->
+  <div class="flex justify-content-between">
+    <div style="width: 80%">
+      <input
+        pInputText
+        class="nolaborable p-inputtext-lg cfe-input"
+        placeholder="Ingrese el nombre"
+        formControlName="nombre"
+        (input)="submit()"
+      />
+    </div>
+
+    <div>
+      <p-button
+        styleClass="p-button-lg btn-mpfn-toggle p-2 ml-2 "
+        [icon]="getIcon()"
+        (onClick)="toggleFilters()"
+      ></p-button>
+    </div>
+    <div class="mr-2" style="width: 20%">
+      <p-button
+        class="p-2"
+        styleClass="w-full btn-mpfn-sad-cancel text-lg"
+        label="Limpiar filtros"
+        (onClick)="onClearFilters()"
+      ></p-button>
+    </div>
+  </div>
+  <div *ngIf="showAdditionalFilters">
+    <div class="grid mt-1">
+      <div class="col-12">
+        <input
+          pInputText
+          class="nolaborable p-inputtext-lg py-2 w-full"
+          formControlName="descripcion"
+          placeholder="Ingrese la descripción"
+          (input)="submit()"
+        />
+      </div>
+    </div>
+    <div class="grid flex justify-content-between">
+      <div class="col-4">
+        <p-dropdown
+          [options]="distritosFiscales"
+          class="p-inputtext-lg w-full"
+          formControlName="distritoFiscal"
+          placeholder="Distrito Fiscal"
+          optionLabel="nombre"
+          optionValue="id"
+          (onChange)="submit()"
+        ></p-dropdown>
+      </div>
+      <div class="col-4">
+        <p-calendar
+          dateMask
+          dateFormat="dd/mm/yy"
+          class="p-inputtext-lg cfe-calendar w-full"
+          [showIcon]="true"
+          icon="cfe-calendar-icon"
+          placeholder="Fecha inicio"
+          (onSelect)="submit()"
+          formControlName="fechaInicio"
+        ></p-calendar>
+      </div>
+      <div class="col-4">
+        <p-calendar
+          dateMask
+          dateFormat="dd/mm/yy"
+          class="p-inputtext-lg cfe-calendar w-full"
+          [showIcon]="true"
+          icon="cfe-calendar-icon"
+          placeholder="Fecha Fin"
+          (onSelect)="submit()"
+          formControlName="fechaFin"
+        ></p-calendar>
+      </div>
+    </div>
+    <div class="grid flex">
+      <div class="flex align-items-center ml-2">
+        <p-checkbox
+          formControlName="feriado"
+          value="true"
+          (click)="submit()"
+          inputId="feriado"
+        />
+        <label class="ml-1" for="feriado">Feriado</label>
+      </div>
+      <div class="flex align-items-center ml-2">
+        <p-checkbox
+          formControlName="nolaborable"
+          value="true"
+          (click)="submit()"
+          inputId="laborable"
+        />
+        <label class="ml-1" for="laborable">No Laborable</label>
+      </div>
+      <div class="flex align-items-center ml-2">
+        <p-checkbox
+          formControlName="nacional"
+          value="true"
+          (click)="submit()"
+          inputId="nacional"
+        />
+        <label class="ml-1" for="nacional">Nacional</label>
+      </div>
+      <div class="flex align-items-center ml-2">
+        <p-checkbox
+          formControlName="regional"
+          value="true"
+          (click)="submit()"
+          inputId="regional"
+        />
+        <label class="ml-1" for="regional">Regional</label>
+      </div>
+    </div>
+    <!--FIN TERCERA FILA-->
+  </div>
+</form>

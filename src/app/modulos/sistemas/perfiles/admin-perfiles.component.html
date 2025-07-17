@@ -1,0 +1,25 @@
+<div class="grid mt-4">
+  <div class="col-12" style="padding: 0px 0px 0px 18px">
+    <h3 class="tituloPage">Perfiles</h3>
+  </div>
+</div>
+<!-- seleccionar opciones de menu perfil -->
+<app-seleccionar-perfiles-sistemas></app-seleccionar-perfiles-sistemas>
+<div class="cfe-container">
+  <app-tabs-view [tabs]="tabsCategoria" (onChangeIndex)="onTabCategoriaChange($event)"></app-tabs-view>
+  <p-tabView (onChange)="onTabAplicacionChange($event)" [activeIndex]="tabAplicacionActivaIndex" [scrollable]="true"
+    [style]="{ 'background-color': 'white' }">
+    <p-tabPanel *ngFor="let tabAplicacion of tabAplicaciones; let j = index" [header]="tabAplicacion.deSiglas">
+      <ng-container *ngIf="tabAplicacion.idAplicacion; else loading">
+        <div>
+          <!--INICIO DE CONTENEDOR TABLA-->
+          <app-tabla [aplicacion]="tabAplicacion" (clicked)="actualizarTablaPerfiles()"
+            (clicked)="actualizarTablaPerfiles()"></app-tabla>
+          <!--FIN DE CONTENEDOR TABLA-->
+        </div>
+      </ng-container>
+      <ng-template #loading>Cargando contenido...</ng-template>
+    </p-tabPanel>
+  </p-tabView>
+  <br />
+</div>

@@ -1,0 +1,21 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.cfe-close__document{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.crime-parts-container{
+  background-color: $white;
+  border-radius: 15px;
+  padding: 0px 40px;
+  width: 3000px;
+  min-height: 700px;
+  h3{
+      color: $primary;
+      font-family: $font-semi-bold;
+      font-size: 2em;
+  }
+}

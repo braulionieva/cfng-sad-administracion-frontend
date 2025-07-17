@@ -1,0 +1,83 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.detalle-menu-modal-container {
+    background-color: $white;
+    border-radius: 10px 10px 10px 10px;
+    padding: 10px 25px;
+    min-width: 900px;
+
+    h3 {
+        color: #0E2E4A;
+        columns: black;
+        font-family: $font-semi-bold;
+        font-weight: 700;
+        font-size: 1.6em;
+        line-height: 20px;
+        letter-spacing: 1%;
+    }
+}
+
+.close {
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 20px;
+}
+
+.font-label {
+    columns: #1B1C1E;
+    font-weight: 700;
+    font-size: 1.05em;
+    line-height: 20px;
+    letter-spacing: 2%;
+}
+
+:host::ng-deep .p-dialog .p-dialog-content {
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+}
+
+.cfe-close__document{
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.centrado th, .centrado td {
+  text-align: center; /* Centra horizontalmente el contenido de las celdas */
+  font-size: 0.7em;
+  border-width: 0 0 1px 0;
+}
+
+.alert{
+  margin-top:10px; padding:10px; border-radius: 5px;
+}
+.alert-warning{
+  background-color: #F7EED6;
+}
+.alert i{
+  font-size: 1.5rem;
+  /**color: rgb(175, 108, 25);**/
+  color: #F19700;
+}
+
+/**
+// ::ng-deep.p-button {
+//   &:disabled {
+//     background-color: #bebebe;
+//     border: 1px solid var(--mpfn-gray6);
+//   }
+// }
+**/
+
+::ng-deep.p-button {
+  &:disabled {
+    background: $gray5;
+    border-color: $gray5;
+  }
+}

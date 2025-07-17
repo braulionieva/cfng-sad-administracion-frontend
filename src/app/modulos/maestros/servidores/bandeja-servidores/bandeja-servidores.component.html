@@ -1,0 +1,25 @@
+<div class="cfe-container">
+    <!--INICIO DE CONTENEDOR DE FILTROS-->
+     <app-filtros (filter)="onFilter($event)">
+     </app-filtros>
+    <!--FIN DE CONTENEDOR DE FILTROS-->
+    <br />
+
+    <app-acciones [totalElementos] = "servidores?.totalElementos"
+                  (exportar) ="exportarExcel()">
+    </app-acciones>
+
+    <br />
+
+    <div class="p-2 bg-white border-round">
+      <!--INICIO DE CONTENEDOR TABLA-->
+      <app-tabla [servidores] = "servidores?.registros"
+                 (clicked)="refrescarBandeja()" >
+      </app-tabla>
+      <!--FIN DE CONTENEDOR TABLA-->
+    </div>
+
+  </div>
+
+
+

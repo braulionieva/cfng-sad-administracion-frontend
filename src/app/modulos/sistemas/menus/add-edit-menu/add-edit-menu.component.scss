@@ -1,0 +1,139 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.add-edit-modal-container {
+  background-color: $white;
+  border-radius: 15px;
+  padding: 30px 25px;
+  min-width: 300px;
+
+  h3 {
+    columns: black;
+    font-family: $font-semi-bold;
+    font-size: 1.25em;
+  }
+}
+
+.close-wrapper{
+  position:relative;
+  .cfe-close__document{
+    position: absolute;
+    top: -17px;
+    right: -17px;
+    cursor: pointer;
+  }
+}
+/******************************/
+.square-btn {
+  width: 20px;       /* Ancho del botón */
+  height: 20px;      /* Altura igual al ancho para hacerlo cuadrado */
+  background-color: #D9D9D9; /* Color de fondo */
+  //color: white;       /* Color del texto */
+  border: 1px solid #5F6062;       /* Quitar bordes */
+  border-radius: 2px;   /* Asegurarse de que no tenga bordes redondeados */
+  cursor: pointer;    /* Cambia el cursor a "pointer" para dar efecto de botón */
+  font-size: 16px;    /* Tamaño del texto */
+}
+
+.square-btn:hover {
+  border-color: var(--mpfn-lightblue-dark) !important;
+}
+/******************************/
+
+/**********tooltipo ****/
+.tooltip {
+  position: relative;
+  display: inline-block;
+  //border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 70%;
+  color: #000;
+  text-align: left;
+  padding: 10px 0;
+  border-radius: 6px;
+  opacity: 1.0;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 20%;
+  margin-top: 15px;
+}
+/**********head table******ld*/
+/**********************************/
+.p-inputtext {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 1rem;
+  color: #495057;
+  background: #ffffff;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ced4da;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+  border-radius: 4px;
+}
+/**********************************/
+:host::ng-deep .p-disabled, .p-disabled * {
+  background: #E0E0E080 !important;
+  border-color: #D1D2D2 !important;
+}
+
+:host::ng-deep .p-dropdown .p-disabled * {
+  background: #E0E0E080 !important;
+  border-color: #D1D2D2 !important;
+}
+
+:host::ng-deep .p-inputtext {
+  background: #fff ;
+}
+/*****************/
+::ng-deep .p-button .p-button-icon-only2 {
+  width: 2.357rem;
+  height: 2rem!important;
+  padding: 0.5rem 0;
+}
+/***************/
+
+.custom-radio .p-radiobutton-box {
+  border: 2px solid #3F9FD6; /* Borde alrededor del radioButton */
+  background-color: #fff;
+}
+
+.custom-radio .p-radiobutton-box.p-highlight {
+  background-color: #3F9FD6; /* Fondo cuando el radioButton está seleccionado */
+  border-color: #3F9FD6;
+}
+
+/* Estilo para el círculo interior cuando está seleccionado */
+.custom-radio .p-radiobutton-icon {
+  width: 13px;
+  height: 13px;
+  background-color: white; /* Color del círculo */
+  border-radius: 50%; /* Hacer el ícono circular */
+  margin: auto;
+  display: block;
+}
+.custom-radio .p-radiobutton-box::before {
+  content: "";
+  width: 5em;
+  height: 5em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em #3F9FD6;
+  /* Windows High Contrast Mode */
+  background-color: CanvasText;
+}
+/********************/
+::ng-deep .btn_ico{
+  width: 40px!important;
+  height: 40px!important;
+  margin-top: 29px!important;
+}
+/********************/
+:host::ng-deep .p-dropdown-panel{
+  width: 100%!important;
+  max-width: 600px!important;
+
+}

@@ -1,0 +1,18 @@
+<div class="cfe-container">
+  <div class="tituloPage">Despachos ({{ totalDespachos }})
+  </div>
+
+  <app-filtros (filter)="onFilter($event)"></app-filtros>
+  <br />
+
+  <app-acciones [exportarExcelDisabled]="exportarExcelDisabled" (exportar)="exportarExcel()"
+    (clicked)="refrescarBandeja()"></app-acciones>
+  <br />
+
+  <div class="p-2 bg-white border-round">
+    <app-tabla [despachos]="despachos" [totalElementos]="totalDespachos" (refrescarBandeja)="refrescarBandeja()"
+      [(first)]="first">
+    </app-tabla>
+  </div>
+
+</div>

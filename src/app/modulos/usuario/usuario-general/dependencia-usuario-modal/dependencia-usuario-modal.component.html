@@ -1,0 +1,129 @@
+<div class="agregar-editar-usuario-modal-container">
+  <div class="close-wrapper p-2">
+    <h5>Dependencias de usuario</h5>
+    <div
+      class="cfe-close__document"
+      (click)="closeAction()"
+      (keydown.enter)="$event.preventDefault()"
+      (keydown.space)="$event.preventDefault()"
+    >
+      <img [src]="icon('close_new')" class="img-custom" height="35px" alt="" />
+    </div>
+  </div>
+</div>
+
+<div class="mx-3 mt-2">
+  <div class="grid">
+    <div class="col-8">
+      <div class="grid">
+        <div class="col">
+          <p>
+            <span class="font-bold">Tipo de documento: </span> <span> DNI</span>
+          </p>
+          <p>
+            <span class="font-bold">Número de documento: </span>
+            <span> {{ usuarioDto.nuVDocumento }}</span>
+          </p>
+        </div>
+        <div class="col">
+          <p>
+            <span class="font-bold">Nombres: </span>
+            <span> {{ usuarioDto.noVCiudadano }}</span>
+          </p>
+          <p>
+            <span class="font-bold">Apellidos: </span
+            ><span>
+              {{ usuarioDto.apVPaterno }} {{ usuarioDto.apVMaterno }}</span
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex">
+    <div class="grow w-full"></div>
+    <div class="flex-none">
+      <p-button
+        (onClick)="agregarDepUsBtn()"
+        styleClass="btn-mpfn-sad-prime ml-3"
+        [disabled]="usuarioDto?.bloqueado === '1'"
+        >Agregar
+      </p-button>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="!isVisibleFormDepUs">
+  <p-table
+    [value]="dependenciaUsLst"
+    [tableStyle]="{ 'min-width': '00rem' }"
+    selectionMode="single"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">N</th>
+        <th scope="col">Distrito Fiscal</th>
+        <th scope="col">Dependencia</th>
+        <th scope="col">Despacho</th>
+        <th scope="col">Cargo</th>
+        <th scope="col">Creación</th>
+        <th scope="col">Modificación</th>
+        <th scope="col">Registrador</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>{{ item.secuencia }}</td>
+        <td>{{ item.distritoFiscal }}</td>
+        <td>{{ item.entidad }}</td>
+        <td>{{ item.despacho }}</td>
+        <td>{{ item.cargo }}</td>
+        <td>
+          {{ item.fechaCreacionStr }}
+          <br />
+          {{ item.noUsuarioCreacion }}
+        </td>
+        <td>
+          {{ item.fechaModificacionStr }}
+          <br />
+          {{ item.noUsuarioModificacion }}
+        </td>
+        <td>{{ item.noUsuarioCreacion }}</td>
+        <!-- <div *ngIf="item.noFlCTipoDependencia !== 'DEPENDENCIA PRINCIPAL'">
+          <p-menu #menu [model]="actionItems" [popup]="true" appendTo="body" [pSelectableRow]="item"></p-menu>
+          <p-button icon="pi pi-ellipsis-v"
+                    styleClass="p-button-rounded p-button-text"
+                    (click)="itemSelected(item); menu.toggle($event)"
+                    (keydown.enter)="$event.preventDefault()"
+                    (keydown.space)="$event.preventDefault()"
+                    tabindex="0">
+          </p-button>
+        </div> -->
+        <td style="text-align: center; vertical-align: middle">
+          <ng-container
+            *ngIf="item.noFlCTipoDependencia !== 'DEPENDENCIA PRINCIPAL'"
+          >
+            <p-menu
+              #menu
+              [model]="actionItems"
+              [popup]="true"
+              appendTo="body"
+              [pSelectableRow]="item"
+            ></p-menu>
+            <p-button
+              icon="pi pi-ellipsis-v"
+              styleClass="p-button-rounded p-button-text"
+              (click)="itemSelected(item); menu.toggle($event)"
+              (keydown.enter)="$event.preventDefault()"
+              (keydown.space)="$event.preventDefault()"
+              tabindex="0"
+            >
+            </p-button>
+          </ng-container>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</ng-container>

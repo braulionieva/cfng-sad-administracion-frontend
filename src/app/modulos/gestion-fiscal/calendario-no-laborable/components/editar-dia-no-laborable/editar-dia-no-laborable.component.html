@@ -1,0 +1,179 @@
+<div class="detalle-menu-modal-container">
+  <h5>
+    <span style="color: #0e2e4a">{{ titleTask }} Día Festivo/No Laborable</span>
+  </h5>
+
+  <div class="cfe-close__document" (click)="close()">
+    <img [src]="icon('close_new')" class="img-custom" alt="" />
+  </div>
+  <form [formGroup]="formNoLaborable" class="ml-5">
+    <div class="ml-5">
+      <h6><b>Día Festivo:</b></h6>
+      <div class="grid m-3">
+        <div class="custom-control custom-radio">
+          <input
+            styleClass="radio-style"
+            id="optionFestivoSi"
+            type="radio"
+            class="custom-control-input"
+            value="SI"
+            name="optionFestivo"
+            formControlName="optionFestivo"
+          />
+        </div>
+        <label class="ml-2">Festivo</label>
+        <div class="ml-3">
+          <input
+            styleClass="radio-style"
+            id="optionFestivoNo"
+            type="radio"
+            class="custom-control-input"
+            value="NO"
+            name="optionFestivo"
+            formControlName="optionFestivo"
+          />
+        </div>
+        <label class="ml-2">No Laborable</label>
+      </div>
+      <h6 class="m-5" style="margin-bottom: 0.2em"><b>Tipo:</b></h6>
+      <div class="grid ml-5">
+        <div>
+          <input
+            id="optionTipoNacional"
+            type="radio"
+            class="custom-control-input"
+            value="NACIONAL"
+            name="optionTipo"
+            formControlName="optionTipo"
+            (click)="changeAmbito()"
+          />
+        </div>
+        <label class="ml-2">Nacional</label>
+        <div class="ml-3">
+          <input
+            id="optionTipoRegional"
+            type="radio"
+            class="custom-control-input"
+            value="REGIONAL"
+            name="optionTipo"
+            formControlName="optionTipo"
+            (click)="changeAmbito()"
+          />
+        </div>
+        <label class="ml-2">Regional</label>
+      </div>
+      <div class="m-5" *ngIf="isRegional">
+        <h6><b>Distrito(s) Fiscal(es):</b></h6>
+        <div>
+          <p-multiSelect
+            [options]="distritoFiscalList"
+            formControlName="distritoFiscal"
+            optionLabel="nombre"
+            display="chip"
+            placeholder="Seleccione Distrito Fiscal"
+          >
+          </p-multiSelect>
+        </div>
+      </div>
+      <div class="padding-left: 4em; mt-5">
+        <h6 style="margin: 0.2em">
+          <b>Seleccione Fecha o Rango de Fechas:</b>
+        </h6>
+      </div>
+
+      <div class="grid">
+        <div class="text-left pt-2 pb-2" style="width: 40%">
+          <div style="width: 350px">
+            <p-calendar
+              inputId="template"
+              [inline]="true"
+              dateFormat="dd/mm/yy"
+              [locale]="es"
+              selectionMode="range"
+              (onSelect)="selectCalendar($event)"
+              [disabledDays]="[0, 6]"
+              formControlName="fecha"
+            >
+              <ng-template pTemplate="date" let-date>
+                <span
+                  [ngStyle]="
+                    formato(date) == 'FERIADO'
+                      ? { backgroundColor: '#C1292E', color: '#fff' }
+                      : formato(date) == 'NO LABORABLE'
+                      ? { backgroundColor: '#0075BF', color: '#fff' }
+                      : { backgroundColor: 'inherit', color: '#1B1C1E' }
+                  "
+                  style="
+                    padding-top: 4px;
+                    text-align: center;
+                    width: 2.5em;
+                    height: 2em;
+                    display: block;
+                  "
+                  >{{ date.day }}</span
+                >
+              </ng-template>
+            </p-calendar>
+          </div>
+        </div>
+        <div class="text-left pt-2 pb-2 ml-5" style="width: 50%">
+          <h6 style="margin: 0.2em"><b>Datos del Día Festivo/No Laboral</b></h6>
+          <label for="extras" class="font-semibold">Nombre:&nbsp;</label>
+          <input
+            pInputText
+            class="w-full text-lg p-inputtext-lg cfe-input-lg mt-3 p-2 surface-border"
+            placeholder="Ingrese el nombre"
+            formControlName="nombre"
+          />
+          <small
+            class="block text-right mt-1"
+            [ngClass]="{ 'p-error': counterNombre > 100 || counterNombre < 1 }"
+          >
+            {{ counterNombre }}/100 caracteres
+          </small>
+
+          <label for="extras" class="font-semibold">Descripción:&nbsp;</label>
+          <textarea
+            rows="5"
+            placeholder="Ingrese la descripción"
+            formControlName="descripcion"
+            class="p-inputtext p-2 w-full h-20px"
+            [ngClass]="{ 'ng-invalid ng-dirty': errorMsg('descripcion') }"
+            (input)="validMaxLength('descripcion')"
+          ></textarea>
+          <small
+            class="block text-right mt-1"
+            [ngClass]="{
+              'p-error': counterDescripcion > 500 || counterDescripcion < 1
+            }"
+          >
+            {{ counterDescripcion }}/500 caracteres
+          </small>
+          <div class="mt-4"></div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="flex justify-content-center mb-2">
+    <div class="grid col-6">
+      <div class="col">
+        <p-button
+          styleClass="p-button-lg w-full py-2 font-semibold btn-mpfn-sad-cancel"
+          (onClick)="close()"
+          label="Cancelar"
+        >
+        </p-button>
+      </div>
+      <div class="col">
+        <p-button
+          styleClass="p-button-lg w-full py-2 font-semibold btn-mpfn-sad-prime"
+          [label]="edicion ? 'Guardar' : 'Registrar'"
+          [disabled]="!validatefecha"
+          (onClick)="confirmarRegistro()"
+        >
+        </p-button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+.filter {
+  background: rgba(51, 51, 51, 0.1);
+  padding: 1rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  gap: 2rem;
+
+  &__options {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 2rem 0;
+  }
+
+  &__collapsed {
+    width: 100%;
+    overflow: hidden;
+  }
+}
+
+
+:host ::ng-deep .p-button.p-button-icon-only {
+  height: 52px !important;
+}
+
+.btn-positions {
+  margin-top: 21px;
+}
+
+:host ::ng-deep .cfe-boton-lg {
+  height: 52px !important;
+  width: 200px !important;
+}
+
+label {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+:host ::ng-deep .p-dropdown,
+input {
+  height: 48px;
+}

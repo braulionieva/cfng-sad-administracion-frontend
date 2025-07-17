@@ -1,0 +1,234 @@
+<!-- Tabla -->
+<div class="grid">
+  <div class="w-full bg-white">
+    <div class="width=90% m-3"><b>Día Festivo/No Laborable:</b><br></div>
+    <div class="flex justify-content-center titleYear width=100% ">
+      <a class="hand m-1" (click)="changeYear(2)"><fn-icon [ico]="obtenerIcono('chevronLeft')" height="1.7rem"/></a>
+          <div >{{yearSelect}}</div>
+      <a class="hand m-1" (click)="changeYear(1)"><fn-icon [ico]="obtenerIcono('chevronRight')" height="1.7rem"/></a></div>
+    <form [formGroup]="calendarioForm">
+      <div class="flex justify-content-around grid m-4 mt-0">
+
+        <div class="justify-content-center m-2 " style="width:350px">
+          <div class="flex justify-content-center mb-0"><b>Enero</b></div>
+          <div class="m-0 p-0">
+            <p-calendar inputId="template"
+                        [inline]="true"
+                        dateFormat="dd/mm/yy"
+                        currentMonth="1"
+                        (firstDayOfWeek)="0"
+                        (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+                        [disabledDays]="[0,6]"
+                        formControlName="mes1">
+              <ng-template pTemplate="date" let-date>
+                  <span
+                        [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                        style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+              </ng-template>
+            </p-calendar>
+         </div>
+      </div>
+      <div class="justify-content-center m-2" style="width:350px">
+          <div class="flex justify-content-center mb-0"><b>Febrero</b></div>
+          <div >
+            <p-calendar inputId="template"
+            [inline]="true"
+            dateFormat="dd/mm/yy"
+            [disabledDays]="[0,6]"
+            currentMonth="2"
+            (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+            formControlName="mes2">
+            <ng-template pTemplate="date" let-date>
+              <span
+                    [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                    style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+          </ng-template>
+          </p-calendar>
+          </div>
+        </div>
+        <div class="justify-content-center m-2" style="width:350px">
+          <div class="flex justify-content-center"><b>Marzo</b></div>
+          <div >
+            <p-calendar inputId="template"
+            [inline]="true"
+            dateFormat="dd/mm/yy"
+           
+            [disabledDays]="[0,6]"
+            (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+            formControlName="mes3">
+            <ng-template pTemplate="date" let-date>
+              <span
+                    [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                    style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+          </ng-template>
+          </p-calendar>
+          </div>
+      </div>
+      <div class="width-100px justify-content-center m-2" style="width:350px">
+        <div class="flex justify-content-center mb-0"><b>Abril</b></div>
+        <div class="m-0 p-0">
+          <p-calendar inputId="template"
+                        [inline]="true"
+                        dateFormat="dd/mm/yy"
+                        [disabledDays]="[0,6]"
+                        (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+                        formControlName="mes4">
+                        <ng-template pTemplate="date" let-date>
+                          <span
+                                [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                                style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+                      </ng-template>
+            </p-calendar>
+        </div>
+      </div>
+      <div class="width-100px justify-content-center m-2" style="width:350px">
+          <div class="flex justify-content-center mb-0"><b>Mayo</b></div>
+          <div >
+            <p-calendar inputId="template"
+            [inline]="true"
+            dateFormat="dd/mm/yy"
+            [disabledDays]="[0,6]"
+            (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+            formControlName="mes5">
+            <ng-template pTemplate="date" let-date>
+              <span
+                    [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                    style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+          </ng-template>
+          </p-calendar>
+          </div>
+        </div>
+        <div class="width-100px justify-content-center m-2" style="width:350px">
+          <div class="flex justify-content-center"><b>Junio</b></div>
+          <div >
+            <p-calendar inputId="template"
+                        [inline]="true"
+                        dateFormat="dd/mm/yy"
+                        [disabledDays]="[0,6]"
+                        (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+                        formControlName="mes6">
+                        <ng-template pTemplate="date" let-date>
+                          <span [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                                style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+                      </ng-template>
+            </p-calendar>
+          </div>
+        </div>
+        <div class="width-100px justify-content-center m-2" style="width:350px">
+          <div class="flex justify-content-center mb-0"><b>Julio</b></div>
+          <div class="m-0 p-0">
+            <p-calendar inputId="template"
+                        [inline]="true"
+                        dateFormat="dd/mm/yy"
+                        [disabledDays]="[0,6]"
+                        (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+                        formControlName="mes7">
+                        <ng-template pTemplate="date" let-date>
+                          <span
+                                [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                                style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+                      </ng-template>
+            </p-calendar>
+          </div>
+        </div>
+          <div class="width-100px justify-content-center m-2" style="width:350px">
+            <div class="flex justify-content-center mb-0"><b>Agosto</b></div>
+            <div >
+              <p-calendar inputId="template"
+              [inline]="true"
+              dateFormat="dd/mm/yy"
+              [disabledDays]="[0,6]"
+              (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+              formControlName="mes8">
+              <ng-template pTemplate="date" let-date>
+                <span
+                      [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                      style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+            </ng-template>
+            </p-calendar>
+            </div>
+          </div>
+          <div class="width-100px justify-content-center m-2" style="width:350px">
+            <div class="flex justify-content-center"><b>Setiembre</b></div>
+            <div >
+              <p-calendar inputId="template"
+              [inline]="true"
+              dateFormat="dd/mm/yy"
+              [disabledDays]="[0,6]"
+              (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+              formControlName="mes9">
+              <ng-template pTemplate="date" let-date>
+                <span
+                      [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                      style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+            </ng-template>
+            </p-calendar>
+            </div>
+          </div>
+
+          <div class="width-100px justify-content-center m-2" style="width:350px">
+            <div class="flex justify-content-center mb-0"><b>Octubre</b></div>
+            <div class="m-0 p-0">
+              <p-calendar inputId="template"
+                        [inline]="true"
+                        dateFormat="dd/mm/yy"
+                        [disabledDays]="[0,6]"
+                        (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+                        formControlName="mes10">
+                        <ng-template pTemplate="date" let-date>
+                          <span
+                                [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                                style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+                      </ng-template>
+            </p-calendar>
+            </div>
+          </div>
+            <div class="width-100px justify-content-center m-2" style="width:350px">
+              <div class="flex justify-content-center mb-0"><b>Noviembre</b></div>
+              <div >
+                <p-calendar inputId="template"
+                [inline]="true"
+                dateFormat="dd/mm/yy"
+                [disabledDays]="[0,6]"
+                (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+                formControlName="mes11">
+                <ng-template pTemplate="date" let-date>
+                  <span
+                        [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                        style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+              </ng-template>
+              </p-calendar>
+              </div>
+            </div>
+            <div class="width-100px justify-content-center m-2" style="width:350px">
+              <div class="flex justify-content-center"><b>Diciembre</b></div>
+              <div >
+                <p-calendar inputId="template"
+                [inline]="true"
+                dateFormat="dd/mm/yy"
+                [disabledDays]="[0,6]"
+                (click)="verClick($event)"
+                        (onSelect)="verDetalle($event)"
+                formControlName="mes12">
+                <ng-template pTemplate="date" let-date>
+                  <span
+                        [ngStyle]="(formato(date)=='FERIADO')?{backgroundColor: '#C1292E',color:'#fff'}:(formato(date)=='NO LABORABLE')? {backgroundColor: '#0075BF',color:'#fff'}:{backgroundColor: 'inherit',color:'#1B1C1E'}"
+                        style="padding-top: 4px; text-align: center; width: 2.5em; height: 2em; display:block">{{date.day}}</span>
+              </ng-template>
+              </p-calendar>
+              </div>
+          </div>
+        </div>
+    </form>
+    <p-calendar  [locale]="es" dateFormat="dd/mm/yy" inputId="spanish"></p-calendar>

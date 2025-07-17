@@ -1,0 +1,27 @@
+  <div class="flex justify-content-center w-full" >
+      <div class="text-align-left ml-3" style="width:50%">
+        <div class="grid ml-1 mt-3 "><div class="feriado mr-2 "></div><div class="label-min"><span>Día Feriado</span></div>
+        </div><div class="grid ml-1 mt-3 "><div class="laborable mr-2 "></div><div class="label-min"><span>Día No Laborable</span></div>
+        </div><div class="grid ml-1 mt-3 "><div class="fin mr-2 "></div><div class="label-min"><span>Sábado y Domingo</span></div>
+        </div>
+      </div>
+
+      <div class="flex justify-content-end mr-3 mt-5" style="width:50%">
+        <p-button
+          styleClass="btn-mpfn-sad-cancel px-4"
+          label="Carga Masiva"
+          (onClick)="openCargaMasiva()"
+        >
+        </p-button>
+        <p-button
+          styleClass="btn-mpfn-sad-prime px-4 ml-2"
+          label="Agregar"
+          (onClick)="openAgregarDiaNoLaborable()"
+        >
+        </p-button>
+      </div>
+    </div>
+
+
+
+

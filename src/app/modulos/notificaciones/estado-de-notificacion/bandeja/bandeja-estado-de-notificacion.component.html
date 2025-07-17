@@ -1,0 +1,23 @@
+<div class="cfe-container mt-5">
+  <!--<app-filtro-generico (filter)="onFilter($event)" [tituloPage]="'Estados de la Cédula de Notificación y Citación'"
+    [phFiltroGn]="'Buscar por Filtro GN'" [phFiltroGc]="'Buscar por Filtro GC'" [phFiltroCn]="'Buscar por Filtro CN'"
+    [phFiltroApp]="'Buscar por Filtro APP'" [bCreacionInicio]="true" [bCreacionFin]="true" [bModificacionInicio]="true"
+    [bModificacionFin]="true"></app-filtro-generico>-->
+
+  <app-filtros (filter)="onFilter($event)"></app-filtros>
+
+  <br />
+  <app-acciones-estado-de-notificacion [totalElementos]="contadorEstados"
+                                       (refrescar)="refrescarBandeja()"
+                                       (exportar)="exportarExcelBtn()"
+  >
+  </app-acciones-estado-de-notificacion>
+
+  <br />
+
+  <div class="p-2 bg-white border-round">
+    <app-tabla-generica [cols]="colsTable" [rows]="bandeja" [showActions]="showActionsButton"
+                        [menuActionsItems]="menuActionsItems" (setDataToAction)="getDataToAction($event)">
+    </app-tabla-generica>
+  </div>
+</div>

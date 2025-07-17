@@ -1,0 +1,67 @@
+<p-toast></p-toast>
+<p-dialog
+  header="Seleccionar opciones del menú"
+  [(visible)]="visible"
+  [style]="{ width: '95vw', height: '80vh' }"
+  [modal]="true"
+  [maximizable]="false"
+  [closable]="false"
+>
+  <div
+    class="cfe-close__document"
+    (click)="closeModal()"
+    style="position: absolute; top: 10px; right: 10px; cursor: pointer"
+  >
+    <img
+      (click)="cierraAddAppModal()"
+      [src]="icon('close_new')"
+      class="img-custom"
+      height="35px"
+      alt="cerrar"
+    />
+  </div>
+  <div style="margin: 0 2rem">
+    <div class="card">
+      <p-treeTable
+        [value]="arbol"
+        [scrollable]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [loading]="loading"
+      >
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+          <tr>
+            <td>
+              <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+              <div style="display: inline-block">
+                <p-checkbox
+                  [(ngModel)]="rowData.esEstado"
+                  [binary]="true"
+                  (onChange)="onCheckboxChange(rowData)"
+                ></p-checkbox>
+                {{ rowData.nomOpcion }}
+              </div>
+              <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr *ngIf="!loading && (arbol.length || 0) === 0">
+            <td colspan="100%">
+              <p style="text-align: center">No hay datos.</p>
+            </td>
+          </tr>
+        </ng-template>
+      </p-treeTable>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-center mt-2">
+      <p-button
+        icon="pi pi-save"
+        label="Grabar"
+        (click)="grabarOpcionesMenuPerfil()"
+        styleClass="font-semibold text-center px-4 py-2"
+      />
+    </div>
+  </ng-template>
+</p-dialog>

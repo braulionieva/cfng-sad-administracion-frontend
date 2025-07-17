@@ -1,0 +1,78 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.sidebar-width {
+    width: var(--sidebar-width);
+    //@media (min-width: $tablet) {
+    position: absolute;
+
+    //}
+    @media (max-width: $tablet) {
+        z-index: 100;
+        left: 0;
+        top: 0;
+    }
+
+    //position: absolute;
+    &.sidebar-collapse {
+        //transform: translateX(calc(0));
+
+    }
+}
+
+.main__container-z {
+    @media (min-width: $tablet) {
+        position: relative;
+
+    }
+
+}
+
+
+.main-section {
+    transition: all .5s ease;
+    // padding-left: var(--sidebar-width);
+    width: 100%;
+    max-width: calc(100% - var(--sidebar-width));
+    margin-left: auto;
+
+    @media (max-width: $tablet) {
+        //width: 100%;
+        // padding-left: 0px;
+        max-width: 100%;
+    }
+
+    &.main-right__extended {
+        //width: 100%;
+        // padding-left: 0px;
+        max-width: 100%;
+
+    }
+}
+
+.main__container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    .main-left__container {
+        width: $sidebar-width;
+        position: relative;
+    }
+
+    .main-right__container {
+        width: calc(100% - $sidebar-width );
+        padding: 40px 40px;
+        transition: 300ms all ease;
+
+        @media (max-width: $tablet) {
+            width: 100%;
+            padding-left: 90px;
+        }
+
+        &.main-right__extended {
+            width: 100%;
+            padding-left: 90px;
+
+        }
+    }
+}

@@ -1,0 +1,106 @@
+<section class="modal">
+  <div class="modal__header">
+    <div class="title m-3 ml-5">{{ (task ? 'Agregar' : 'Eliminar') + ' foto' }}</div>
+
+    <div class="close-wrapper p-2">
+      <div (click)="this.ref.close('closed')" (keydown.enter)="$event.preventDefault()"
+        (keydown.space)="$event.preventDefault()" class="cfe-close__document">
+        <img [src]="'assets/icons/close_new.svg'" class="img-custom" height="35px" alt="" />
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="formImgPerfil" class="ml-5">
+    <div class="flex flex-column gap-3">
+      <div>Nombre completo: <b>{{ usuario?.nombreCompleto }}</b></div>
+      <div>Tipo de documento: <b>{{ usuario?.numeroDocumento?.split(':')[0] }}</b></div>
+      <div>Número de documento: <b>{{ usuario?.numeroDocumento?.split(':')[1] }}</b></div>
+
+      <div class="flex gap-4 ">
+        <div class="flex gap-1">
+          <input (click)="seleccionarOpcion('ADD')" (keypress)="seleccionarOpcion('ADD')"
+            formControlName="optionSelected" id="optionSelectedSi" type="radio" class="custom-control-input" value="ADD"
+            name="optionSelected" styleClass="radio-style">
+          <label for="optionSelectedSi" class="ml-2">Agregar</label>
+        </div>
+
+        <div class="flex gap-1">
+          <input (click)="seleccionarOpcion('DEL')" (keypress)="seleccionarOpcion('DEL')"
+            formControlName="optionSelected" id="optionSelectedNo" type="radio" class="custom-control-input" value="DEL"
+            name="optionSelected" styleClass="radio-style">
+          <label for="optionSelectedNo" class="ml-2">Eliminar</label>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="task" class="file-upload-container">
+      <div class="flex" style="justify-content: center;">
+        <input (change)="fileChangeEvent($event)" (click)="fileValidate($event)" id="file" type="file"
+          accept=".jpg, .jpeg, .png" class="inputFile" hidden />
+
+        <p-button (onClick)="triggerFileInput()" styleClass="cfe-boton-lg cfe-boton cfe-boton-secondary"
+          label="Seleccionar el archivo" />
+      </div>
+      <br>
+
+      <p *ngIf="datosImgSeleccionada.nombre" class="inputFile__name text-center">
+        {{ datosImgSeleccionada.nombre }}
+      </p>
+
+      <p *ngIf="errorMessage" class="inputFile__error-message text-center text-red-500">
+        {{ errorMessage }}
+        <br> <br> <br>
+      </p>
+    </div>
+  </form>
+
+  <ng-container *ngIf="task && datosImgSeleccionada.nombre">
+    <div class="modal__main">
+      <div class="modal__cropperWrapper" *ngIf="imageChangedEvent">
+        <div class="mt-3">
+          <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false"
+            [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="null" [cropperMinWidth]="128"
+            [onlyScaleDown]="true" [roundCropper]="false" [canvasRotation]="canvasRotation" [(transform)]="transform"
+            [alignImage]="'center'" [style.display]="showCropper ? null : 'none'" [allowMoveImage]="allowMoveImage"
+            [hidden]="hidden" imageAltText="Alternative image text" output="base64"
+            [format]="datosImgSeleccionada.extension" (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady($event)"
+            (loadImageFailed)="loadImageFailed()"></image-cropper>
+          <div *ngIf="loading" class="loader">Loading...</div>
+        </div>
+
+        <div>
+          <p>Vista previa</p>
+          <img [src]="croppedImage" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <br> <br> <br>
+  </ng-container>
+
+  <ng-container *ngIf="!task && usuario?.foto">
+    <div class="modal__main--message text-center">
+      <ng-container *ngIf="usuario.foto">
+        <img [src]="'data:image/' + usuario.extension + ';base64,' + this.usuario.foto" [alt]="this.usuario.nombre"
+          class="img-logo" />
+      </ng-container>
+
+      <p class="font-message ">
+        Se eliminará la foto del usuario
+      </p>
+    </div>
+    <br>
+  </ng-container>
+
+
+  <div class="flex modal_actions">
+    <p-button (onClick)="closeModal()" styleClass="btn-mpfn-sad-cancel" label="Cancelar" />
+
+    <p-button *ngIf="task" styleClass="btn-mpfn-sad-prime ml-3" label="Agregar"
+      (onClick)="croppedImage ? confirmaGuardar() : null" [disabled]="!croppedImage" />
+
+    <p-button *ngIf="!task" (onClick)="(!task && usuario?.foto) ? confirmaEliminar() : null"
+      [disabled]="!(!task)&&(usuario?.foto)" styleClass="btn-mpfn-sad-prime ml-3" label="Eliminar" />
+  </div>
+</section>

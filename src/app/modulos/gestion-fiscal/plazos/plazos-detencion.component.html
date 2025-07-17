@@ -1,0 +1,26 @@
+<div class="cfe-container">
+  <div class="my-3">
+    <div class="tituloPage">
+      Plazos de Detención por Flagrancia ({{ numberArrests }})
+    </div>
+  </div>
+  <app-filtros
+    [categories]="categoriesDropdown"
+    [specialties]="specialtiesDropdown"
+    (onSelectCategory)="onCategoryChange($event)"
+    (createPlazo)="actionPlazoDetencion()"
+    (onSelectValuesFilter)="aplicarFiltros($event)"
+    (onExportExcel)="exportarExcel($event)"
+    (onCleanFilters)="cleanFilters($event)"
+  ></app-filtros>
+  <br />
+  <div class="p-2 bg-white border-round">
+    <app-tabla
+      [dataTable]="plazos"
+      (editPlazo)="actionPlazoDetencion($event)"
+      [totalRegistros]="numberArrests"
+      (cargarDatosPaginados)="getListPlazos($event)"
+      [(first)]="first"
+    ></app-tabla>
+  </div>
+</div>

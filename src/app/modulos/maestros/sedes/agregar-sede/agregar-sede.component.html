@@ -1,0 +1,102 @@
+<div class="agregar-menu-modal-container">
+  <h3>Nueva Sede</h3>
+  <span class="close" (click)="close()">
+    <img [src]="icon('close_new')" class="img-custom" alt="" />
+  </span>
+
+  <div class="grid mt-3">
+    <div class="col-12">
+      <form
+        [formGroup]="formularioAgregarSede"
+        (ngSubmit)="onSubmit()"
+        class="form-container-filter"
+      >
+        <div class="grid">
+          <div class="col-12">
+            <label for="extras" class="font-semibold">Nombre</label>
+            <input
+              type="text"
+              #nombreSede
+              pInputText
+              class="p-inputtext-lg w-full"
+              formControlName="nombreSede"
+              maxlength="100"
+              placeholder="Ingrese nombre"
+            />
+            <div style="text-align: right">
+              <small
+                >{{
+                  formularioAgregarSede.get("nombreSede").value
+                    ? formularioAgregarSede.get("nombreSede").value.length
+                    : 0
+                }}/100</small
+              >
+            </div>
+          </div>
+
+          <div class="col-6">
+            <label for="extras" class="font-semibold">Distrito Fiscal</label>
+            <p-dropdown
+              [options]="disFiscales"
+              formControlName="idDistritoFiscal"
+              placeholder="Seleccionar"
+              optionLabel="nombre"
+              optionValue="id"              
+              emptyMessage="No se encontraron registros"
+              (onChange)="obtenerDistritoGeografico($event)"
+            ></p-dropdown>
+          </div>
+
+          <div class="col-6">
+            <label for="extras" class="font-semibold"
+              >Distrito Geográfico (opcional)</label
+            >
+            <p-dropdown
+              [options]="distGeograficos"
+              formControlName="idDistritoGeografico"
+              placeholder="Seleccionar"
+              optionLabel="distritoGeografico"
+              optionValue="idUbigeo"
+              [showClear]="true"
+              emptyMessage="No se encontraron registros"
+            ></p-dropdown>
+          </div>
+
+          <div class="col-12">
+            <label for="extras" class="font-semibold">Dirección (opcional)</label>
+            <input
+              type="text"
+              pInputText
+              class="p-inputtext-lg w-full"
+              formControlName="direccionSede"
+              maxlength="100"
+              placeholder="Ingrese dirección"
+            />
+            <div style="text-align: right">
+              <small
+                >{{
+                  formularioAgregarSede.get("direccionSede").value
+                    ? formularioAgregarSede.get("direccionSede").value.length
+                    : 0
+                }}/100</small
+              >
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-3 justify-content-center">
+          <p-button
+            styleClass="btn-mpfn-sad-cancel"
+            label="Cancelar"
+            (click)="close()"
+          ></p-button>
+          <p-button
+            type="submit"
+            styleClass="btn-mpfn-sad-prime"
+            [disabled]="formularioAgregarSede.invalid"
+            label="Guardar"
+          ></p-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

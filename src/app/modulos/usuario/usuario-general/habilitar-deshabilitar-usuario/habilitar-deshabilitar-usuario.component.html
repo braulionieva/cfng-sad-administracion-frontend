@@ -1,0 +1,91 @@
+<div class="agregar-editar-usuario-modal-container">
+    <div class="close-wrapper">
+        <h3>{{ isHabilitar ? 'Habilitar usuario' : 'Deshabilitar usuario' }}</h3>
+
+        <div class="cfe-close__document" (click)="closeAction()" (keydown.enter)="$event.preventDefault()"
+            (keydown.space)="$event.preventDefault()">
+            <img [src]="icon('close_new')" class="img-custom" height="35px" alt="" />
+        </div>
+    </div>
+</div>
+
+<div class="form-wrapper mx-5 mb-5">
+    <div class="grid">
+        <div class="col">
+            <p>Nombre Completo:
+                <b>{{ userDetail.apVPaterno }} {{ userDetail.apVPaterno }}, {{ userDetail.noVCiudadano }}</b>
+            </p>
+
+            <p>DNI:
+                <b>{{ userDetail.nuVDocumento }}</b>
+            </p>
+
+            <p>Relación Laboral:
+                <b>{{ userDetail.noVRelacionLaboral }}</b>
+            </p>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="col">
+            <div class="alert alert-warning">
+                <i class="pi pi-exclamation-circle"></i>
+                <b>Nota:</b>
+                {{ isHabilitar ? 'Al habilitar nuevamente el usuario, este podrá iniciar sesión en la institución.' :
+                'Al deshabilitar un usuario, este ya no podrá iniciar sesión en la institución.' }}
+            </div>
+        </div>
+    </div>
+
+    <form [formGroup]="formGroup">
+        <div class="grid">
+            <div class="col-12">
+                <div class="flex flex-column gap-2">
+                    <label htmlFor="noVObservaciones">
+                        <b>Ingrese el motivo para {{ isHabilitar ? 'habilitar' : 'deshabilitar' }} al usuario</b>
+                    </label>
+
+                    <textarea formControlName="noVObservaciones"
+                        [placeholder]="'Escriba el motivo para ' + (isHabilitar ? 'habilitar' : 'deshabilitar') + ' al usuario'"
+                        rows="5" cols="30" maxlength="300" pInputTextarea>
+                    </textarea>
+
+                    <div>
+                        <div style="text-align: left;">
+                            <small
+                                *ngIf="formGroup.get('noVObservaciones').invalid && formGroup.get('noVObservaciones').errors?.['required']"
+                                class="error-message">
+                                Este campo es requerido
+                            </small>
+                        </div>
+
+                        <div style="text-align: right;">
+                            <small>
+                                {{ formGroup.get('noVObservaciones').value?.length || 0 }} / 300
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="col">
+                <p-checkbox formControlName="flCAceptaCondiciones" id="flCAceptaCondiciones" value="1" [binary]="true"
+                    inputId="flCAceptaCondiciones" />
+
+                <label for="flCAceptaCondiciones"> Acepto condiciones</label>
+            </div>
+        </div>
+
+        <div class="flex justify-content-center mt-4">
+            <p-button (onClick)="cancelAction()" styleClass="btn-mpfn-sad-cancel">
+                Cancelar
+            </p-button>
+
+            <p-button (onClick)="procesarUsuario()" [disabled]="formGroup.invalid" styleClass="btn-mpfn-sad-prime ml-3">
+                {{ isHabilitar ? 'Habilitar usuario' : 'Deshabilitar usuario' }}
+            </p-button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,15 @@
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  //font-size: small;
+  padding: 1rem 1rem;
+}
+
+td.break-text {
+  word-wrap: break-word; /* Corta el texto si es muy largo */
+  word-break: break-all; /* Rompe la palabra si no cabe en una línea */
+  white-space: normal; /* Permite que el texto se ajuste automáticamente */
+}
+
+:host ::ng-deep .p-paginator-bottom .p-paginator-current {
+  margin-right: auto;
+  padding-left: 1rem;
+}

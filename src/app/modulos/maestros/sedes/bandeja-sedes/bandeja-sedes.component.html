@@ -1,0 +1,35 @@
+<div class="cfe-container">
+  <app-contador-sedes
+    [totalElementos]="sedes.totalElementos"
+  ></app-contador-sedes>
+
+  <!--INICIO DE CONTENEDOR DE FILTROS-->
+  <app-sedes-filtros (filter)="onFilter($event)" [distritos]="distritos">
+  </app-sedes-filtros>
+  <!--FIN DE CONTENEDOR DE FILTROS-->
+
+  <br />
+
+  <app-acciones-sede
+    [distritos]="distritos"
+    [puedeExportar]="sedesDisponiblesParaExportar"
+    (exportar)="exportarExcel()"
+    (refrescar)="refrescarBandeja()"
+  >
+  </app-acciones-sede>
+
+  <br />
+
+  <div class="p-2 bg-white border-round">
+    <!--INICIO DE CONTENEDOR TABLA-->
+    <app-tabla-sede
+      [sedes]="sedes.registros"
+      [totalElementos]="totalElementos"
+      (clickedRefrescar)="refrescarBandeja()"
+      [distritos]="distritos"
+      [(first)]="first"
+    >
+    </app-tabla-sede>
+    <!--FIN DE CONTENEDOR TABLA-->
+  </div>
+</div>

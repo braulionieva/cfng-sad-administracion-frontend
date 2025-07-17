@@ -1,0 +1,26 @@
+<div class="agregar-menu-modal-container">
+  <h3>{{getTitulo()}}</h3>
+  <span class="close" (click)="close()" (keypress)="close()">X</span>
+
+  <div class="grid mt-3">
+    <div class="col-12">
+      <p-steps [model]="items" [(activeIndex)]="nActiveIndex" [readonly]="true"></p-steps>
+      <ng-container [ngTemplateOutlet]="nActiveIndex== 0 ? buscarActoProcesal : agregarEditarActoProcesal">
+
+        <!--PASO 1 buscar acto procesal-->
+        <ng-template #buscarActoProcesal>
+          <app-buscar-acto-procesal (setIdActoProcesal)="setIdActoProcesal($event)"
+            (setNombreActoProcesal)="setNombreActoProcesal($event)" (siguiente)="siguiente()"
+            [tipoLlamado]="tipoLlamado"></app-buscar-acto-procesal>
+        </ng-template>
+
+        <!--PASO 2 editar procesal-->
+        <ng-template #agregarEditarActoProcesal>
+          <app-agregar-editar-acto-procesal [idActoProcesalSelected]="idActoProcesalSelected"
+            [nombreActoProcesalSelected]="nombreActoProcesalSelected"
+            (anterior)="anterior()"></app-agregar-editar-acto-procesal>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+</div>

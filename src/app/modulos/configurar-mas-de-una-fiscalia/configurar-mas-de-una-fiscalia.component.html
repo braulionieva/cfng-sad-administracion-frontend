@@ -1,0 +1,435 @@
+<!-- dialogo de confirmacion -->
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
+<!-- filtro -->
+<div class="cfe-container">
+  <div class="tituloPage">Fiscalías con Fiscalías Padre Configuradas ({{ this.fiscaliaLstTotal }})</div>
+  <form [formGroup]="formFiltroBuscar" class="color-filter">
+    <div class="grid">
+      <div class="col">
+        <p-dropdown [options]="distritoFiscalLst" formControlName="idNDistritoFiscal"
+                    placeholder="Seleccione Distrito Fiscal" optionLabel="noVDistritoFiscal"
+                    optionValue="idNDistritoFiscal"
+                    (onChange)="onChangeDistritoFiscalFilter($event.value)"
+                    appendTo="body" emptyMessage="No se encontraron registros"
+        ></p-dropdown>
+      </div>
+      <div class="col">
+        <p-dropdown [options]="sedeXDFLst" formControlName="coVSede" placeholder="Seleccione Sede" optionLabel="noVSede"
+                    optionValue="coVSede" (onChange)="onChangeSedeFilter($event.value)"
+                    appendTo="body" emptyMessage="No se encontraron registros"
+        ></p-dropdown>
+      </div>
+      <div class="col">
+        <p-dropdown [options]="fiscaliaXDFLst" formControlName="coVEntidad" placeholder="Nombre Fiscalía"
+                    optionLabel="noVEntidad" optionValue="coVEntidad"
+                    appendTo="body" emptyMessage="No se encontraron registros"
+                    (onChange)="onChangeBuscar()"
+        ></p-dropdown>
+      </div>
+      <div class="col">
+        <input type="text" pInputText formControlName="coVEntidadTxt" placeholder="Código de Fiscalía"
+               (keyup)="buscarFiscaliaKeyUp()"/>
+      </div>
+      <div class="col">
+        <p-button label="Limpiar Filtros" styleClass="btn-mpfn-sad-cancel btn-mpfn-sad-filtrar w-full"
+                  (onClick)="limpiarFiltrosBusqueda()"></p-button>
+      </div>
+    </div>
+  </form>
+
+  <div class="flex justify-content-end w-full my-4">
+    <p-button styleClass="btn-mpfn-sad-cancel" label="Exportar Excel" (onClick)="exportarExcelForm()">
+      <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px"/>
+    </p-button>
+
+    <p-button styleClass="btn-mpfn-sad-prime ml-3" label="Agregar" (onClick)="openModalFormNew()">
+    </p-button>
+  </div>
+
+</div>
+
+<!-- Tabla resultados de busqueda-->
+<div class="grid bg-white border-round">
+  <div class="col-12">
+    <p-table [value]="this.fiscaliaLst" [lazy]="true" (onLazyLoad)="getBuscarFiscaliasFiltroPagination($event)"
+             [paginator]="true" [rows]="this.configPage.perPage" [totalRecords]="this.fiscaliaLstTotal"
+             [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">N°</th>
+          <th scope="col">Codigo</th>
+          <th scope="col">Distrito Fiscal</th>
+          <th scope="col">Tipo Especialidad</th>
+          <th scope="col">Especialidad</th>
+          <th scope="col">Jerarquía</th>
+          <th scope="col">Fiscalía</th>
+          <th scope="col">Fiscalía(s) Padre</th>
+          <th scope="col">Creación</th>
+          <th scope="col">Modificación</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>{{ item.secuencia }}</td>
+          <td>{{ item.coVEntidad }}</td>
+          <td>{{ item.noVDistritoFiscal }}</td>
+          <td>{{ item.noVTipoEspecialidad }}</td>
+          <td>{{ item.noVEspecialidad }}</td>
+          <td>{{ item.noVJerarquia }}</td>
+          <td>{{ item.noVEntidad }}</td>
+          <td>{{ item.noVEntidadPadre1 }} <br/>
+            {{ item.noVEntidadPadre2 }} <br/>
+            <button *ngIf="item.cantidadEntidadPadres > 2" pButton pRipple type="button"
+                    (click)="verMasSobreFiscaliasPadre(item)" class="p-button-rounded p-button-text">Ver
+              más
+            </button>
+          </td>
+          <td>{{ item.usrCrea }} <br>{{ item.feDCreacion }}</td>
+          <td>{{ item.usrModifica }} <br>{{ item.feDModificacion }}</td>
+          <td>
+            <div>
+
+              <p-menu #menu [model]="actionItems" [popup]="true" appendTo="body" [pSelectableRow]="item"></p-menu>
+              <p-button icon="pi pi-ellipsis-v" styleClass="p-button-rounded p-button-text"
+                        (click)="itemSelected(item); menu.toggle($event)"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<!-- modal -->
+<p-dialog header="" [(visible)]="isVisibleModalNewForm" [modal]="true" [style]="{width: '60%'}"
+          [styleClass]="'p-dialog-custom'" [contentStyleClass]="'p-dialog-content-custom'" [maximizable]="false"
+          [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <ng-container *ngIf="isEditForm==true; then editForm; else newForm"></ng-container>
+    <ng-template #editForm>
+      <span class="p-dialog-header p-dialog-title p-component">Editar Fiscalia Padre a una Fiscalía</span>
+    </ng-template>
+    <ng-template #newForm>
+      <span class="p-dialog-header p-dialog-title p-component">Agregar Fiscalia Padre a una Fiscalía</span>
+    </ng-template>
+  </ng-template>
+
+  <div class="cfe-close__document" (click)="onCloseModal()">
+    <img [src]="icon('close_new')" class="img-custom" height="35px" alt=""/>
+  </div>
+
+  <form [formGroup]="formGroup" class="mx-3 mt-0 pt-0">
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="idNDistritoFiscal" class="ml-2">Distrito Fiscal</label>
+          <p-dropdown [options]="distritoFiscalLst" formControlName="idNDistritoFiscal" id="idNDistritoFiscal"
+                      placeholder="Seleccione" optionLabel="noVDistritoFiscal" optionValue="idNDistritoFiscal"
+                      (onChange)="onChangeDistritoFiscalForm($event.value)"
+                      appendTo="body" emptyMessage="No se encontraron registros"
+          ></p-dropdown>
+          <small
+            *ngIf="formGroup.get('idNDistritoFiscal').invalid&&formGroup.get('idNDistritoFiscal').errors?.['required']">Este
+            campo es requerido</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="coVSede" class="ml-2">Sede</label>
+          <p-dropdown [options]="sedeXDFLstForm" formControlName="coVSede" placeholder="Seleccione"
+                      optionLabel="noVSede" optionValue="coVSede" (onChange)="onChangeSedeForm()"
+                      appendTo="body" emptyMessage="No se encontraron registros"
+          ></p-dropdown>
+          <small *ngIf="formGroup.get('coVSede').invalid&&formGroup.get('coVSede').errors?.['required']">Este
+            campo es requerido</small>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="idNTipoEspecialidad" class="ml-2">Tipo Especialidad</label>
+          <p-dropdown [options]="tipoEspecialidadLst" formControlName="idNTipoEspecialidad"
+                      placeholder="Seleccione Tipo Especialidad" optionLabel="noVTipoEspecialidad"
+                      optionValue="idNTipoEspecialidad"
+                      appendTo="body" emptyMessage="No se encontraron registros"
+                      (onChange)="onChangeTipoEspecialidad($event.value)"></p-dropdown>
+          <small
+            *ngIf="formGroup.get('idNTipoEspecialidad').invalid&&formGroup.get('idNTipoEspecialidad').errors?.['required']">Este
+            campo es requerido</small>
+        </div>
+      </div>
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="idVEspecialidad" class="ml-2">Especialidad</label>
+          <p-dropdown [options]="especialidadLst" formControlName="idVEspecialidad"
+                      placeholder="Seleccione Especialidad" optionLabel="noVEspecialidad" optionValue="idVEspecialidad"
+                      appendTo="body" emptyMessage="No se encontraron registros"
+                      (onChange)="onChangeEspecialidad()"></p-dropdown>
+          <small
+            *ngIf="formGroup.get('idVEspecialidad').invalid&&formGroup.get('idVEspecialidad').errors?.['required']">Este
+            campo es requerido</small>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="idNJerarquia" class="ml-2">Jerarquía</label>
+          <p-dropdown [options]="jerarquiaLst" formControlName="idNJerarquia" placeholder="Seleccione la Jerarquía"
+                      [required] optionLabel="noVJerarquia" optionValue="idNJerarquia"
+                      (onChange)="onChangeJerarquia($event.value)"
+                      appendTo="body" emptyMessage="No se encontraron registros"
+          ></p-dropdown>
+          <small *ngIf="formGroup.get('idNJerarquia').invalid&&formGroup.get('idNJerarquia').errors?.['required']">Este
+            campo es requerido</small>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="coVEntidad" class="ml-2">Nombre Fiscalía</label>
+          <p-dropdown [options]="fiscaliaXDFLstForm" formControlName="coVEntidad" placeholder="Seleccione"
+                      optionLabel="noVEntidad" optionValue="coVEntidad" (onChange)="onChangeFiscalia($event.value)"
+                      appendTo="body" emptyMessage="No se encontraron registros"
+          ></p-dropdown>
+          <small *ngIf="formGroup.get('coVEntidad').invalid&&formGroup.get('coVEntidad').errors?.['required']">Este
+            campo es requerido</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col-12">
+        <p-table [value]="fiscaliasPadreTable" [tableStyle]="{ 'min-width': '50rem' }">
+          <ng-template pTemplate="header">
+            <tr>
+              <th scope="col">N°</th>
+              <th scope="col">Fiscalía Padre</th>
+              <th scope="col">Creación</th>
+              <th scope="col">Modificación</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr>
+              <td></td>
+              <td>{{ item.noVEntidad }}</td>
+              <td>{{ item.usrCrea }} <br>{{ item.feDCreacion }}</td>
+              <td>{{ item.usrModifica }} <br>{{ item.feDModificacion }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="col">
+        <div class="flex flex-column gap-2">
+          <label for="coVEntidadPadre" class="ml-2">Fiscalía Padre</label>
+          <p-dropdown [options]="fiscaliaPadreLst" formControlName="coVEntidadPadre" placeholder="Seleccione"
+                      optionLabel="noVEntidad" optionValue="coVEntidad"
+                      appendTo="body" emptyMessage="No se encontraron registros"
+          ></p-dropdown>
+          <small
+            *ngIf="formGroup.get('coVEntidadPadre').invalid&&formGroup.get('coVEntidadPadre').errors?.['required']">Este
+            campo es requerido</small>
+
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-center">
+      <p-button (click)="cancelarForm()" styleClass="btn-mpfn-sad-cancel px-8">Cancelar
+      </p-button>
+      <p-button *ngIf="isEditForm==false" (click)="addForm()"
+                styleClass="btn-mpfn-sad-prime width-auto ml-3 px-8">Guardar
+      </p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- modal de notificaciones -->
+<p-dialog header="" [(visible)]="isVisibleModalNotification" [style]="{width: '50vw'}" [modal]="true"
+          (onHide)="onCloseModalNotification()">
+  <p class="text-center">
+    <ng-container [ngSwitch]="modalNotificationType">
+      <ng-template ngSwitchCase="success">
+        <i class="pi pi-check" style="font-size: 3.5rem; color: rgb(11, 146, 22)"></i>
+      </ng-template>
+      <ng-template ngSwitchCase="danger">
+        <i class="pi pi-times" style="font-size: 3.5rem; color: rgb(202, 11, 11)"></i>
+      </ng-template>
+      <ng-template ngSwitchCase="warning">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3.5rem; color: rgb(189, 202, 1)"></i>
+      </ng-template>
+      <ng-container *ngSwitchDefault>
+        <i class="pi pi-exclamation-triangle" style="font-size: 3.5rem; color: rgb(11, 146, 22)"></i>
+      </ng-container>
+    </ng-container>
+  </p>
+  <h5 class="text-center">{{ modalNotificationTitle }}</h5>
+  <p class="text-center">
+    {{ modalNotificationMsg }}
+  </p>
+  <div class="text-center">
+    <button pButton pRipple label="Listo" class="" (click)="onCloseModalNotification()"></button>
+  </div>
+</p-dialog>
+
+<!-- modal edit on row-->
+<!--(onHide)="onCloseModal()"-->
+<p-dialog header="" [(visible)]="isVisibleModalEditForm"
+          [modal]="true" [style]="{width: '80%'}"
+          [styleClass]="'p-dialog-custom'" [contentStyleClass]="'p-dialog-content-custom'" [maximizable]="false"
+          [draggable]="false" [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">Editar Fiscalia Padre a una Fiscalía</span>
+  </ng-template>
+
+  <div class="cfe-close__document" (click)="onCloseEditFormModal()">
+    <img [src]="icon('close_new')" class="img-custom" height="35px" alt=""/>
+  </div>
+
+  <form [formGroup]="formGroup" styleClass="p-3">
+    <div class="grid">
+      <div class="col">
+        <div class="grid">
+          <div class="col"><b>Distrito Fiscal:</b></div>
+          <div class="col">{{ this.fiscaliaEditBasic.noVDistritoFiscal }}</div>
+        </div>
+        <div class="grid">
+          <div class="col"><b>Tipo Especialidad:</b></div>
+          <div class="col">{{ this.fiscaliaEditBasic.noVTipoEspecialidad }}</div>
+        </div>
+        <div class="grid">
+          <div class="col"><b>Especialidad:</b></div>
+          <div class="col">{{ this.fiscaliaEditBasic.noVEspecialidad }}</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="grid">
+          <div class="col"><b>Jerarquía:</b></div>
+          <div class="col">{{ this.fiscaliaEditBasic.noVEntidad }}</div>
+        </div>
+        <div class="grid">
+          <div class="col"><b>Fiscalía:</b></div>
+          <div class="col">{{ this.fiscaliaEditBasic.noVEntidad }}</div>
+        </div>
+        <div class="grid">
+          <div class="col"><b>Código:</b></div>
+          <div class="col">{{ this.fiscaliaEditBasic.coVEntidad }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col">
+        <p-button
+          (onClick)="agregarFiscaliaPadreInner(this.fiscaliaEditBasic)"
+          styleClass="btn-mpfn-sad-prime my-3">Agregar</p-button>
+      </div>
+    </div>
+    <!--<div class="flex">
+      <div class="grow w-full">
+        <p>
+          <b>Distrito Fiscal</b>: {{ this.fiscaliaEditBasic.noVDistritoFiscal }}<br/>
+          <b>Tipo Especialidad</b>: {{ this.fiscaliaEditBasic.noVTipoEspecialidad }}<br/>
+          <b>Especialidad</b>: {{ this.fiscaliaEditBasic.noVEspecialidad }}<br/>
+          <b>Jerarquía</b>:{{ this.fiscaliaEditBasic.noVJerarquia }}<br/>
+        </p>
+        <p>
+          <b>Fiscalía</b>: {{ this.fiscaliaEditBasic.noVEntidad }}<br/>
+          <b>Código</b>: {{ this.fiscaliaEditBasic.coVEntidad }}<br/>
+        </p>
+      </div>
+      <div class="flex-none">
+        <p-button styleClass="" label="Agregar"
+                  (onClick)="agregarFiscaliaPadreInner(this.fiscaliaEditBasic)"></p-button>
+      </div>
+    </div>-->
+  </form>
+
+  <div class="grid">
+    <div class="col-12">
+      <form [formGroup]="formGroupEdit">
+        <p-table [value]="fiscaliaPadreLstForEdit" editMode="row" dataKey="idVRelacionEntidad">
+          <ng-template pTemplate="header">
+            <tr>
+              <th scope="col">N°</th>
+              <th scope="col">Fiscalía Padre</th>
+              <!--<th scope="col">Creación</th>
+              <th scope="col">Modificación</th>-->
+              <th scope="col">Acciones</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item let-editing="editing" let-rindex="rowIndex">
+            <tr [pEditableRow]="item">
+              <td>{{ item.secuencia }}</td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-dropdown [options]="fiscaliaPadreSelectEdit" formControlName="coVEntidadPadre"
+                                [style]="{'width':'100%'}" optionLabel="noVEntidad" optionValue="coVEntidad"
+                                appendTo="body" emptyMessage="No se encontraron registros"
+                    >
+                    </p-dropdown>
+                  </ng-template>
+
+                  <ng-template pTemplate="output">
+                    {{ item.noVEntidad }}
+                  </ng-template>
+                </p-cellEditor>
+
+              </td>
+              <!--<td>{{ item.usrCrea }} <br>{{ item.feDCreacion }}</td>
+              <td>{{ item.usrModifica }} <br>{{ item.feDModificacion }}</td>-->
+              <td>
+                <!--opciones de la tabla-->
+                <!--<button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                        (click)="onRowEditInit(item, rindex)" class="p-button-rounded p-button-text"></button>-->
+                <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                        (click)="onRowDelete(item, rindex)" class="p-button-rounded p-button-text"></button>
+
+                <!--opciones de la tabla en modo edicion-->
+                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                        (click)="onRowEditSave(item, rindex)"
+                        class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                        class="p-button-rounded p-button-text p-button-danger"></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </form>
+
+
+    </div>
+  </div>
+
+  <div class="grid" *ngIf="idVisibleFormGroupNewOnRow">
+    <div class="col-7">
+      <form [formGroup]="formGroupNewOnRow">
+        <p-dropdown [options]="fiscaliaPadreSelectEdit" formControlName="coVEntidad" [style]="{'width':'100%'}"
+                    optionLabel="noVEntidad" optionValue="coVEntidad"
+                    placeholder="Seleccione"
+                    appendTo="body" emptyMessage="No se encontraron registros"
+        >
+        </p-dropdown>
+      </form>
+    </div>
+    <div class="col-5">
+      <button pButton pRipple type="button" icon="pi pi-check" (click)="onRowAddFiscaliaPadreConfirm()"
+              class="p-button-rounded p-button-text"></button>
+      <button pButton pRipple type="button" icon="pi pi-times" (click)="onRowAddFiscaliaPadreCancel()"
+              class="p-button-rounded p-button-text"></button>
+
+
+    </div>
+  </div>
+</p-dialog>

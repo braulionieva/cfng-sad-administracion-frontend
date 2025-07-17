@@ -1,0 +1,33 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.filter {
+  background: rgba(51, 51, 51, 0.1);
+  padding: 1rem;
+  border-radius: 5px;
+  display: flex;
+  gap: 2rem;
+
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__dropdown,
+  .filter_dropdown {
+    min-width: 300px;
+    width: 100%;
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+:host::ng-deep .btn-prime-img {
+  padding: 10px 8px 10px 25px !important;
+}
+
+/***************/

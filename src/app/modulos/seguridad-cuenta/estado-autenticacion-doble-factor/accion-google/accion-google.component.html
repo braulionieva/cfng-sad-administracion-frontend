@@ -1,0 +1,102 @@
+<div style="padding: 1rem 3.5rem; border: 2px solid #ececec">
+  <div class="flex justify-content-center">
+    <img src="assets/images/gear.png" alt="Gear" style="width: 4.5rem" />
+  </div>
+  <ng-container *ngIf="!metodo?.estadoMetodo">
+    <p class="m-0 mt-3">
+      Paso 1. Descargue e instale la aplicación de Google authenticator en su
+      teléfono, está disponible para IOS y Android, en las tiendas de App Store
+      y Play Store respectivamente.
+    </p>
+    <p class="m-0">
+      Paso 2. Abra la aplicación instalada, seleccione el botón +, luego la
+      opción “Escanear un código QR” y escanee el siguiente código.
+    </p>
+    <div class="mt-3 mb-3">
+      <img
+        *ngIf="codigoQR"
+        [src]="'data:image/png;base64,' + codigoQR"
+        alt="qr"
+      />
+    </div>
+    <div class="flex flex-column gap-1 mt-3" style="height: 85px">
+      <label for="codigo-validacion"
+        >Paso 3. Ingrese el código de 6 dígitos allí generado.</label
+      >
+      <div id="codigo-validacion" style="max-width: 18rem">
+        <p-inputNumber
+          [useGrouping]="false"
+          [formControl]="codigoValidacion"
+          [maxlength]="6"
+        />
+        <!-- <p-inputText
+          [formControl]="codigoValidacion"
+          maxlength="6"
+          placeholder="Ingrese su código de 6 dígitos"
+        /> -->
+      </div>
+      <small
+        style="color: red"
+        *ngIf="codigoValidacion.touched && codigoValidacion.errors?.['required']"
+        >Ingrese el código recibido.</small
+      >
+      <small
+        style="color: red"
+        *ngIf="codigoValidacion.touched && codigoValidacion.errors?.['pattern']"
+        >Código no valido.</small
+      >
+      <small style="color: red" *ngIf="codigoError"
+        >El código ingresado no es válido, por favor intentelo
+        nuevamente.</small
+      >
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="metodo?.estadoMetodo">
+    <h4 class="text-center">Google Authenticator</h4>
+    <div class="mt-3 mb-3 flex justify-content-center">
+      <img
+        *ngIf="codigoQR"
+        [src]="'data:image/png;base64,' + codigoQR"
+        alt="qr"
+      />
+    </div>
+    <p class="text-center">
+      Para desactivar la autenticación con este método, abra la aplicación de
+      Google Authenticator instalada en su teléfono e ingrese aquí el código de
+      6 dígitos generado.
+    </p>
+    <div class="flex flex-column align-items-center gap-1" style="height: 85px">
+      <div style="max-width: 18rem">
+        <p-inputNumber
+          [useGrouping]="false"
+          [formControl]="codigoValidacion"
+          [maxlength]="6"
+        />
+      </div>
+      <small
+        style="color: red"
+        *ngIf="codigoValidacion.touched && codigoValidacion.errors?.['required']"
+        >Ingrese el código recibido.</small
+      >
+      <small
+        style="color: red"
+        *ngIf="codigoValidacion.touched && codigoValidacion.errors?.['pattern']"
+        >Código no valido.</small
+      >
+      <small style="color: red" *ngIf="codigoError"
+        >El código ingresado no es válido, por favor intentelo
+        nuevamente.</small
+      >
+    </div>
+  </ng-container>
+
+  <div class="flex justify-content-center">
+    <p-button
+      label="Confirmar código"
+      styleClass="cfe-boton-lg cfe-boton mt-3"
+      [disabled]="!codigoValidacion.valid"
+      (onClick)="onConfirmarCodigo()"
+    />
+  </div>
+</div>

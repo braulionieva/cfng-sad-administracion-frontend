@@ -1,0 +1,59 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.container {
+  background-color: #ffffff;
+}
+
+.login {
+  padding: 0 2rem;
+
+  &__container {
+    width: 465px;
+    border: 2.5px solid rgb(214, 214, 214);
+  }
+
+  &__actions {
+    &--google {
+      background: none;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
+      color: var(--mpfn-primary);
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    &--forgot {
+      text-decoration: underline !important;
+      color: var(--mpfn-gray-1);
+      padding: 0;
+    }
+  }
+
+  &__profile {
+    background: $gray9;
+
+    & img {
+      width: 2rem;
+      border-radius: 6px;
+    }
+  }
+}
+
+::ng-deep.p-password {
+  flex-direction: row-reverse;
+}
+
+::ng-deep.p-element.p-icon-wrapper {
+  right: 1rem;
+}
+
+::ng-deep.p-button {
+  &:disabled {
+    background: $gray5;
+    border-color: $gray5;
+  }
+}

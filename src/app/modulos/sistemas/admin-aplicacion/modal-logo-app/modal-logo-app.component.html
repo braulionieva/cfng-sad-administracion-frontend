@@ -1,0 +1,88 @@
+<section class="modal">
+  <div class="close-wrapper p-2">
+    <div class="cfe-close__document" (click)="this.ref.close('closed')" (keydown.enter)="$event.preventDefault()"
+      (keydown.space)="$event.preventDefault()">
+      <img [src]="'assets/icons/close_new.svg'" class="img-custom" height="35px" alt="" />
+    </div>
+  </div>
+
+  <form [formGroup]="formGroup">
+    <div class="modal__options">
+      <div *ngFor="let option of options">
+        <p-radioButton formControlName="optionSelected" [inputId]="option.key" [value]="option.key"
+          [label]="option.name" />
+      </div>
+    </div>
+
+    <br />
+
+    <div class="modal__options">
+      <div *ngIf="optionSelectedField.value === 'agregar'" class="file-upload-container">
+        <div class="flex" style="justify-content: center;">
+          <input (change)="fileChangeEvent($event)" id="file" type="file" accept=".jpg, .jpeg, .png" class="inputFile"
+            hidden />
+
+          <p-button (onClick)="triggerFileInput()" styleClass="cfe-boton-lg cfe-boton cfe-boton-secondary"
+            label="Seleccionar el archivo del logo" />
+        </div>
+
+        <br>
+
+        <p *ngIf="datosLogoSeleccionado.nombre" class="inputFile__name">
+          {{ datosLogoSeleccionado.nombre }}
+        </p>
+
+        <p *ngIf="errorMessage" class="inputFile__error-message text-red-500">
+          {{ errorMessage }}
+          <br> <br> <br>
+        </p>
+      </div>
+    </div>
+  </form>
+
+  <ng-container *ngIf="optionSelectedField.value === 'agregar' && datosLogoSeleccionado.nombre">
+    <div class="modal__main">
+      <div class="modal__cropperWrapper" *ngIf="imageChangedEvent">
+        <div>
+          <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+            [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="aspectRatio" [cropperMinWidth]="128"
+            [onlyScaleDown]="true" [roundCropper]="false" [canvasRotation]="canvasRotation" [(transform)]="transform"
+            [alignImage]="'center'" [style.display]="showCropper ? null : 'none'" [allowMoveImage]="allowMoveImage"
+            [hidden]="hidden" imageAltText="Alternative image text" output="base64"
+            [format]="datosLogoSeleccionado.extension" (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady($event)"
+            (loadImageFailed)="loadImageFailed()"></image-cropper>
+          <div *ngIf="loading" class="loader">Loading...</div>
+        </div>
+
+        <div>
+          <p>Vista previa</p>
+          <img [src]="croppedImage" alt="" />
+        </div>
+      </div>
+    </div>
+
+    <br> <br> <br>
+  </ng-container>
+
+  <ng-container *ngIf="optionSelectedField.value === 'eliminar'">
+    <div class="modal__main--message">
+      <ng-container *ngIf="logoPrevio.base64">
+        <img [src]="'data:image/' + logoPrevio.extension + ';base64,' + this.logoPrevio.base64"
+          [alt]="this.datosLogoSeleccionado.nombre" class="img-logo" />
+      </ng-container>
+    </div>
+
+    <br>
+  </ng-container>
+
+  <div class="flex modal__actions">
+    <p-button (click)="clickCancelAction()" styleClass="cfe-boton-lg cfe-boton cfe-boton-secondary">Cancelar</p-button>
+
+    <p-button *ngIf="optionSelectedField.value === 'agregar'" (click)="croppedImage ? clickSuccessAction() : null"
+      [disabled]="!croppedImage" styleClass="cfe-boton-lg cfe-boton">Guardar</p-button>
+
+    <p-button *ngIf="optionSelectedField.value === 'eliminar'" (click)="logoPrevio.base64 ? clickSuccessAction() : null"
+      [disabled]="!logoPrevio.base64" styleClass="cfe-boton-lg cfe-boton">Eliminar</p-button>
+  </div>
+</section>

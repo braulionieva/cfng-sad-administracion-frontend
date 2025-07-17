@@ -1,0 +1,140 @@
+<p-table
+  #tablaRef
+  [value]="dataTable"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [paginator]="true"
+  [rows]="filasPorPagina"
+  [lazy]="true"
+  (onLazyLoad)="obtenerListaPlazos($event)"
+  [totalRecords]="totalRegistros"
+  (onPage)="onPageChange($event)"
+  [(first)]="first"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="{last} de {{ totalRegistros }} registros"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th *ngFor="let columna of columnas" class="text-start">
+        {{ columna }}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-plazo>
+    <tr>
+      <td>
+        <div class="text-start">
+          <ng-container *ngIf="plazo.numeracion; else no_content">
+            {{ plazo.numeracion }}
+          </ng-container>
+          <ng-template #no_content> - </ng-template>
+        </div>
+      </td>
+      <td>
+        <div class="text-start">
+          <ng-container *ngIf="plazo.descripcionTipoPlazo; else no_content">
+            {{ plazo.descripcionTipoPlazo }}
+          </ng-container>
+          <ng-template #no_content> - </ng-template>
+        </div>
+      </td>
+      <td>
+        <div class="text-start">
+          <ng-container *ngIf="plazo.distritoFiscal; else no_content">
+            {{ plazo.distritoFiscal }}
+          </ng-container>
+          <ng-template #no_content> - </ng-template>
+        </div>
+      </td>
+      <td>
+        <div class="text-start">
+          <ng-container *ngIf="plazo.tipoEspecialidad; else no_content">
+            {{ plazo.tipoEspecialidad }}
+          </ng-container>
+          <ng-template #no_content> - </ng-template>
+        </div>
+      </td>
+      <td>
+        <div class="text-start">
+          <ng-container *ngIf="plazo.especialidad; else no_content">
+            {{ plazo.especialidad }}
+          </ng-container>
+          <ng-template #no_content> - </ng-template>
+        </div>
+      </td>
+      <td>
+        <div class="text-start">
+          <ng-container *ngIf="plazo.etapa; else no_content">
+            {{ plazo.etapa }}
+          </ng-container>
+          <ng-template #no_content> - </ng-template>
+        </div>
+      </td>
+      <td>
+        <div class="text-start flex-column">
+          <ng-container *ngIf="plazo.idTramite; else no_content">
+            <p class="mb-1">
+              {{ plazo.idTramite }}
+            </p>
+            <span
+              class="table__detail"
+              (click)="abrirModalDetallePlazoTramites(plazo)"
+              >Ver detalle</span
+            >
+          </ng-container>
+          <ng-template #no_content> - </ng-template>
+        </div>
+      </td>
+      <td>
+        <div class="text-start">
+          <ng-container *ngIf="plazo.tramite; else no_content">
+            {{ plazo.tramite }}
+          </ng-container>
+          <ng-template #no_content> - </ng-template>
+        </div>
+      </td>
+      <td>
+        <div class="text-start">
+          <ng-container *ngIf="plazo.plazo; else no_content">
+            {{ plazo.plazoUnidad }}
+          </ng-container>
+          <ng-template #no_content> - </ng-template>
+        </div>
+      </td>
+      <td>
+        <div class="text-start">
+          <ng-container *ngIf="plazo.diasCalendarios; else no_content">
+            {{ plazo.diasCalendarios }}
+          </ng-container>
+          <ng-template #no_content> - </ng-template>
+        </div>
+      </td>
+      <td>
+        <div class="text-start">
+          <ng-container *ngIf="plazo.restrictivo; else no_content">
+            {{ plazo.restrictivo }}
+          </ng-container>
+          <ng-template #no_content> - </ng-template>
+        </div>
+      </td>
+      <td>
+        <div class="flex gap-3 align-items-center justify-content-start">
+          <p-button
+            type="button"
+            (onClick)="mostrarMenuAcciones($event, plazo)"
+            icon="pi pi-ellipsis-v"
+            styleClass=" p-button-text p-button-rounded"
+          />
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="100%">
+        <p class="text-center py-5">No se encontraron registros</p>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-menu #menu [model]="actionsitems" [popup]="true" appendTo="body"></p-menu>

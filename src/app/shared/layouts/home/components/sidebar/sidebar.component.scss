@@ -1,0 +1,240 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+ul {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #0e2e4a;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.1em;
+}
+
+.menu__container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 40px;
+  background-color: $white;
+
+  .btn-menu {
+    outline: none;
+    border: none;
+    background-color: $background;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    border-radius: 6px;
+
+    &>img {
+      width: 22.5px;
+    }
+  }
+}
+
+a.btn-submenu {
+  position: absolute;
+  right: -61px;
+  top: 27px;
+  z-index: 2;
+  display: none;
+  background-color: $grayBackground;
+  border-top-right-radius: 7px;
+  border-top-left-radius: 7px;
+  padding: 5px;
+  //font-family:$font-bold;//Arial, Helvetica, sans-serif; //
+  font-family: Arial, Helvetica, sans-serif; //
+  font-weight: bold !important;
+
+  font-size: 1.1em;
+  transform: rotate(90deg);
+  cursor: pointer;
+
+  &>span {
+    margin-left: 5px;
+  }
+
+  &>img {
+    transform: rotate(-90deg);
+  }
+
+  &.show {
+    display: block;
+  }
+}
+
+.btn_menu_collapse {
+  outline: none;
+  border: none;
+  background-color: $grayBackground;
+  width: 40px;
+  height: 146px;
+  cursor: pointer;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  position: absolute;
+  right: -40px;
+  top: 0px;
+  z-index: 2;
+  display: none;
+
+  &>img {
+    width: 28px;
+    position: relative;
+    top: -22.5px;
+  }
+
+  &>span {
+    display: block;
+    position: relative;
+    bottom: -2px;
+    transform: rotate(90deg);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold !important;
+    font-size: 1.5em;
+    border: 1px solid red;
+  }
+
+  &.show {
+    display: block;
+  }
+}
+
+.dropdown-icon {
+  right: -10px;
+  position: absolute;
+  width: 15px;
+  top: 10px;
+}
+
+.url_active {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold !important;
+}
+
+.sidebar__container {
+  width: $sidebar-width;
+
+  background-color: $background;
+  transition: 300ms all ease;
+  position: absolute;
+
+  &.sidebar-collapse {
+    transform: translateX(-$sidebar-width);
+  }
+
+  .option__container {
+    width: 100%;
+
+    .suboption__container {
+      width: 100%;
+    }
+  }
+
+  & li {
+    width: 100%;
+    background-color: $background;
+
+    &>a {
+      width: 100%;
+      padding: 20px 40px 20px 20px;
+      display: block;
+      cursor: pointer;
+      background-color: $white;
+      position: relative;
+
+      &>span {
+        width: 100%;
+        display: inline-block;
+        position: relative;
+        padding-left: 50px;
+        padding-right: 20px;
+      }
+
+      &.option__selected {
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          width: calc(100% - 40px);
+          height: 100%;
+          top: 0;
+          left: 40px;
+          background-color: $background;
+          z-index: 0;
+          border-top-left-radius: 12px;
+          border-bottom-left-radius: 12px;
+          border-right: 2px solid $background;
+          mask-border-width: 100px;
+        }
+
+        &>span {
+          z-index: 1;
+          font-family: Arial, Helvetica, sans-serif;
+          font-weight: bold !important;
+          position: relative;
+        }
+      }
+
+      &.option__prev {
+        border-bottom-right-radius: 12px;
+      }
+
+      &.option__next {
+        border-top-right-radius: 12px;
+      }
+    }
+  }
+}
+
+.counter {
+  background-color: $secondary;
+  color: $white;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold !important;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  display: flex;
+  padding-left: 0;
+  position: absolute;
+  top: 2px;
+  right: -14px;
+  justify-content: center;
+  align-items: center;
+}
+
+.subitem {
+  padding-left: 35px !important;
+
+  &>span {
+    font-size: 0.95em !important;
+  }
+}
+
+.fix-count {
+  right: 10px !important;
+}
+
+.sidebar__bottom {
+  width: 100%;
+  height: calc(100vh - var(--header-height) - 150px);
+  background-color: $white;
+}
+
+.suboption__container {
+  transition: 300ms all ease;
+  height: auto;
+
+  &.not-extended {
+    height: 0;
+    overflow: hidden;
+  }
+}

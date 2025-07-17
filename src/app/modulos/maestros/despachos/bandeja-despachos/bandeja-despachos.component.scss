@@ -1,0 +1,11 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.subtitleSad {
+    color: #0E2E4A !important;
+    // columns: black;
+    font-family: $font-semi-bold !important;
+    font-weight: 700;
+    font-size: 1.0em !important;
+    line-height: 20px;
+    //letter-spacing: 1%;
+}

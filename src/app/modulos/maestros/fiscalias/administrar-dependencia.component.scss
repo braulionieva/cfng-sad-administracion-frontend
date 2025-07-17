@@ -1,0 +1,170 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+//disable dropdown
+p-dropdown.p-disabled ::ng-deep .p-dropdown {
+  background-color: #d1d2d2; // Este es un gris muy claro, similar al de la imagen
+  border-color: #E0E0E0; // Un tono ligeramente más oscuro para el borde
+
+  .p-dropdown-label {
+    color: #666666; // Un gris medio para el texto
+  }
+
+  .p-dropdown-trigger-icon {
+    color: #666666; // El mismo color para el icono
+  }
+}
+
+//label error
+.label-error {
+  color: $red;
+}
+
+.float-left{
+  float: left;
+}
+.float-right{
+  float: right;
+}
+
+//disabled input
+.disabled-input {
+  background-color: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.65;
+  border: 1px solid #ced4da;
+}
+
+//placeholder dropdown. enabled
+p-dropdown.dropdown-form-search-placeholder::ng-deep .p-dropdown {
+  //background-color: #d1d2d2; // Este es un gris muy claro, similar al de la imagen
+  //border-color: #E0E0E0; // Un tono ligeramente más oscuro para el borde
+  .p-dropdown-label {
+    &.p-placeholder{
+      color: #bebebe;
+    }
+  }
+}
+
+//placeholder input. enabled
+input.input-form-search-placeholder::placeholder {
+  color: #bebebe;
+}
+
+//placeholder calendar. enabled
+.calendar-form-search-placeholder::ng-deep {
+
+  .p-calendar .p-inputtext::placeholder {
+    color: #bebebe !important;
+  }
+
+  // Para mayor compatibilidad con diferentes navegadores
+  .p-calendar .p-inputtext::-webkit-input-placeholder { color: #bebebe !important; }
+  .p-calendar .p-inputtext::-moz-placeholder { color: #bebebe !important; }
+  .p-calendar .p-inputtext:-ms-input-placeholder { color: #bebebe !important; }
+}
+
+
+//background del filter
+.color-filter{
+  background: #e2dfcf;
+  padding: 1rem;
+  border-radius: 5px;
+  gap: 2rem;
+}
+
+:host::ng-deep .btn-mpfn-sad-filtrar{
+  height: 40px!important;
+}
+
+//--------------------------------
+// p dialog  cerrar aplicacion y botonoes footer
+//--------------------------------
+.submenu{
+  font-size: small;
+  font-weight: 700;
+}
+.cfe-close__document{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.crime-parts-container{
+  background-color: $white;
+  border-radius: 15px;
+  padding: 0px 40px;
+  width: 3000px;
+  min-height: 700px;
+  h3{
+    color: $primary;
+    font-family: $font-semi-bold;
+    font-size: 2em;
+  }
+}
+
+input[type="text"]:disabled {
+  background: #E0E0E080;
+}
+
+::ng-deep.p-inputtext, .p-inputnumber, .p-password, .p-calendar {
+  background: #fff;
+  width: 100%;
+}
+::ng-deep.p-dialog .p-dialog-footer {
+  border-top: 1px solid #fff;
+  background: #fff!important;
+
+}
+::ng-deep.p-dialog .p-dialog-header {
+  border-bottom: 1px solid #fff!important;
+  background: #ffffff;
+
+}
+
+::ng-deep.p-dialog-header .p-icon {
+  display: none;
+}
+
+::ng-deep .despacho .p-disabled, .p-component:disabled {
+  opacity: 1!important;
+}
+
+::ng-deep .despacho .p-disabled,.p-disabled * {
+  cursor: default !important;
+  pointer-events: none;
+  background: #E0E0E080!important;
+  color:#000!important;
+}
+
+::ng-deep .p-dialog .p-dialog-header .p-dialog-title {
+  color: #0E2E4A;
+  padding-top: 13px;
+  padding-left: 10px;
+}
+
+::ng-deep .p-dialog .p-dialog-footer button {
+  margin-bottom: 15px;
+}
+
+//dimensiones del modal
+:host ::ng-deep .p-dialog-custom {
+  width: auto;
+  border-radius: 10px;
+  overflow: hidden;
+  /**icon: none;**/
+}
+
+:host ::ng-deep .p-dialog-content-custom {
+  min-width: 50vw;
+  max-height: calc(100vh - 20px);
+  overflow-y: auto;
+  padding-right: 50px;
+}
+/**************************/
+:host ::ng-deep .p-paginator-bottom .p-paginator-current {
+  margin-right: auto;
+  padding-left: 1rem;
+}

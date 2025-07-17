@@ -1,0 +1,212 @@
+.mt-text {
+  //font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+  color: #0e2e4a;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+.enlace {
+  align-items: flex-start;
+  color: #1b75bb;
+  text-decoration: underline;
+  margin: 20px;
+  cursor: pointer;
+}
+.cfe-container {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  padding: 15px 10px;
+  background: var(--mpfn-white);
+}
+
+.titleMain {
+  align-items: center;
+  justify-content: center;
+}
+.rounded {
+  border-radius: 50%;
+}
+/****boton amplio*****/
+:host::ng-deep .btn-mpfn-sad-prime {
+  width: 300px !important;
+}
+/*******/
+.filterLink {
+  cursor: pointer;
+}
+
+.oneline {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 370px !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+.nodo-descripcionsiglas {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 170px !important;
+  display: inline-block !important;
+}
+
+:host ::ng-deep .ui-treetable .ui-treetable-tbody > tr::before {
+  content: "" !important;
+  position: absolute !important;
+  border-left: 2px solid #ccc !important; /* Estilo de la línea */
+  height: 100% !important;
+  top: -15px !important; /* Alinea la línea con el nodo */
+  left: 20px !important; /* Ajusta la posición de la línea en relación con el nodo */
+}
+
+/* Línea horizontal que conecta los nodos hijos con su padre */
+:host ::ng-deep .ui-treetable .ui-treetable-toggler::after {
+  content: "" !important;
+  position: absolute !important;
+  border-top: 2px solid #ccc !important;
+  width: 20px !important;
+  top: 50% !important;
+  left: -20px !important;
+}
+
+/* Ajusta la posición y tamaño de la celda para las líneas */
+:host ::ng-deep .ui-treetable .ui-treetable-toggler {
+  position: relative !important;
+  padding-left: 25px; /* Espacio para la línea */
+}
+
+/* Ajuste para el nodo expandido */
+:host ::ng-deep .ui-treetable-toggler-expanded::before {
+  border-left-color: #4caf50 !important; /* Cambiar el color de la línea para el nodo expandido */
+}
+
+/* Ajuste para el nodo colapsado */
+:host ::ng-deep .ui-treetable-toggler-collapsed::before {
+  border-left-color: #f44336 !important; /* Cambiar el color de la línea para el nodo colapsado */
+}
+
+////
+///
+///
+///
+// /***********/
+/* Cambiar el icono del nodo expandido */
+// :host::ng-deep .p-treetable-toggler .pi-chevron-right {
+//   content: "\f078"; /* Aquí puedes cambiar el código del icono */
+// }
+
+// /* Cambiar el icono del nodo colapsado */
+// :host::ng-deep .p-treetable-toggler .pi-chevron-down {
+//   content: '\f077'; /* Cambia el código por el icono que prefieras */
+// }
+// /* Estilos solo aplicables dentro del componente específico (styles.scss del componente) */
+// /*:host::ng-deep .p-datepicker table td {
+//   padding: 0rem!important;
+// }
+// :host ::ng-deep .p-treetable-toggler-icon {
+//   color: #007bff;
+//   font-size: 1.5em;
+// }*/
+// :host ::ng-deep .p-treetable-toggler {
+//   background-color: #f0f0f0;
+//   border-radius: 50%;
+//   width: 24px;
+//   height: 24px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// :host ::ng-deep .p-treetable-toggler:hover {
+//   background-color: #007bff;
+//   color: white;
+// }
+// /*
+// :host ::ng-deep .custom-toggler {
+//   background-color: #ff5722;
+// }
+// :host ::ng-deep .p-treetable-toggler {
+//   color: #4CAF50;
+//   font-size: 16px;
+//   padding: 5px;
+// }
+
+// :host ::ng-deep .pi-chevron-right::before {
+//   content: "\e930";
+//   font-size: 20px;
+// }
+
+// :host ::ng-deep .pi-chevron-down::before {
+//   content: "\e931";
+//   font-size: 20px;
+// }*/
+// /******/
+// /*
+// .ui-treenode-content:focus {
+//   outline: none;
+// }
+// .p-treenode-content {
+// box-shadow: darkcyan;
+// }
+
+// :host::ng-deep .p-tree-filter {
+// outline: 0 none;
+// outline-offset: 0;
+// box-shadow: none;
+// border-color: inherit;
+// }
+// :host::ng-deep.pi-chevron-right:before {
+// content: '\e905' !important;
+// vertical-align: middle !important;
+// font-size: 25px;
+// }
+// :host::ng-deep.p-treetable .p-treetable-tbody > tr > td .p-treetable-toggler {
+//     width: 1rem!important;
+//     height: 1rem!important;
+//     text-align: center!important;
+//     color: #6c757d!important;
+//     border-radius: 2px !important;
+//     border: 2px solid #ccc !important;
+//     left: -10px;
+//     top: -10px;
+//     visibility: visible!important;
+
+//     //line-height: 12px !important;
+// }
+// :host::ng-deep .p-icon:before {
+// line-height: 30px !important;
+// content: '\e905' !important;
+//   vertical-align: middle !important;
+//   font-size: 25px;
+// }
+// :host::ng-deep .p-icon {
+// display: none;
+// }*/
+:host ::ng-deep .p-tree.tree-expedientes {
+  border-color: transparent;
+}
+:host ::ng-deep .p-treenode-content {
+  & .p-treenode-label {
+    position: relative;
+    width: 100%;
+    & .ng-star-inserted {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+    // & .icono-personalizado {
+    //   border: 1px solid red;
+    //   // float: right !important;
+    //   position: absolute;
+    //   left: -50px !important;
+    // }
+  }
+
+  // & .p-ripple:first-child {
+  //   border: 1px solid red !important;
+  //   float: right !important;
+  // }
+}

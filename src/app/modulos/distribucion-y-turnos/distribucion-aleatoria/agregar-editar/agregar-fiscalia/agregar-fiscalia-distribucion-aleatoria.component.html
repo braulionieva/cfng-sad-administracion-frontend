@@ -1,0 +1,152 @@
+<div class="agregar-modal-container">
+  <div class="titleAF">{{ tareaForm }} fiscalía</div>
+  <span class="close" (click)="close()" (keydown)="close()">
+    <img [src]="icon('close_new')" alt="Close Icon"/>
+  </span>
+
+  <div class="grid mt-3">
+    <div class="col-12">
+      <form [formGroup]="formFiscalia" class="form-container-filter">
+        <div class="grid">
+          <div class="col-6 mb-1 gap-2">
+            <div class="font-label">Distrito Fiscal</div>
+
+            <!-- placeholder="Seleccione el distrito fiscal" optionLabel="nombre" optionValue="id" [disabled]="!edicion" -->
+            <p-dropdown (onChange)="onChangeDistritoFiscal($event.value)" [options]="distritoFiscal"
+                        formControlName="idDistritoFiscal" placeholder="Seleccione el distrito fiscal"
+                        optionLabel="nombre"
+                        optionValue="id" emptyMessage="Sin resultados" styleClass="mt-2"
+                        class="p-inputtext-lg py-3 text-lg w-full"
+                        appendTo="body"
+            />
+          </div>
+
+          <div class="col-6 mb-1 gap-2">
+            <div class="font-label">Sede</div>
+            <p-dropdown [options]="sedeLst"
+                        id="coVSede"
+                        formControlName="coVSede"
+                        placeholder="Seleccione la Sede"
+                        optionLabel="noVSede"
+                        optionValue="coVSede"
+                        emptyMessage="Sin resultados"
+                        styleClass="mt-2"
+                        class="p-inputtext-lg py-3 text-lg w-full" appendTo="body"
+                        (onChange)="onChangeSede($event.value)"
+            />
+          </div>
+
+          <div class="col-6 mb-1">
+            <div class="font-label">Tipo Especialidad</div>
+            <p-dropdown (onChange)="onChangeTipoEspecialidad($event)" [options]="tipoEspecialidad"
+                        formControlName="idTipoEspecialidad" placeholder="Seleccione el tipo de especialidad"
+                        optionLabel="nombre"
+                        optionValue="id" emptyMessage="Sin resultados" styleClass="mt-2"
+                        class="p-inputtext-lg py-3 text-lg w-full"
+                        appendTo="body"
+            />
+            <!-- [disabled]="!edicion" -->
+          </div>
+
+          <div class="col-6 mb-1">
+            <div class="font-label">Especialidad</div>
+            <p-dropdown (onChange)="onChangeEspecialidad()" [options]="especialidad"
+                        formControlName="idEspecialidad"
+                        placeholder="Seleccione la especialidad" optionLabel="nombre" optionValue="id"
+                        emptyMessage="Sin resultados" styleClass="mt-2" class="p-inputtext-lg py-3 text-lg w-full"
+                        appendTo="body"/>
+            <!-- [disabled]="!edicion" -->
+          </div>
+
+          <div class="col-6 mb-1">
+            <div class="font-label">Fiscalía</div>
+            <p-dropdown [options]="fiscalias" formControlName="idFiscalia" placeholder="Seleccione la fiscalía"
+                        optionLabel="fiscalia" optionValue="codigoFiscalia" (onChange)="onChangeFiscalia($event)"
+                        emptyMessage="Sin resultados" styleClass="ajustaDrop mt-2"
+                        class="ajustaDrop p-inputtext-lg py-3 text-lg w-full"
+                        appendTo="body"/>
+          </div>
+        </div>
+      </form>
+
+      <div class="grid">
+        <div class="col-12 mb-3 mt-3">
+          <app-nota-info-distribucion *ngIf="mostrarNotas.activa" [nota]="'ACTIVA'" [tipo]="idTipoDistribucion"/>
+          <app-nota-info-distribucion *ngIf="mostrarNotas.minimo" [nota]="'MINIMO'" [tipo]="idTipoDistribucion"/>
+          <app-nota-info-distribucion *ngIf="mostrarNotas.cambia" [nota]="'CAMBIA'" [tipo]="idTipoDistribucion"/>
+          <app-nota-info-distribucion *ngIf="mostrarNotas.duplicado" [nota]="'DUPLICADO'" [tipo]="idTipoDistribucion"/>
+        </div>
+
+        <div class="col-12 mb-3 mt-3">
+          <div class="font-label">Configurar despachos</div>
+        </div>
+
+        <div class="col-12">
+          <div class="p-2 bg-white border-round">
+            <form [formGroup]="form" class="form-container-filter">
+
+              <p-table [value]="turnoDespachos" editMode="row">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th id style="text-align: center; width:40px">N°</th>
+                    <th id style="text-align: left; width:160px">Despacho</th>
+                    <th id style="text-align: left; width:180px">Fiscales</th>
+                    <th id style="text-align: center; width:50px">Estado</th>
+                    <th id style="text-align: center; width:40px">¿Considera turno?</th>
+                    <th id style="text-align: left; width: 150px">Última modificación</th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-despacho let-i="rowIndex">
+                  <tr>
+                    <td style="text-align: center;">{{ i + 1 }}</td>
+                    <td style="text-align: left;">{{ despacho.nombreDespacho|titlecase }}</td>
+                    <td>
+                      <div *ngFor="let fiscal of despacho.fiscales"
+                           style="align-content: center; height: 31px;text-align: left;">
+                        {{ fiscal.nombres|titlecase }} {{ fiscal.apPaterno|titlecase }} {{ fiscal.apMaterno|titlecase }}
+                        ({{ fiscal.cargo }} )
+                      </div>
+                    <td>
+                      <div *ngIf="idTipoDistribucion==1" class="flex"><!--distribucion despacho-->
+                        <p-inputSwitch (onChange)="actualizaEstado(despacho, $event)" formControlName="switchFical"/>
+                        <div class="p-1"><b>{{ despacho?.estado == '1' ? 'Activo' : 'Inactivo' }}</b></div>
+                      </div>
+
+                      <div class="" *ngIf="idTipoDistribucion==2"><!--distribucion fiscal-->
+                        <div *ngFor="let fiscal of despacho.fiscales" style="text-align: center;">
+                          <div class="mt-30px mb-30px flex" style="align-content: center;">
+                            <p-inputSwitch (onChange)="actualizaEstado(fiscal, $event)"
+                                           formControlName="switchDespacho"/>
+                            <div class="p-1"><b>{{ fiscal?.estado == '1' ? 'Activo' : 'Inactivo' }}</b></div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="" style="text-align: center;">
+                      <input *ngIf="despacho.consideraTurno" (click)="cambiaTurnos(despacho,$event)"
+                             (keypress)="cambiaTurnos(despacho,$event)" type="checkbox" checked/>
+
+                      <input *ngIf="!despacho.consideraTurno" (click)="cambiaTurnos(despacho,$event)"
+                             (keypress)="cambiaTurnos(despacho,$event)" type="checkbox"/>
+                    </td>
+
+                    <td>{{ despacho.ultimaModificacion }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </form>
+
+            <hr class="mt-0">
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-content-center ">
+        <p-button (onClick)="AgregarFiscalia()" styleClass="btn-mpfn-sad-prime" [disabled]="!validateFiscalia"
+                  label="Guardar"/>
+      </div>
+    </div>
+  </div>
+</div>

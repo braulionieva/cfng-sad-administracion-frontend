@@ -1,0 +1,114 @@
+<div>
+  <form [formGroup]="filtroForm" class="form-container-filter">
+    <div class="flex m-1">
+      <div class="grid grow w-full">
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="distritoFiscal" class="font-bold">Distrito Fiscal</label>
+            <p-dropdown
+              class="p-inputtext-lg text-lg w-full"
+              [style]="{ border: 'none' }"
+              [options]="distritosFiscalesList"
+              formControlName="distritoFiscal"
+              placeholder="Seleccionar"
+              [required]
+              optionLabel="nombre"
+              optionValue="id"
+              (onChange)="renuevaDependencia($event.value)"
+            ></p-dropdown>
+            <small id="idNDistritoFiscal-help"></small>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="dependencia" class="font-bold">Fiscalía</label>
+            <p-dropdown
+              class="p-inputtext-lg text-lg w-full"
+              [options]="dependenciasFiscalesList"
+              formControlName="dependencia"
+              emptyMessage="No se encontraron registros"
+              placeholder="Seleccionar"
+              [required]
+              optionLabel="nombre"
+              optionValue="codigo"
+              (onChange)="renuevaDespacho($event.value)"
+            ></p-dropdown>
+            <small id="idVCentral-help"></small>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="flex flex-column gap-2">
+            <label htmlFor="despacho" class="font-bold">Despacho</label>
+            <p-dropdown
+              class="p-inputtext-lg text-lg w-full"
+              [options]="despachosList"
+              formControlName="despacho"
+              placeholder="Seleccionar"
+              [required]
+              emptyMessage="No se encontraron registros"
+              optionLabel="nombre"
+              optionValue="codigo"
+              (onChange)="submit()"
+            ></p-dropdown
+            ><!--No se encontro resultado-->
+            <small id="idVCentral-help"></small>
+          </div>
+        </div>
+      </div>
+      <div class="flex-none mt-5">
+        <p-button
+          styleClass="p-button-lg btn-mpfn-toggle p-2 ml-2 "
+          [icon]="getIcon()"
+          (onClick)="toggleFilters()"
+        ></p-button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="showAdditionalFilters">
+      <div class="grid">
+        <div class="col"></div>
+      </div>
+      <div class="grid ml-1">
+        <div class="flex flex-column gap-2">
+          <label htmlFor="fechaInicio" class="font-bold">Fecha inicio turno</label>
+          <p-calendar
+            dateMask
+            dateFormat="dd/mm/yy"
+            class="p-inputtext-lg cfe-calendar h-56 width-200px"
+            [showIcon]="true"
+            icon="cfe-calendar-icon"
+            placeholder="dd/mm/aaaa"
+            formControlName="fechaInicio"
+            (onSelect)="submit()"
+          ></p-calendar>
+        </div>
+
+        <div class="flex flex-column gap-2">
+          <label htmlFor="fechaFin" class="font-bold">Fecha fin turno</label>
+          <p-calendar
+            dateMask
+            dateFormat="dd/mm/yy"
+            class="p-inputtext-lg cfe-calendar h-56 ml-3"
+            [showIcon]="true"
+            icon="cfe-calendar-icon"
+            placeholder="dd/mm/aaaa"
+            formControlName="fechaFin"
+            (onSelect)="submit()"
+          ></p-calendar>
+        </div>
+
+      </div>
+    </ng-container>
+    <div class="flex">
+      <div class="grow w-full"></div>
+      <div class="flex-none">
+        <p-button
+          label="Limpiar Filtros"
+          styleClass="btn-mpfn-sad-cancel "
+          class="ml-2"
+          (onClick)="onClearFilters()"
+        ></p-button>
+      </div>
+    </div>
+  </form>
+</div>

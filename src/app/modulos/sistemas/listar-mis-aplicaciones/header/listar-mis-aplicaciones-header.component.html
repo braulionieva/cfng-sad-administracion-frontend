@@ -1,0 +1,24 @@
+<div class="detalle-menu-modal-container">
+  <div class="cfe-close__document" (click)="close()">
+    <img
+      [src]="icon('close')"
+      class="img-custom"
+      style="width: 18px; height: 18px"
+      alt=""
+    />
+  </div>
+  <div class="navegar-opciones-contenedor">
+    <h4>Carpeta Fiscal Electrónica</h4>
+    <ul>
+      <li *ngFor="let sistema of sistemas">
+        <a
+          href="javascript:void(0)"
+          (click)="navegarAUrl(sistema.url, sistema.nombre)"
+          rel="noopener"
+        >
+          {{ sistema.nombre }}</a
+        >
+      </li>
+    </ul>
+  </div>
+</div>

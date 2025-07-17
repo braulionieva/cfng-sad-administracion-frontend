@@ -1,0 +1,41 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+.handCursor {
+  cursor: pointer;
+}
+/******************/
+/*:host::ng-deep .btn-prime-img{
+  padding: 10px 8px 10px 25px  !important;
+}*/
+/******************/
+
+.semiboldBlue {
+  color: rgb(26, 26, 83);
+}
+
+.novigente {
+  background:  #C83C3C;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+}
+
+.vigente {
+  background:  #33CC85;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+}
+
+.botonVigente {
+  border: 1px solid darkgray; /*anchura, estilo y color borde*/
+  padding: 7px;
+  text-align: center;
+  background-color: #F5F2E0; /*color botón*/
+  color: #161313c2; /*color texto*/
+  text-decoration: none; /*decoración texto*/
+  /*text-transform: uppercase; /*capitalización texto*/
+  font-family: 'Helvetica', sans-serif; /*tipografía texto*/
+  border-radius: 15px; /*bordes redondos*/
+ }
+
+ 

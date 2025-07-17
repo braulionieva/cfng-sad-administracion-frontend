@@ -1,0 +1,101 @@
+<form [formGroup]="formGroup">
+  <div class="flex gap-3">
+    <span class="font-semibold">¿Tiene plazo de alerta?</span>
+    <div class="flex gap-2">
+      <p-radioButton
+        inputId="tienePlazoAlertaSi"
+        name="tienePlazoAlerta"
+        value="1"
+        formControlName="tienePlazoAlerta"
+      >
+      </p-radioButton>
+      <label for="tienePlazoAlertaSi" class="ml-2">Si</label>
+    </div>
+    <div class="flex gap-2">
+      <p-radioButton
+        inputId="tienePlazoAlertaNo"
+        name="tienePlazoAlerta"
+        value="0"
+        formControlName="tienePlazoAlerta"
+      >
+      </p-radioButton>
+      <label for="tienePlazoAlertaNo" class="ml-2">No</label>
+    </div>
+  </div>
+
+  <ng-container *ngIf="campoTienePlazoAlerta.value">
+    <div *ngIf="campoTienePlazoAlerta.value === '1'" class="grid px-3 mt-4">
+      <div class="col-4">
+        <div class="flex flex-column gap-2">
+          <label for="">Plazo de alerta</label>
+          <p-inputNumber
+            placeholder="Ingrese el plazo de alerta"
+            [useGrouping]="false"
+            formControlName="plazoAlerta"
+            [inputStyle]="{ width: '100%' }"
+          ></p-inputNumber>
+          <!-- errores -->
+          <small
+            *ngIf="
+              campoPlazoAlerta.touched && campoPlazoAlerta!.hasError('required')
+            "
+            class="p-error"
+            >Plazo de alerta es requerido.</small
+          >
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="flex flex-column gap-2">
+          <label for="">Unidad de medida</label>
+          <p-dropdown
+            [options]="dropdownsData?.unidades_medida"
+            optionLabel="nombre"
+            optionValue="id"
+            placeholder="Seleccione la unidad de medida"
+            formControlName="tipoUnidadPlazoAlerta"
+            appendTo="body"
+          ></p-dropdown>
+          <!-- errores -->
+          <small
+            *ngIf="
+              campoPlazoAlerta.touched && campoPlazoAlerta!.hasError('required')
+            "
+            class="p-error"
+            >Unidad de medida es requerido.</small
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 mb-4 grid">
+      <div class="col-4">
+        <div class="flex flex-column gap-2">
+          <label for="">Complejidad</label>
+          <p-dropdown
+            [options]="dropdownsData?.complejidades"
+            optionLabel="nombre"
+            optionValue="id"
+            placeholder="Seleccione la complejidad"
+            formControlName="complejidad"
+            appendTo="body"
+          ></p-dropdown>
+          <!-- errores -->
+          <small
+            *ngIf="
+              campoComplejidad.touched && campoComplejidad!.hasError('required')
+            "
+            class="p-error"
+            >Complejidad es requerido.</small
+          >
+        </div>
+      </div>
+    </div>
+
+    <app-tabla-seleccion-tramite
+      (envioTramitesSeleccionados)="onTramitesRecibidos($event)"
+      [accionPlazo]="accionPlazo"
+      [idConfiguraPlazo]="codigoConfiguraPlazo"
+      >></app-tabla-seleccion-tramite
+    >
+  </ng-container>
+</form>

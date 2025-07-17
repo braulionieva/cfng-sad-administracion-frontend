@@ -1,0 +1,140 @@
+<!-- filtro -->
+<div class="cfe-container">
+  <div class="tituloPage ">Aplicaciones ({{ aplicacionLstTotal }})</div>
+
+  <form [formGroup]="formFiltroSearch" class="color-filter">
+    <div class="flex">
+      <div class="grow w-full">
+        <div class="flex flex-column gap-2">
+          <label for="noVAplicacion" class="font-bold">Nombre</label>
+          <input type="text" pInputText formControlName="noVAplicacion" placeholder="Ingrese nombre"
+            class="input-form-search-placeholder height-common" maxlength="90" />
+        </div>
+      </div>
+
+      <div class="flex-none mt-5">
+        <p-button styleClass="p-button-lg btn-mpfn-toggle p-2 mx-2 py-2 px-4 font-semibold height-common"
+          [icon]="this.showMoreFiltro? 'pi pi-angle-double-up': 'pi pi-angle-double-down'"
+          (onClick)="toggleMasFiltros()">
+        </p-button>
+      </div>
+
+      <div class="flex-none mt-5">
+        <p-button styleClass="btn-mpfn-sad-cancel w-full text-lg height-common" label="Limpiar filtros"
+          (onClick)="onClearFiltersAndSearch()">
+        </p-button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="showMoreFiltro">
+      <div class="grid">
+        <div class="col"></div>
+      </div>
+
+      <div class="grid">
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label for="coAplicacion" class="font-bold">Código</label>
+            <input type="text" pInputText formControlName="coAplicacion" placeholder="Ingrese código"
+              class="input-form-search-placeholder" maxlength="10" />
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label for="deVSiglas" class="font-bold">Siglas</label>
+            <input type="text" pInputText formControlName="deVSiglas" placeholder="Ingrese siglas"
+              class="input-form-search-placeholder" maxlength="20" />
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label for="idNCategoria" class="font-bold">Categoría</label>
+            <p-dropdown [options]="categoriaLstFilter" formControlName="idNCategoria" placeholder="Seleccionar"
+              [required] optionLabel="noVCategoria" optionValue="idNCategoria" id="idNCategoria" appendTo="body" />
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="flex flex-column gap-2">
+            <label for="idNCategoria" class="font-bold">Fecha de lanzamiento</label>
+            <p-calendar [showIcon]="true" dateFormat="dd/mm/yy" placeholder="dd/mm/aaaa" formControlName="feDLanzto"
+              icon="cfe-calendar-icon" class="calendar-form-search-placeholder cfe-calendar h-39"></p-calendar>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </form>
+
+  <div class="flex justify-content-end w-full my-4">
+    <p-button (onClick)="exportarExcelForm()" [disabled]="exportarExcelDisabled"
+      styleClass="btn-mpfn-sad-cancel btn-excel" label="Exportar Excel">
+      <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px" />
+    </p-button>
+
+    <p-button (onClick)="openModalFormNew()" styleClass="btn-mpfn-sad-prime ml-3" label="Agregar" />
+  </div>
+</div>
+
+<!-- Tabla listado de aplicaciones -->
+<div class="p-2 bg-white border-round">
+  <div class="grid">
+    <div class="col-12">
+      <p-table [value]="aplicacionLst" [lazy]="true" (onLazyLoad)="buscarAplicacionPaginacion($event)"
+        [paginator]="true" [rows]="this.configPage.perPage" [first]="first" [totalRecords]="this.aplicacionLstTotal"
+        [tableStyle]="{ 'min-width': '50rem' }" [showCurrentPageReport]="true"
+        currentPageReportTemplate="{last} de {{this.aplicacionLstTotal}} registros">
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col">Nº</th>
+            <th scope="col">Logo</th>
+            <th scope="col">Código</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Siglas</th>
+            <th scope="col">Fecha lanzamiento</th>
+            <th scope="col">Versión</th>
+            <th scope="col">Categoría</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>{{ item.secuencia }}</td>
+            <td>
+              <img *ngIf="item.logo" [src]="'data:image/png;base64,' + item.logo" class="img-logo" alt="" />
+            </td>
+            <td>{{ item.coVAplicacion }}</td>
+            <td>{{ item.noVAplicacion }}</td>
+            <td>{{ item.deVSiglas }}</td>
+            <td>{{ item.feDLanztoStr }}</td>
+            <td>{{ item.deVVersion }}</td>
+            <td>{{ item.noVCategoria }}</td>
+            <td>
+              <div>
+                <p-button icon="pi pi-ellipsis-v" styleClass="p-button-rounded p-button-text"
+                  (click)="verOpcionesAplicacion($event,item);" />
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <!-- Bloque para mostrar el mensaje cuando no haya datos -->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="8" class="text-center">No se encontraron registros</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<p-menu #menu [model]="actionItems" [popup]="true" appendTo="body" />
+
+<!--modal add edit formGetters aplicacion-->
+<app-add-edit-aplicacion [dataModal]="dataModal" (closeModal)="closeModalAplicacion()"
+  (closeModalResponse)="closeModalResponseAplicacion($event)" (closeModalAndUpdate)="closeModalAndUpdateAplicacion()" />

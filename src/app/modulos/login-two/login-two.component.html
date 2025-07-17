@@ -1,0 +1,82 @@
+<form [formGroup]="formulario" (ngSubmit)="onIniciarSesion()">
+  <div class="flex flex-column gap-4">
+    <fn-input
+      label="Ingrese su DNI o correo electrónico"
+      formControlName="username"
+    />
+  </div>
+
+  <div class="flex flex-column gap-4">
+    <fn-input
+      label="Ingrese su contraseña"
+      formControlName="password"
+      type="password"
+    />
+  </div>
+
+  <div
+    *ngIf="conteoIntentos > configIntentos.min"
+    class="grid"
+    style="align-items: center"
+  >
+    <div class="col-6">
+      <img [src]="imageUrl" alt="Captcha" />
+    </div>
+
+    <div class="col-6">
+      <div (click)="obtenerCaptcha()" class="captcha">Refrescar Captcha</div>
+    </div>
+
+    <div class="col-12">
+      <fn-input formControlName="captcha" />
+    </div>
+  </div>
+
+  <div class="grid" *ngIf="errorMsg">
+    <div class="col">
+      <p class="error-message" style="text-align: center">
+        {{errorMsg}}
+      </p>
+    </div>
+  </div>
+
+  <!-- INI COMPONENTE PARA CONTINUAR CON LA VALIDACIÓN DE PASSWORD-->
+  <div class="flex flex-column gap-4">
+    <button
+      [loading]="estaCargando"
+      [disabled]="estaCargando || formulario.invalid"
+      label="Iniciar sesión"
+      class="w-full"
+      type="submit"
+      pButton
+      pRipple
+    ></button>
+  </div>
+</form>
+
+<div
+  class="flex flex-column justify-content-center align-items-center gap-4 mt-4"
+>
+  <button
+    (click)="onIniciarSesionGoogle()"
+    class="w-full login__actions--google mt-text font-semibold"
+  >
+    <img src="../../../assets/images/google.svg" alt="google-icon" />
+    <span> Iniciar sesión con Google </span>
+  </button>
+
+  <a
+    (click)="onRedireccionarRecuperarContrasena()"
+    class="text-center text-xs cursor-pointer"
+  >
+    <u>¿Olvidé mi contraseña?</u>
+  </a>
+</div>
+
+<br /><br />
+
+<div class="grid" style="font-size: 14px">
+  <div class="col-6 text-left">soportemp&#64;mpfn.gob.pe</div>
+
+  <div class="col-6 text-right">625-5555 Anexo: 6065</div>
+</div>

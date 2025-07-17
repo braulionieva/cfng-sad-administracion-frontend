@@ -1,0 +1,154 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.modal {
+  padding: 1rem;
+
+  &__options {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    align-items: center;
+    margin-top: auto;
+    width: 100%;
+  }
+
+  &__main {
+    margin-top: 25px;
+    width: 100%;
+    min-height: 140px;
+
+    &--message {
+      color: $red;
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    &--previusimg {
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      & img {
+        width: 100%;
+      }
+    }
+  }
+
+  &__cropperWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+
+    &>div:first-child {
+      max-width: 16rem;
+      position: relative;
+      padding: 0.6rem;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+
+    &>div:last-child {
+      text-align: center;
+
+      &>img {
+        width: 100%;
+        max-width: 18rem;
+        border: 1px solid rgb(212, 211, 211);
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    gap: 10px;
+  }
+}
+
+image-cropper {
+  max-height: 33vh;
+}
+
+.loader {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  color: white;
+}
+
+.file-upload-btn {
+  padding: 10px;
+}
+
+.inputFile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  padding: 14px 0;
+  cursor: pointer;
+
+  &__trigger {
+    display: block;
+    cursor: pointer;
+    background: #e2e6ea;
+    border: 1px solid #e2e6ea;
+    border-radius: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    transition: 300ms background-color ease;
+    justify-content: center;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    color: #fff;
+  }
+
+  &__name {
+    margin: 0;
+    text-align: center;
+  }
+
+  .inputFile__error-message {
+    color: #800000; // Color granate
+    font-size: 0.9rem;
+    margin: 0;
+    text-align: center;
+    visibility: visible;
+  }
+
+  .file-upload-container {
+    position: relative;
+
+    .inputFile__error-message {
+      min-height: 1.5rem; // Reserva espacio constante
+      visibility: hidden; // Por defecto no visible, pero ocupa espacio
+    }
+
+    .inputFile__error-message[ng-reflect-ng-if="true"] {
+      visibility: visible; // Cuando el mensaje está activo
+    }
+  }
+}
+
+.img-logo {
+  width: 75px;
+  border-radius: 50%;
+  height: 75px;
+}

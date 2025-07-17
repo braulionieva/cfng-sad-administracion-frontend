@@ -1,0 +1,73 @@
+<form [formGroup]="formularioFiltros">
+  <div class="filter" style="align-items: end">
+    <div class="filter__actions">
+      <div class="filter_dropdown">
+        <label for="nombre" class="font-semibold">Nombre de Cargo</label>
+        <input
+          formControlName="nombre"
+          placeholder="Ingrese nombre"
+          maxlength="100"
+          type="text"
+          pInputText
+        />
+      </div>
+
+      <div class="filter__dropdown">
+        <label for="jerarquia" class="font-semibold">Jerarquía</label>
+        <p-dropdown
+          (onChange)="aplicarFiltros()"
+          [options]="jerarquias"
+          [showClear]="false"
+          formControlName="jerarquia"
+          optionLabel="nombre"
+          optionValue="id"
+          placeholder="Seleccionar"
+          emptyMessage="No se encontraron registros"
+        />
+      </div>
+
+      <div class="filter__dropdown">
+        <label for="categoria" class="font-semibold">Categoría</label>
+        <p-dropdown
+          (onChange)="aplicarFiltros()"
+          [options]="categorias"
+          [showClear]="false"
+          formControlName="categoria"
+          optionLabel="nombreCategoriaCargo"
+          optionValue="idCategoriaCargo"
+          placeholder="Seleccionar"
+          emptyMessage="No se encontraron registros"
+        />
+      </div>
+    </div>
+
+    <div style="width: 100%; max-width: 300px">
+      <p-button
+        (click)="onClickCleanFilters()"
+        styleClass="btn-mpfn-sad-cancel btn-mpfn-adjust-clean w-full"
+        label="Limpiar filtros"
+      />
+    </div>
+  </div>
+</form>
+
+<div class="options">
+  <div class="flex justify-content-end">
+    <p-button
+      (onClick)="exportarExcel()"
+      class="mr-3"
+      label=""
+      styleClass="btn-mpfn-sad-cancel"
+      [disabled]="!puedeExportar"
+    >
+      <fn-icon [ico]="obtenerIcono('iTable')" color="#0E2E4A" height="18px" />
+      Exportar Excel
+    </p-button>
+
+    <p-button
+      (onClick)="showModalCreationPlazo()"
+      styleClass="btn-mpfn-sad-prime"
+      label="Agregar"
+    />
+  </div>
+</div>

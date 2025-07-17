@@ -1,0 +1,68 @@
+<!-- Tabla -->
+<div class="grid">
+  <div class="col-12">
+    <p-table [value]="detalleActoProcesal" [loading]="loading" sortField="secuencia" sortMode="single"
+             dataKey="actoProcesal" rowGroupMode="subheader" groupRowsBy="secuencia" [tableStyle]="{'min-width': '70rem'}"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th id>Nº</th>
+          <th id>Acto procesal</th>
+          <th id>Acciones</th>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="groupheader" let-detalle let-rowIndex="rowIndex" let-expanded="expanded"
+                   let-i="absRowIndex">
+        <tr>
+          <td>{{ detalle.secuencia }}</td>
+          <td colspan="6" style="text-align: center;">
+            <span class="font-bold ml-2">{{ detalle.actoProcesal }}</span>
+          </td>
+          <td>
+            <p-button type="button" (keydown.enter)="editar('{{detalle.idActoProcesal}}')"
+                      (click)="editar('{{detalle.idActoProcesal}}')" icon="pi pi-pencil"
+                      styleClass=" p-button-text p-button-rounded"></p-button>
+            <p-button type="button" (keydown.enter)="onDetails(detalle.idActoProcesal)"
+                      (click)="onDetails(detalle.idActoProcesal)" icon="pi pi-eye"
+                      styleClass=" p-button-text p-button-rounded"></p-button>
+            <p-button type="button" (keydown.enter)="onDelete(detalle.idActoProcesal, detalle.actoProcesal)"
+                      (click)="onDelete(detalle.idActoProcesal, detalle.actoProcesal)" icon="pi pi-trash"
+                      styleClass=" p-button-text p-button-rounded mr-5"></p-button>
+            <button type="button" pButton pRipple [pRowToggler]="detalle"
+                    class="p-button-text p-button-rounded p-button-plain ml-5"
+                    [icon]="expanded ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-detalle>
+        <tr>
+          <td>
+            {{ detalle.codigo }}
+          </td>
+          <td>
+            {{ detalle.tipoCarpetaCuaderno }}
+          </td>
+          <td>
+            {{ detalle.tipoEspecialidad }}
+          </td>
+          <td>
+            {{ detalle.especialidad }}
+          </td>
+          <td>
+            {{ detalle.jerarquia }}
+          </td>
+          <td>
+            {{ detalle.tipoProceso }}
+          </td>
+          <td>
+            {{ detalle.subTipoProceso }}
+          </td>
+          <td>
+            {{ detalle.etapa }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

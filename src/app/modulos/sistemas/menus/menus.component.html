@@ -1,0 +1,66 @@
+<div class="tituloPage">Menú</div>
+<div class="cfe-container align-content-center">
+  <div>
+    <a (click)="regresar($event)" class="enlace">Volver a Aplicaciones</a>
+  </div>
+
+  <div class="flex justify-content-center">
+    <div style="width: 1100px; min-width: 900px">
+      <div class="flex justify-content-center mt-text">
+        {{ this.devSiglas + ' - ' + noVAplicacion }}
+      </div>
+
+      <div>
+        <b>Nodos (opciones del menú)</b>
+      </div>
+
+      <div class="surface-border border-1 mt-1">
+        <div class="p-4 flex align-items-center" style="border: 1px solid #dee2e6">
+          <p-button styleClass="btn-mpfn-sad-prime" (onClick)="agregarNodoPrimerNivel()"><img class="mr-2" height="22px"
+              style="border-radius: 50%" alt="" />
+            Agregar nodo de primer nivel
+          </p-button>
+        </div>
+
+        <p-tree [value]="files" [draggableNodes]="true" [droppableNodes]="true" [validateDrop]="true"
+                (onNodeDrop)="allowDrop($event)" [style]="{ 'min-width': '50rem' }" [loading]="loading"
+                emptyMessage="No se encontraron registros"
+                styleClass="tree-expedientes">
+          <ng-template let-node pTemplate="default">
+            <div style="display: flex; gap: 1rem; align-items: center">
+              <div class="flex justify-content-between align-items-center">
+                <img [src]="images('drag')" style="vertical-align: middle" alt="Drag Icon" width="30px"
+                     class="icono-personalizado"/>
+                <img [src]="images('carpeta')" style="vertical-align: middle" alt="Folder Icon" width="30px"
+                     class="img-custom mr-2"/>
+                <span class="oneline">{{ node.data.codigoAplicacion }} -
+                  {{ node.data.nombreAplicacion }}</span>
+              </div>
+
+              <div class="flex gap-3 align-items-center">
+                <span class="nodo-descripcionsiglas">{{
+                    node.data.codigoAplicacion
+                  }}</span>
+
+                <i class="p-ripple fa fa-trash-o filterLink" aria-hidden="true" (click)="agregarNodo(node.data.idMenu,false)">
+                  <img [src]="node.children && node.children.length > 0 ? images('plus_v') : images('plus_r')"
+                       height="35px" width="35px" alt="Agregar"/>
+                </i>
+
+                <i class="p-ripple fa fa-trash-o filterLink" aria-hidden="true" (click)="editarNodo(node.data)"
+                   (keydown)="editarNodo(node.data)">
+                  <img [src]="images('edit_new')" width="31px" alt="Editar"/>
+                </i>
+
+                <i class="p-ripple fa fa-trash-o filterLink" aria-hidden="true"
+                   (click)="confirmaEliminarMenu(node.data)">
+                  <img [src]="images('minus_new')" height="35px" width="35px" alt="Eliminar"/>
+                </i>
+              </div>
+            </div>
+          </ng-template>
+        </p-tree>
+      </div>
+    </div>
+  </div>
+</div>

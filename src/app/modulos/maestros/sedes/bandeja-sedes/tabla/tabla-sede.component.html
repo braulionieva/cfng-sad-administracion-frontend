@@ -1,0 +1,76 @@
+<!-- Tabla -->
+<div class="grid">
+  <div class="col-12">
+    <p-table
+      [value]="sedes"
+      [paginator]="true"
+      [rows]="10"
+      (onPage)="onPageChange($event)"
+      [(first)]="first"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="{last} de {{ totalElementos }} registros"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col">N°</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Distrito Geográfico</th>
+          <th scope="col">Distrito Fiscal</th>
+          <th scope="col">Dirección</th>
+          <th scope="col">Creación</th>
+          <th scope="col">Modificación</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-sede>
+        <tr>
+          <td>{{ sede.numeracion }}</td>
+          <td
+            style="
+              text-align: start;
+              max-width: 50rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            "
+          >
+            {{ sede.nombreSede }}
+          </td>
+          <td>{{ sede.nombreDistritoGeografico }}</td>
+          <td>{{ sede.nombreDistritoFiscal }}</td>
+          <td
+            style="
+              text-align: start;
+              max-width: 50rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            "
+          >
+            {{ sede.direccionSede }}
+          </td>
+          <td>{{ sede.usuarioCreador }}</td>
+          <td>{{ sede.usuarioModificador }}</td>
+          <td>
+            <div class="flex gap-3 align-items-center justify-content-center">
+              <p-button
+                type="button"
+                (click)="prepareAndShowMenu($event, sede)"
+                icon="pi pi-ellipsis-v"
+                styleClass=" p-button-text p-button-rounded"
+              ></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Bloque para mostrar el mensaje cuando no haya datos -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8" class="text-center">No se encontraron registros</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-menu #menu [model]="actionsitems" [popup]="true" appendTo="body"></p-menu>

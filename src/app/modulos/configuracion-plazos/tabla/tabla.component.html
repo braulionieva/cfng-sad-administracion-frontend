@@ -1,0 +1,93 @@
+<div *ngIf="dataTable">
+  <p-table
+    [value]="dataTable"
+    [paginator]="true"
+    [rows]="10"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let columna of columnas" class="text-center">
+          {{ columna }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-plazo>
+      <tr>
+        <td>
+          <div class="flex align-items-center justify-content-center">
+            {{ plazo.rnum }}
+          </div>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-center">
+            {{ plazo.configuradoPor }}
+          </div>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-center">
+            {{ plazo.DistritoFiscal }}
+          </div>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-center">
+            {{ plazo.tipoEspecialidad }}
+          </div>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-center">
+            {{ plazo.especialidad }}
+          </div>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-center">
+            {{ plazo.plazoParaEvaluar }}
+            <!-- {{
+              deadlineDays(
+                plazo.plazo_evaluar.cantidad,
+                plazo.plazo_evaluar.tipo
+              )
+            }} -->
+          </div>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-center">
+            {{ plazo.plazoParaMostrarAlerta }}
+            <!-- {{
+              deadlineDays(
+                plazo.plazo_mostrar.cantidad,
+                plazo.plazo_mostrar.tipo
+              )
+            }} -->
+          </div>
+        </td>
+        <td>
+          <div
+            class="flex flex-column align-items-center justify-content-center"
+          >
+            {{ plazo.creacion }}
+          </div>
+        </td>
+        <td>
+          <div
+            class="flex flex-column align-items-center justify-content-center"
+          >
+            {{ plazo.modifcacion }}
+          </div>
+        </td>
+        <td>
+          <div class="flex gap-3 align-items-center justify-content-center">
+            <p-button
+              type="button"
+              (click)="prepareAndShowMenu($event, plazo)"
+              icon="pi pi-ellipsis-v"
+              styleClass=" p-button-text p-button-rounded"
+            ></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-menu #menu [model]="actionsitems" [popup]="true" appendTo="body"></p-menu>

@@ -1,0 +1,43 @@
+@use "/src/assets/styles/scss/abstracts/index" as *;
+
+.cuenta {
+  width: 100%;
+  max-width: 70rem;
+  margin: 0 auto;
+  border-radius: 8px;
+  display: flex;
+  &__card {
+    width: 100%;
+    margin: 1.5rem 0;
+    &--header {
+      background: #ececec;
+      padding: 1rem 1.5rem;
+      border: 2px solid #ececec;
+      color: $primary;
+      & > h6 {
+        margin: 0;
+        color: $lightblue;
+        font-weight: bold;
+      }
+    }
+    &--content {
+      background: #fff;
+      padding: 1rem 1.5rem;
+      border: 2px solid #ececec;
+    }
+  }
+}
+
+.filter {
+  width: 100%;
+  overflow: hidden;
+}
+
+.texto-resaltado {
+  color: $lightblue;
+  font-weight: bold;
+}
+
+::ng-deep .cfe-boton-lg {
+  padding: 12.5px 50px !important;
+}

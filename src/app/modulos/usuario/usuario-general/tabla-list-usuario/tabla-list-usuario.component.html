@@ -1,0 +1,60 @@
+<div class="p-2 bg-white border-round ">
+  <div class="grid">
+    <div class="col-12">
+      <p-table
+        [value]="users"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th id style="width: 10px;text-align: center;">Nº</th>
+            <th id  style="width: 100px">Usuario</th>
+            <th id  style="width: 60px">Documento</th>
+            <th id  style="width: 250px">Nombre completo</th>
+            <th id  style="width: 150px">Rel. Laboral</th>
+            <th id  style="width: 200px">Distrito Fiscal</th>
+            <th id  style="width: 300px">Dependencia</th>
+            <th id  style="width: 200px">Despacho</th>
+            <th id  style="width: 50px; text-align: center;">Adm.Distrital</th>
+            <th id  style="width: 50px; text-align: center;">Bloq.</th>
+            <th id  style="width: 30px; text-align: center;">Estado</th>
+            <th id  style="width: 40px; text-align: center;">Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usuario let-i="rowIndex">
+          <tr>
+            <td>{{ i+1 }}</td>
+            <td>{{ usuario.usuario }}</td>
+            <td>{{ usuario.noVTipoDocIdent}}: {{ usuario.numeroDocumento }}</td>
+            <td>{{ usuario.nombreCompleto|titlecase}}</td>
+            <td>{{ usuario.relacionLaboral|titlecase }}</td>
+            <td>{{ usuario.distritoFiscal|titlecase }}</td>
+            <td>{{ usuario.entidad|titlecase }}</td>
+            <td>{{ usuario.despacho|titlecase }}</td>
+            <td style="width: 40px; text-align: center;"><p-tag [value]="usuario.adminDistrital=='0'?'No':'Si'" [severity]="getSeverityAdminDistrital(usuario.adminDistrital)" /></td>
+            <td style="width: 40px; text-align: center;"><p-tag [value]="usuario.bloqueado|titlecase"  [severity]="getSeverityBloqueado(usuario.bloqueado)" /></td>
+            <td style="width: 40px; text-align: center;"><p-tag [value]="usuario.noVEstado|titlecase"  [severity]="getSeverityEstado(usuario.noVEstado )" /></td>
+            <td style="width: 5%; text-align: center;">
+              <div>
+                <p-menu
+                  #menu
+                  [model]="actionItemsMenu"
+                  [popup]="true"
+                  appendTo="body"
+                  [pSelectableRow]="usuario"
+                ></p-menu>
+                <p-button
+                  icon="pi pi-ellipsis-v"
+                  styleClass="p-button-rounded p-button-text"
+                  (onClick)="setRowSelected(usuario); menu.toggle($event)"
+                ></p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
