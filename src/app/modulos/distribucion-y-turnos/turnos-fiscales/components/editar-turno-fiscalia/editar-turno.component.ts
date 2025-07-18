@@ -14,7 +14,7 @@ import { InputTextarea } from "primeng/inputtextarea";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { MessagesModule } from 'primeng/messages';
-import { Message } from 'primeng/api';
+import { Message } from 'primeng/message';
 import { MaestroService } from '@services/maestro/maestro.service';
 import { Subscription } from 'rxjs';
 import { TableModule } from 'primeng/table';

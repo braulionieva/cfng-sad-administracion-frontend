@@ -2,7 +2,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { PrimeNGConfig } from 'primeng/api';
+import { providePrimeNG } from 'primeng/config';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { importProvidersFrom } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -19,8 +19,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    PrimeNGConfig,
+
     TranslateService,
+    providePrimeNG(),
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
     importProvidersFrom(RouterModule.forRoot(routes)),

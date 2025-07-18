@@ -39,6 +39,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.css",
+              "node_modules/primeicons/primeicons.css",
               "node_modules/ngx-spinner/animations/ball-spin-clockwise.css",
               "src/assets/styles/theme/bootstrap4-light-blue/theme.css",
               "src/styles.scss",
@@ -150,12 +153,29 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.css",
+              "node_modules/primeng/resources/primeng.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/ngx-spinner/animations/ball-spin-clockwise.css",
               "node_modules/ngx-spinner/animations/ball-spin-clockwise.css",
               "src/styles.scss",
               "src/assets/styles/theme/bootstrap4-light-blue/theme.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/ngx-spinner/animations/ball-spin-clockwise.css",
+              "src/assets/styles/theme/bootstrap4-light-blue/theme.css",
+              "src/styles.scss",
               "src/assets/styles/theme/tema-mpfn.scss",
               "src/assets/styles/theme/tema-cfe.scss",
-              "src/assets/styles/theme/tema-sad.scss"
+              "src/assets/styles/theme/tema-sad.scss",
+              "node_modules/quill/dist/quill.core.css",
+              "node_modules/quill/dist/quill.snow.css"
+            ],
+            "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": []
           }

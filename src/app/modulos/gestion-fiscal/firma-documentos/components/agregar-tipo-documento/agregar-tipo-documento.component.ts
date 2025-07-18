@@ -16,7 +16,7 @@ import { InputTextarea } from "primeng/inputtextarea";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { MessagesModule } from 'primeng/messages';
-import { Message } from 'primeng/api';
+import { Message } from 'primeng/message';
 import { Subscription } from 'rxjs';
 import { obtenerIcono } from '@utils/icon';
 import { CmpLibModule } from 'ngx-mpfn-dev-cmp-lib';
