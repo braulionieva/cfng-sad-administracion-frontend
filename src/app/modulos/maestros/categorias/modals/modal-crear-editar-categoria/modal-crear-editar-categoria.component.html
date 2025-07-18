@@ -41,13 +41,7 @@
 
     <div class="flex flex-column gap-2">
       <label for="palabrasClave">Palabras claves (opcional)</label>
-
-      <p-autoComplete
-        formControlName="palabrasClave"
-        [multiple]="true"
-        placeholder="Ingrese palabras claves"
-        [forceSelection]="false">
-      </p-autoComplete>
+      <p-chips formControlName="palabrasClave" separator="," placeholder="Ingrese palabras claves" />
 
       <div style="text-align: right">
         <small>{{ totalPalabrasClaveLength }}/100</small>

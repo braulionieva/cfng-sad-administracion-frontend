@@ -5,8 +5,7 @@ import { BuscarDependenciaReq, BuscarDependenciaReqFiltro, BuscarDependenciaRes,
 import { DependenciaDTOB, SedeDTOB } from '@interfaces/agregar-dependencia-us/agregar-dependencia-us';
 import { AdministrarDependenciaService } from '@services/administrar-dependencia/administrar-dependencia.service';
 import { AgregarDependenciaUsService } from '@services/agregar-dependencia-us/agregar-dependencia-us.service';
-import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
-import { TableLazyLoadEvent } from 'primeng/table';
+import { MessageService, ConfirmationService, MenuItem, LazyLoadEvent } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -330,7 +329,7 @@ export class AdministrarDependenciaComponent {
   getDistritoFiscalLstFilter() {
     this.agregarDependenciaUsService.getDistritoFiscalLst().subscribe({
       next: (response) => {
-
+       
         this.distritoFiscalLstFilter = response.sort((a, b) =>
           a.noVDistritoFiscal.localeCompare(b.noVDistritoFiscal)
         );
@@ -512,7 +511,7 @@ export class AdministrarDependenciaComponent {
     this.onLazyLoadActivo = true;
   }
 
-  buscarDependenciaPaginacion(event: TableLazyLoadEvent) {
+  buscarDependenciaPaginacion(event: LazyLoadEvent) {
     if (this.onLazyLoadActivo) {
       //configurando page cuyos valores son (0,10,20,30,... deben ser convertidos a 1,2,3,...)
       this.first = event.first;

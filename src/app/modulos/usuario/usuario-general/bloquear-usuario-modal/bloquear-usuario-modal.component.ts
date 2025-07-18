@@ -11,7 +11,7 @@ import { Auth2Service } from "@services/auth/auth2.service";
 import { MessageService, ConfirmationService } from "primeng/api";
 import { ButtonModule } from "primeng/button";
 import { DynamicDialogRef, DynamicDialogConfig, DialogService } from "primeng/dynamicdialog";
-import { InputTextarea } from "primeng/inputtextarea";
+import { InputTextareaModule } from "primeng/inputtextarea";
 
 @Component({
   selector: 'app-bloquear-usuario-modal',
@@ -19,7 +19,7 @@ import { InputTextarea } from "primeng/inputtextarea";
   standalone: true,
   imports: [
     ButtonModule,
-    InputTextarea,
+    InputTextareaModule,
     NgIf,
     ReactiveFormsModule
   ],

@@ -4,7 +4,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem, MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef, DynamicDialog } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef, DynamicDialogModule } from 'primeng/dynamicdialog';
 
 import { BuscarDependenciaResRow } from '@interfaces/administrar-dependencia/administrar-dependencia';
 
@@ -25,7 +25,7 @@ import { AlertModalComponent } from '@components/alert-modal/alert-modal.compone
     CheckboxModule,
     MenuModule,
     CmpLibModule,
-    DynamicDialog,
+    DynamicDialogModule,
     AgregarTipoDocumentoComponent],
   templateUrl: './tabla.component.html',
   styleUrls: ['./tabla.component.scss'],
@@ -69,7 +69,7 @@ export class TablaComponent {
     this.loadcargos();
     this.loadFirmaDocumentoPerfil()
   }
-
+  
   public icon(name: string): string {
     return `assets/icons/${name}.svg`;
   }
@@ -127,7 +127,7 @@ export class TablaComponent {
       },
     });
   }
-
+  
   public informarEliminacionRegistro(): void {
     this.refModal = this.dialogService.open(AlertModalComponent, {
       width: '600px',

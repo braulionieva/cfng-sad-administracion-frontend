@@ -9,7 +9,7 @@ import {MenuItem, MessageService} from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import {
   DialogService,
-  DynamicDialog,
+  DynamicDialogModule,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
@@ -18,7 +18,7 @@ import {MenuModule} from "primeng/menu";
 @Component({
   selector: 'app-tabla-tramite-por-acto-procesal',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, DynamicDialog, MenuModule],
+  imports: [CommonModule, TableModule, ButtonModule, DynamicDialogModule, MenuModule],
   templateUrl: './tabla-tramite-por-acto-procesal.component.html',
   styleUrls: ['./tabla-tramite-por-acto-procesal.component.scss'],
   providers: [MessageService, DialogService],

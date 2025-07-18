@@ -30,7 +30,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextarea } from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { Subscription } from 'rxjs';
 
@@ -51,7 +51,7 @@ import { Subscription } from 'rxjs';
     DropdownModule,
     ButtonModule,
     InputNumberModule,
-    InputTextarea,
+    InputTextareaModule,
     RadioButtonModule,
   ],
   providers: [DialogService],

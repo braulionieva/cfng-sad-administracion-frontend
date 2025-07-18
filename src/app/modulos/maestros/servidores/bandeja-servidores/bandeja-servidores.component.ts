@@ -15,7 +15,7 @@ import { TablaComponent } from './tabla/tabla.component';
 import { AccionesComponent } from './acciones/acciones.component';
 import { Filtros } from '@interfaces/shared/shared';
 import { ServidorBandejaRequest, ServidorBandejaResponse } from '@interfaces/servidor/servidor';
-import { DynamicDialog, DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogModule, DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-bandeja-servidores',
@@ -30,7 +30,7 @@ import { DynamicDialog, DialogService, DynamicDialogConfig } from 'primeng/dynam
     FiltrosComponent,
     TablaComponent,
     AccionesComponent,
-    DynamicDialog
+    DynamicDialogModule
 
   ],
   providers: [DynamicDialogConfig, DialogService],

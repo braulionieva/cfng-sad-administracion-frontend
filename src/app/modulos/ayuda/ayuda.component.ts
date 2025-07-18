@@ -4,8 +4,7 @@ import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} f
 import {RegionATF} from '@interfaces/administrarDependenciasATF/administrarDependenciasATF';
 import {ConfigPage} from '@interfaces/plazo-doc-obs/BuscarPlazoDocObsRes';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {ConfirmationService, MenuItem, MessageService} from 'primeng/api';
-import { TableLazyLoadEvent } from 'primeng/table';
+import {ConfirmationService, LazyLoadEvent, MenuItem, MessageService} from 'primeng/api';
 import {ButtonModule} from 'primeng/button';
 import {CalendarModule} from 'primeng/calendar';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
@@ -13,7 +12,7 @@ import {DialogModule} from 'primeng/dialog';
 import {DropdownModule} from 'primeng/dropdown';
 import {InputNumberModule} from 'primeng/inputnumber';
 import {InputTextModule} from 'primeng/inputtext';
-import {InputTextarea} from 'primeng/inputtextarea';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 import {MenuModule} from 'primeng/menu';
 import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
@@ -40,7 +39,7 @@ import {BACKEND} from "@environments/environment";
     CommonModule, DropdownModule, ReactiveFormsModule, InputTextModule, ButtonModule,
     CalendarModule, TableModule, ToastModule, DialogModule, ConfirmDialogModule,
     MenuModule, NgIf, FormsModule, ReactiveFormsModule, InputTextModule,
-    DropdownModule, InputNumberModule, CommonModule, InputTextarea, InputTextarea,
+    DropdownModule, InputNumberModule, CommonModule, InputTextareaModule, InputTextareaModule,
     CmpLibModule, RadioButtonModule, MultiSelectModule, CKEditorModule, AyudaTagComponent
   ],
   providers: [MessageService, ConfirmationService, DialogService],
@@ -403,7 +402,7 @@ export class AyudaComponent implements OnInit {
     }
   }
 
-  protected async lazyLoad(event: TableLazyLoadEvent) {
+  protected async lazyLoad(event: LazyLoadEvent) {
     this.configPage.pages = event.first / 10 + 1;
     await this.obtenerCategorias();
   }

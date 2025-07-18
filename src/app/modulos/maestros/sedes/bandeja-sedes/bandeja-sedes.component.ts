@@ -17,7 +17,7 @@ import { saveAs } from 'file-saver';
 import { MessageService } from 'primeng/api';
 import {
   DialogService,
-  DynamicDialog,
+  DynamicDialogModule,
 } from 'primeng/dynamicdialog';
 import { EventService } from '../event.service';
 
@@ -32,7 +32,7 @@ const EXCEL_TYPE =
     FiltrosComponent,
     TablaSedeComponent,
     AccionesSedeComponent,
-    DynamicDialog,
+    DynamicDialogModule,
   ],
   providers: [MessageService, DialogService],
   templateUrl: './bandeja-sedes.component.html',

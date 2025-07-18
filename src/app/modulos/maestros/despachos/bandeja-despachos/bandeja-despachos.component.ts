@@ -4,7 +4,7 @@ import { FiltrosComponent } from './filtros/filtros.component';
 import { AccionesComponent } from './acciones/acciones.component';
 import { AdminDespachoService } from '@services/admin-despacho/admin-despacho.service';
 import { DespachoBandejaRequest, DespachoBandejaResponse, Filtros } from '@interfaces/admin-despacho/admin-despacho';
-import { DynamicDialog, DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogModule, DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common';
     FiltrosComponent,
     AccionesComponent,
     //EditarDespachoComponent,
-    DynamicDialog
+    DynamicDialogModule
   ],
   providers: [DynamicDialogConfig, DialogService, DatePipe],
 })

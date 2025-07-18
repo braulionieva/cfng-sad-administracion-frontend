@@ -3,7 +3,7 @@ import { Component, OnInit, inject } from "@angular/core";
 import { FormsModule, ReactiveFormsModule, FormGroup, FormArray, FormControl, FormBuilder, AbstractControl } from "@angular/forms";
 import { ModalMensajeComponent } from "@modulos/maestros/categorias/modals/modal-mensaje/modal-mensaje.component";
 import { CoberturaCentralesService } from "@services/cobertura-centrales/cobertura-centrales.service";
-import { TableLazyLoadEvent } from 'primeng/table';
+import { LazyLoadEvent } from "primeng/api";
 import { ButtonModule } from "primeng/button";
 import { CheckboxModule } from "primeng/checkbox";
 import { DropdownModule } from "primeng/dropdown";
@@ -169,7 +169,7 @@ export class CoberturaDeCentralComponent implements OnInit {
     this.coberturaCentralesService.getListaCentrales().subscribe({
       next: (response) => {
         if (!response.data) return;
-
+  
         // Para cobertura
         this.centralesCoberturaDropdown = response.data
           .map((central) => ({
@@ -177,7 +177,7 @@ export class CoberturaDeCentralComponent implements OnInit {
             value: central.codigo,
           }))
           .sort((a, b) => a.name.localeCompare(b.name));
-
+        
         this.centralesFiscaliaDropdown = response.data
           .map((central) => ({
             name: central.nombre,
@@ -191,7 +191,7 @@ export class CoberturaDeCentralComponent implements OnInit {
     });
   }
 
-  loadDistritos(event: TableLazyLoadEvent) {
+  loadDistritos(event: LazyLoadEvent) {
     const pagina = event.first / event.rows + 1; // Calcula el número de página
     const registrosPorPagina = event.rows; // Tamaño de página
 
@@ -215,16 +215,16 @@ export class CoberturaDeCentralComponent implements OnInit {
       pagina,
       registrosPorPagina,
     };
-
+  
     this.coberturaCentralesService.getDistritos(datosSolicitud).subscribe({
       next: (response) => {
         this.distritosTableData = response.registros
           .sort((a, b) => a.distrito.localeCompare(b.distrito));
-
+  
         this.totalRegistrosGeografico = response.totalElementos;
-
+  
         if (this.distritosTableData?.length <= 0) return;
-
+  
         this.distritosFormArray = this.formBuilder.array(
           this.distritosTableData.map((distrito) => this.buildDistritoFormGroup(distrito))
         );
@@ -235,7 +235,7 @@ export class CoberturaDeCentralComponent implements OnInit {
     });
   }
 
-  loadFiscalias(event: TableLazyLoadEvent) {
+  loadFiscalias(event: LazyLoadEvent) {
     const pagina = event.first / event.rows + 1; // Calcula el número de página
     const registrosPorPagina = event.rows; // Tamaño de página
 
@@ -268,7 +268,7 @@ export class CoberturaDeCentralComponent implements OnInit {
       next: (response) => {
         this.fiscaliasTableData = response.registros
           .sort((a, b) => a.nombreEntidad.localeCompare(b.nombreEntidad));
-
+  
         this.totalRegistrosFiscalia = response.totalElementos;
         this.previousRequestListaFiscalias = requestData;
         this.fiscaliasFormArray = this.formBuilder.array(

@@ -9,7 +9,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FiscaliaAgregada } from '@interfaces/grupo-aleatorio/grupo-aleatorio';
 import {
   DialogService,
-  DynamicDialog,
+  DynamicDialogModule,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { DialogDataTransferService } from '@services/shared/dataTransfer.service';
@@ -26,7 +26,7 @@ import { DialogDataTransferService } from '@services/shared/dataTransfer.service
     ButtonModule,
     CalendarModule,
     ReactiveFormsModule,
-    DynamicDialog,
+    DynamicDialogModule,
   ],
   providers: [DialogService, DynamicDialogRef],
 })

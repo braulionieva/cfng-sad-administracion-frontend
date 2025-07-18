@@ -15,8 +15,7 @@ import {
   FiltroBuscarNotificadoresReq,
   NotificadorForm,
 } from '@interfaces/administrar-notificador/administrar-notificador';
-import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
-import { TableLazyLoadEvent } from 'primeng/table';
+import { MessageService, ConfirmationService, MenuItem, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -233,7 +232,7 @@ export class AdministrarNotificadorComponent {
     this.onLazyLoadActivo = true;
   }
 
-  buscarNotificadorPaginacion(event: TableLazyLoadEvent) {
+  buscarNotificadorPaginacion(event: LazyLoadEvent) {
     if (this.onLazyLoadActivo) {
       //configurando page cuyos valores son (0,10,20,30,... deben ser convertidos a 1,2,3,...)
       this.configPage.pages = (event.first / 10) + 1;

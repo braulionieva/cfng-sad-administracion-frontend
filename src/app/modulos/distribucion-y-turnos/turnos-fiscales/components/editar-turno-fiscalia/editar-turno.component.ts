@@ -10,11 +10,11 @@ import { InputMaskModule } from "primeng/inputmask";
 import { InputTextModule } from "primeng/inputtext";
 import { SelectButtonModule } from "primeng/selectbutton";
 import { RippleModule } from "primeng/ripple";
-import { InputTextarea } from "primeng/inputtextarea";
+import { InputTextareaModule } from "primeng/inputtextarea";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { MessagesModule } from 'primeng/messages';
-import { Message } from 'primeng/message';
+import { Message } from 'primeng/api/message';
 import { MaestroService } from '@services/maestro/maestro.service';
 import { Subscription } from 'rxjs';
 import { TableModule } from 'primeng/table';
@@ -40,7 +40,7 @@ import { horaAmPm } from '@utils/date';
     InputTextModule,
     SelectButtonModule,
     RippleModule,
-    InputTextarea,
+    InputTextareaModule,
     TableModule,
     FormsModule,
     RadioButtonModule,
@@ -195,7 +195,7 @@ export class EditarTurnoComponent {
 
     setTimeout(() => {
       const rawInitial = this.formularioNuevoTurno.getRawValue();
-
+    
       if (rawInitial.fechaInicio instanceof Date) {
         rawInitial.fechaInicio = this.toSimpleDateString(rawInitial.fechaInicio);
       }
@@ -208,9 +208,9 @@ export class EditarTurnoComponent {
       if (rawInitial.horaFin instanceof Date) {
         rawInitial.horaFin = this.toTimeString(rawInitial.horaFin);
       }
-
+    
       this.initialFormValue = JSON.stringify(rawInitial);
-
+    
       this.subscribeToFormChanges();
     }, 0);
   }
@@ -218,7 +218,7 @@ export class EditarTurnoComponent {
   private subscribeToFormChanges(): void {
     this.formularioNuevoTurno.valueChanges.subscribe(() => {
       const rawValues = this.formularioNuevoTurno.getRawValue();
-
+  
       if (rawValues.fechaInicio instanceof Date) {
         rawValues.fechaInicio = this.toSimpleDateString(rawValues.fechaInicio);
       }
@@ -231,9 +231,9 @@ export class EditarTurnoComponent {
       if (rawValues.horaFin instanceof Date) {
         rawValues.horaFin = this.toTimeString(rawValues.horaFin);
       }
-
+  
       const currentValue = JSON.stringify(rawValues);
-
+  
       this.isFormChanged = (currentValue !== this.initialFormValue);
     });
   }
@@ -244,7 +244,7 @@ export class EditarTurnoComponent {
     const day = ('0' + date.getDate()).slice(-2);
     return `${day}/${month}/${year}`;
   }
-
+  
   private toTimeString(date: Date): string {
     const hours = ('0' + date.getHours()).slice(-2);
     const minutes = ('0' + date.getMinutes()).slice(-2);
@@ -310,7 +310,7 @@ export class EditarTurnoComponent {
 
   public validarFormatoHora(event: any): any {
     const code = event.which ? event.which : event.keyCode;
-    if (code === 8) {
+    if (code === 8) { 
       return true;
     } else if (code >= 48 && code <= 58) {
       return true;
@@ -498,25 +498,25 @@ export class EditarTurnoComponent {
   }
 
   fromDbStringToDateTimeAmPm(dbString: string): {
-    dateOnly: Date;
-    timeOnly: Date;
+    dateOnly: Date; 
+    timeOnly: Date; 
     ampm: 'AM' | 'PM';
   } {
-    const [datePart, timePartRaw] = dbString.split(' ');
-    const timePart = timePartRaw.split('.')[0];
-
+    const [datePart, timePartRaw] = dbString.split(' ');   
+    const timePart = timePartRaw.split('.')[0]; 
+    
     const [yyyy, mm, dd] = datePart.split('-').map(Number);
     const [hh, min, ss] = timePart.split(':').map(Number);
-
+  
     const dateOnly = new Date(yyyy, mm - 1, dd, 0, 0, 0);
-
+  
     const timeOnly = new Date(0, 0, 0, hh, min, ss);
-
+  
     let ampm: 'AM' | 'PM' = 'AM';
     if (hh >= 12) {
       ampm = 'PM';
     }
-
+  
     return { dateOnly, timeOnly, ampm };
   }
 
@@ -567,37 +567,37 @@ export class EditarTurnoComponent {
     const fecha = this.formularioNuevoTurno.get('fechaInicio')?.value as Date;
     const hora = this.formularioNuevoTurno.get('horaInicio')?.value as Date;
     const ampm = this.formularioNuevoTurno.get('ampmIni')?.value; // "AM" o "PM"
-
+  
     const date24h = this.combinarFechaHora(fecha, hora, ampm); // Conviertes a 24h
     return formatDateSimple(date24h) + ' ' + formatTime(date24h);
   }
-
+  
   private buildFechaFin(): string {
     const fecha = this.formularioNuevoTurno.get('fechaFin')?.value as Date;
     const hora = this.formularioNuevoTurno.get('horaFin')?.value as Date;
     const ampm = this.formularioNuevoTurno.get('ampmFin')?.value; // "AM" o "PM"
-
+  
     const date24h = this.combinarFechaHora(fecha, hora, ampm);
     return formatDateSimple(date24h) + ' ' + formatTime(date24h);
   }
 
   private combinarFechaHora(fecha: Date, hora: Date, ampm: string): Date {
     const result = new Date(fecha.getTime());
-
-    let hours = hora.getHours();
+  
+    let hours = hora.getHours();   
     const minutes = hora.getMinutes();
-
+  
     if (ampm === 'PM' && hours < 12) {
-      hours += 12;
+      hours += 12; 
     } else if (ampm === 'AM' && hours === 12) {
-      hours = 0;
+      hours = 0; 
     }
-
+  
     result.setHours(hours);
     result.setMinutes(minutes);
     result.setSeconds(0);
     result.setMilliseconds(0);
-
+  
     return result;
   }
 

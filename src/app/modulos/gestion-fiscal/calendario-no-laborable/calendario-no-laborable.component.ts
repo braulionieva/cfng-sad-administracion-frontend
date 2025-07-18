@@ -10,7 +10,7 @@ import { TablaComponent } from './calendario-anual/calendario-anual.component';
 import { AccionesComponent } from './acciones/acciones.component';
 import { Filtros, FiltrosCalendar } from '@interfaces/shared/shared';
 import {
-  DynamicDialog,
+  DynamicDialogModule,
   DialogService,
   DynamicDialogConfig,
   DynamicDialogRef,
@@ -38,7 +38,7 @@ import { formatDateString } from '@utils/utils';
     FiltrosComponent,
     TablaComponent,
     AccionesComponent,
-    DynamicDialog,
+    DynamicDialogModule,
     CmpLibModule,
     TablaDiasNoLaborableComponent,
   ],

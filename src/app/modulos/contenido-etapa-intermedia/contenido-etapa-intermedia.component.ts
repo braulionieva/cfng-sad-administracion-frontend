@@ -5,14 +5,13 @@ import { TipoActoprocesal, AcusacionTRow, BuscarAcusacionReq, BuscarAcusacionReq
 import { ConfigPage } from '@interfaces/plazo-doc-obs/BuscarPlazoDocObsRes';
 import { ContenidoEtapaIntermediaService } from '@services/contenido-etapa-intermedia/contenido-etapa-intermedia.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MessageService, ConfirmationService, MenuItem, ConfirmEventType } from 'primeng/api';
-import { TableLazyLoadEvent } from 'primeng/table';
+import { MessageService, ConfirmationService, MenuItem, LazyLoadEvent, ConfirmEventType } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextarea } from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
@@ -30,7 +29,7 @@ import { CmpLibModule } from "ngx-mpfn-dev-cmp-lib";
     MenuModule, NgIf,
     FormsModule, ReactiveFormsModule, InputTextModule,
     DropdownModule, InputNumberModule, CommonModule,
-    InputTextarea, InputTextarea, CmpLibModule,
+    InputTextareaModule, InputTextareaModule, CmpLibModule,
   ],
   providers: [MessageService, ConfirmationService,],
 })
@@ -251,7 +250,7 @@ export class ContenidoEtapaIntermediaComponent {
 
   }
 
-  buscarAcusacionFiltroPaginacion(event: TableLazyLoadEvent) {
+  buscarAcusacionFiltroPaginacion(event: LazyLoadEvent) {
     if (this.onLazyLoadActivo) {
       //configurando page cuyos valores son (0,10,20,30,... deben ser convertidos a 1,2,3,...)
       this.configPage.pages = (event.first / 10) + 1;
@@ -384,7 +383,7 @@ export class ContenidoEtapaIntermediaComponent {
 
   }
 
-  buscarSobreseimientoFiltroPaginacion(event: TableLazyLoadEvent) {
+  buscarSobreseimientoFiltroPaginacion(event: LazyLoadEvent) {
     if (this.onLazyLoadActivo) {
       //configurando page cuyos valores son (0,10,20,30,... deben ser convertidos a 1,2,3,...)
       this.configPage.pages = (event.first / 10) + 1;

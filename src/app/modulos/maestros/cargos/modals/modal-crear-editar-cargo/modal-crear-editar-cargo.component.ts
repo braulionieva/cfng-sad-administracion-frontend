@@ -27,7 +27,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextarea } from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { Subscription } from 'rxjs';
 import { CargosAccionesService } from '../../cargos-acciones.service';
 
@@ -48,7 +48,7 @@ import { CargosAccionesService } from '../../cargos-acciones.service';
     DropdownModule,
     ButtonModule,
     InputNumberModule,
-    InputTextarea,
+    InputTextareaModule,
   ],
   providers: [DialogService],
 })

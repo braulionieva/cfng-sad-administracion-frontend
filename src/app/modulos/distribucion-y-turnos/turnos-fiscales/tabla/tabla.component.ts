@@ -4,7 +4,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { MenuItem, MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef,DynamicDialog  } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef,DynamicDialogModule  } from 'primeng/dynamicdialog';
 import { BuscarDependenciaResRow } from '@interfaces/administrar-dependencia/administrar-dependencia';
 import { TurnoService } from '@services/turno/turno.service';
 import { CmpLibModule } from 'ngx-mpfn-dev-cmp-lib';
@@ -23,7 +23,7 @@ import { EditarTurnoComponent } from '../components/editar-turno-fiscalia/editar
     ButtonModule,
     MenuModule,
     CmpLibModule,
-    DynamicDialog,
+    DynamicDialogModule,
     ],
   templateUrl: './tabla.component.html',
   styleUrls: ['./tabla.component.scss'],

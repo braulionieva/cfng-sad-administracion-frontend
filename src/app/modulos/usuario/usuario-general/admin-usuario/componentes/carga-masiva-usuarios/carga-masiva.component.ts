@@ -26,7 +26,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextarea } from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MessagesModule } from 'primeng/messages';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
@@ -45,7 +45,7 @@ import {
   standalone: true,
   imports: [
     CommonModule, ButtonModule, CalendarModule, CardModule, CheckboxModule, DropdownModule, InputMaskModule, InputTextModule,
-    SelectButtonModule, RippleModule, InputTextarea, FormsModule, RadioButtonModule, ReactiveFormsModule, DialogModule, MessagesModule, CmpLibModule,
+    SelectButtonModule, RippleModule, InputTextareaModule, FormsModule, RadioButtonModule, ReactiveFormsModule, DialogModule, MessagesModule, CmpLibModule,
   ],
   templateUrl: './carga-masiva.component.html',
   styleUrls: ['./carga-masiva.component.scss'],

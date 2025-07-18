@@ -28,7 +28,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextarea } from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RippleModule } from 'primeng/ripple';
 import { SelectButtonModule } from 'primeng/selectbutton';
@@ -49,7 +49,7 @@ import { Subject, Subscription } from 'rxjs';
     InputTextModule,
     SelectButtonModule,
     RippleModule,
-    InputTextarea,
+    InputTextareaModule,
     FormsModule,
     RadioButtonModule,
     ReactiveFormsModule,

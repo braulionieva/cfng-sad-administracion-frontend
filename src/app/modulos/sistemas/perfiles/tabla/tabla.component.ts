@@ -4,10 +4,9 @@ import { AlertModalComponent } from "@components/alert-modal/alert-modal.compone
 import { Aplicacion, Perfil, IListPerfilesRequest } from "@interfaces/admin-perfiles/admin-perfiles";
 import { AdminPerfilesService } from "@services/admin-perfiles/admin-perfiles.service";
 import { ComunDialogService } from "@services/dialog/comun-dialog.service";
-import { MessageService} from "primeng/api";
-import { TableLazyLoadEvent } from 'primeng/table';
+import { MessageService, LazyLoadEvent } from "primeng/api";
 import { ButtonModule } from "primeng/button";
-import { DynamicDialog, DynamicDialogRef, DynamicDialogConfig, DialogService } from "primeng/dynamicdialog";
+import { DynamicDialogModule, DynamicDialogRef, DynamicDialogConfig, DialogService } from "primeng/dynamicdialog";
 import { MenuModule } from "primeng/menu";
 import { TableModule } from "primeng/table";
 import { AdicionarPerfilComponent } from "../adicionar-perfil/adicionar-perfil.component";
@@ -21,7 +20,7 @@ import { EditPerfilComponent } from "../edit-perfil/edit-perfil.component";
     TableModule,
     ButtonModule,
     MenuModule,
-    DynamicDialog,
+    DynamicDialogModule,
     AdicionarPerfilComponent,
     EditPerfilComponent,
   ],
@@ -95,7 +94,7 @@ export class TablaComponent {
     });
   }
 
-  onLazyLoad(event: TableLazyLoadEvent) {
+  onLazyLoad(event: LazyLoadEvent) {
     this.first = event.first;
     this.paginaActual = Math.floor(event.first / event.rows) + 1;
     this.filasPorPagina = event.rows;

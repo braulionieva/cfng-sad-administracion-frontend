@@ -38,9 +38,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import {
   MessageService,
   ConfirmationService,
-  MenuItem
+  MenuItem,
+  LazyLoadEvent,
 } from 'primeng/api';
-import { TableLazyLoadEvent } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -271,7 +271,7 @@ export class ConfigurarMasDeUnaFiscaliaComponent {
   }
 
   //ejecuta onLazyLoad. la primera vez no debe ejecutarse porque no hay parámetros de búsqueda
-  getBuscarFiscaliasFiltroPagination(event: TableLazyLoadEvent) {
+  getBuscarFiscaliasFiltroPagination(event: LazyLoadEvent) {
     if (this.onLazyLoadActivo) {
       this.configPage.pages = event.first / 10 + 1;
 

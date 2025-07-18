@@ -10,7 +10,7 @@
               [style]="{ border: 'none' }"
               [options]="distritosFiscalesList"
               formControlName="distritoFiscal"
-              placeholder="Seleccionar"
+              placeholder="Distrito Fiscal"
               [required]
               optionLabel="nombre"
               optionValue="id"
@@ -27,7 +27,7 @@
               [options]="dependenciasFiscalesList"
               formControlName="dependencia"
               emptyMessage="No se encontraron registros"
-              placeholder="Seleccionar"
+              placeholder="Fiscalía"
               [required]
               optionLabel="nombre"
               optionValue="codigo"
@@ -43,7 +43,7 @@
               class="p-inputtext-lg text-lg w-full"
               [options]="despachosList"
               formControlName="despacho"
-              placeholder="Seleccionar"
+              placeholder="Despacho"
               [required]
               emptyMessage="No se encontraron registros"
               optionLabel="nombre"
@@ -77,7 +77,7 @@
             class="p-inputtext-lg cfe-calendar h-56 width-200px"
             [showIcon]="true"
             icon="cfe-calendar-icon"
-            placeholder="dd/mm/aaaa"
+            placeholder="Fecha inicio turno"
             formControlName="fechaInicio"
             (onSelect)="submit()"
           ></p-calendar>
@@ -91,7 +91,7 @@
             class="p-inputtext-lg cfe-calendar h-56 ml-3"
             [showIcon]="true"
             icon="cfe-calendar-icon"
-            placeholder="dd/mm/aaaa"
+            placeholder="Fecha fin turno"
             formControlName="fechaFin"
             (onSelect)="submit()"
           ></p-calendar>

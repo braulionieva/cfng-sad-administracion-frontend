@@ -14,7 +14,7 @@ import { DropdownModule } from "primeng/dropdown";
 import { DynamicDialogRef, DynamicDialogConfig } from "primeng/dynamicdialog";
 import { InputMaskModule } from "primeng/inputmask";
 import { InputTextModule } from "primeng/inputtext";
-import { InputTextarea } from "primeng/inputtextarea";
+import { InputTextareaModule } from "primeng/inputtextarea";
 import { MessagesModule } from "primeng/messages";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { RippleModule } from "primeng/ripple";
@@ -35,7 +35,7 @@ import { Subscription } from "rxjs";
     InputTextModule,
     SelectButtonModule,
     RippleModule,
-    InputTextarea,
+    InputTextareaModule,
     TableModule,
     FormsModule,
     RadioButtonModule,

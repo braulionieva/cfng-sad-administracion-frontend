@@ -15,7 +15,7 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import {
   DialogService,
-  DynamicDialog,
+  DynamicDialogModule,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { Menu, MenuModule } from 'primeng/menu';
@@ -33,7 +33,7 @@ import { ModalMensajeComponent } from '@modulos/maestros/categorias/modals/modal
     TableModule,
     ButtonModule,
     MenuModule,
-    DynamicDialog,
+    DynamicDialogModule,
   ],
   templateUrl: './tabla-sede.component.html',
   styleUrls: ['./tabla-sede.component.scss'],

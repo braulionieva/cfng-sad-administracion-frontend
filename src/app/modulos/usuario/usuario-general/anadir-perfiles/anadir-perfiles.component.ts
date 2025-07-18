@@ -22,7 +22,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { TreeTableModule } from 'primeng/treetable';
-import { ProgressSpinner } from 'primeng/progressspinner';
+import { SpinnerModule } from 'primeng/spinner';
 import { SeleccionarOpcionesMenuComponent } from '../seleccionar-opciones-menu/seleccionar-opciones-menu.component';
 import { ComunDialogService } from '@services/dialog/comun-dialog.service';
 
@@ -41,7 +41,7 @@ import { ComunDialogService } from '@services/dialog/comun-dialog.service';
     FormsModule,
     ReactiveFormsModule,
     TreeTableModule,
-    ProgressSpinner,
+    SpinnerModule,
     SeleccionarOpcionesMenuComponent,
   ],
 })

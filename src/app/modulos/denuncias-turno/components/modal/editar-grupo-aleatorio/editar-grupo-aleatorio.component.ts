@@ -13,7 +13,7 @@ import {
 } from '@modulos/denuncias-turno/data/dropdowns';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-import { DialogService, DynamicDialog } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { AgregarFiscaliaComponent } from '../agregar-fiscalia/agregar-fiscalia.component';
 import { MessagesModule } from 'primeng/messages';
 
@@ -34,7 +34,7 @@ import { MessagesModule } from 'primeng/messages';
     ProgressSpinnerModule,
     MessagesModule,
     AgregarFiscaliaComponent,
-    DynamicDialog,
+    DynamicDialogModule,
   ],
 })
 export class EditarGrupoAleatorio implements OnInit {
@@ -63,7 +63,7 @@ export class EditarGrupoAleatorio implements OnInit {
     this.getDistritosFiscalesDropdownData();
     this.getEspecialidadesDropdownData();
   }
-
+ 
 
   showModalAgregarFiscalia() {
     this.dialogService.open(AgregarFiscaliaComponent, {

@@ -13,7 +13,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { InputTextarea } from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CheckboxModule } from 'primeng/checkbox';
 import { AdminDistritalService } from '@services/admin-usuario/admin-distrital/admin-distrital.service';
 import { AlertModalComponent } from '@components/alert-modal/alert-modal.component';
@@ -38,7 +38,7 @@ import { convertirTexto } from '@utils/text';
     DropdownModule,
     InputNumberModule,
     CommonModule,
-    InputTextarea,
+    InputTextareaModule,
     CheckboxModule,
     RadioButtonModule,
   ],
@@ -96,7 +96,7 @@ export class AdministradorDistritalComponent {
   asignaDistritoFiscal(item: any, $event) {
     this.entidadSelect = item;
 
-  }
+  } 
 
   cancelarAsignarAdminDistrital() {
     this.close();
@@ -353,7 +353,7 @@ export class AdministradorDistritalComponent {
         error: (err) => {
         }
       });
-
+  
       if(this.editar){
         this.adminDistritalService.getDependenciasAdminDistrital(idUsuario).subscribe({
           next: (response) => {
@@ -368,7 +368,7 @@ export class AdministradorDistritalComponent {
         this.adminDistritalService.getDFiscalAdminDistrital(idUsuario).subscribe({
           next: (response) => {
             this.dfiscalAdmin = response;
-
+  
           },
           error: (err) => {
             this.getDependenciasUsuario(idUsuario)
@@ -379,7 +379,7 @@ export class AdministradorDistritalComponent {
         this.getDependenciasUsuario(idUsuario)
       }
     }
-
+  
     getDependenciasUsuario(idUsuario: string) {
       this.adminDistritalService.getDependenciasUsuario(idUsuario).subscribe({
         next: (response) => {
@@ -388,7 +388,7 @@ export class AdministradorDistritalComponent {
         error: (err) => {
         }
       });
-
+  
       this.adminDistritalService.getDFiscalUsuario(idUsuario).subscribe({
         next: (response) => {
           this.dfiscalUsuario = response;

@@ -11,7 +11,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { CategoriaService } from '@services/categoria/categoria.service';
-import { AutoComplete } from 'primeng/autocomplete';
+import { ChipsModule } from 'primeng/chips';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -42,7 +42,7 @@ import { isEqual } from 'lodash';
     ReactiveFormsModule,
     DialogModule,
     InputTextModule,
-    AutoComplete,
+    ChipsModule,
     InputSwitchModule,
     ButtonModule,
     InputNumberModule,

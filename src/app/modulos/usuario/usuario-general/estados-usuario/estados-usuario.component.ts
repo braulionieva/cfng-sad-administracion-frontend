@@ -12,7 +12,7 @@ import { MessageService } from "primeng/api";
 import { ButtonModule } from "primeng/button";
 import { CheckboxModule } from "primeng/checkbox";
 import { DynamicDialogRef, DynamicDialogConfig, DialogService } from "primeng/dynamicdialog";
-import { InputTextarea } from "primeng/inputtextarea";
+import { InputTextareaModule } from "primeng/inputtextarea";
 
 @Component({
   selector: 'app-estados-usuario',
@@ -21,7 +21,7 @@ import { InputTextarea } from "primeng/inputtextarea";
   imports: [
     ButtonModule,
     CheckboxModule,
-    InputTextarea,
+    InputTextareaModule,
     NgIf,
     ReactiveFormsModule
   ],

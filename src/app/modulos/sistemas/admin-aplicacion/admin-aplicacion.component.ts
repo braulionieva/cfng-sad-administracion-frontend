@@ -8,8 +8,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from "@angul
 import { CalendarModule } from "primeng/calendar";
 import { NgIf } from "@angular/common";
 import { NgxSpinnerService } from "ngx-spinner";
-import { ConfirmationService, MenuItem, MessageService } from "primeng/api";
-import { TableLazyLoadEvent } from 'primeng/table';
+import { ConfirmationService, LazyLoadEvent, MenuItem, MessageService } from "primeng/api";
 import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
 import { Auth2Service } from "@services/auth/auth2.service";
 import { PlazoDocObsService } from "@services/plazo-doc-obs/plazo-doc-obs.service";
@@ -178,7 +177,7 @@ export class AdminAplicacionComponent {
     this.onLazyLoadActivo = true;
   }
 
-  buscarAplicacionPaginacion(event: TableLazyLoadEvent) {
+  buscarAplicacionPaginacion(event: LazyLoadEvent) {
     if (this.onLazyLoadActivo) {
       //configurando page cuyos valores son (0,10,20,30,... deben ser convertidos a 1,2,3,...)
       this.first = event.first;
@@ -228,15 +227,15 @@ export class AdminAplicacionComponent {
 
   onClearFiltersAndSearch(): void {
     this.initConfigPage();
-
+    
     this.formFiltroSearch.reset({
       noVAplicacion: null,
       coAplicacion: null,
       deVSiglas: null,
       idNCategoria: null,
       feDLanzto: null,
-    }, { emitEvent: false });
-
+    }, { emitEvent: false }); 
+  
     this.buscarAplicacionFormFiltro();
   }
 

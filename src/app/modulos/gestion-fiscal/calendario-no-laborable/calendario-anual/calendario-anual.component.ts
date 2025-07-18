@@ -15,7 +15,7 @@ import {
   DialogService,
   DynamicDialogConfig,
   DynamicDialogRef,
-  DynamicDialog,
+  DynamicDialogModule,
 } from 'primeng/dynamicdialog';
 import { VerDetalleFechaComponent } from '../components/ver-detalle-fecha/ver-detalle-fecha.component';
 import { CalendarModule } from 'primeng/calendar';
@@ -39,7 +39,7 @@ import { CmpLibModule } from 'ngx-mpfn-dev-cmp-lib';
     CalendarModule,
     ReactiveFormsModule,
     MenuModule,
-    DynamicDialog,
+    DynamicDialogModule,
     CmpLibModule,
   ],
   templateUrl: './calendario-anual.component.html',

@@ -13,7 +13,7 @@ import { InputMaskModule } from "primeng/inputmask";
 import { InputTextModule } from "primeng/inputtext";
 import { SelectButtonModule } from "primeng/selectbutton";
 import { RippleModule } from "primeng/ripple";
-import { InputTextarea } from "primeng/inputtextarea";
+import { InputTextareaModule } from "primeng/inputtextarea";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { ServidorDTO } from '@interfaces/servidor/servidor';
@@ -32,7 +32,7 @@ import { ServidorDTO } from '@interfaces/servidor/servidor';
     InputTextModule,
     SelectButtonModule,
     RippleModule,
-    InputTextarea,
+    InputTextareaModule,
     FormsModule,
     RadioButtonModule,
     ReactiveFormsModule,

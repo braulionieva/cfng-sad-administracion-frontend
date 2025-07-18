@@ -5,8 +5,7 @@ import { ActualizarDependenciaAtfRe, ActualizarDependenciaAtfReq, AgregarDepende
 import { ConfigPage } from '@interfaces/plazo-doc-obs/BuscarPlazoDocObsRes';
 import { AdministrarDependenciasATFService } from '@services/administrarDependenciasATF/administrar-dependencias-atf.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MessageService, ConfirmationService, MenuItem } from 'primeng/api';
-import { TableLazyLoadEvent } from 'primeng/table';
+import { MessageService, ConfirmationService, MenuItem, LazyLoadEvent } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -14,7 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextarea } from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
@@ -34,7 +33,7 @@ import { finalize } from 'rxjs';
     CommonModule, DropdownModule, ReactiveFormsModule, InputTextModule, ButtonModule,
     CalendarModule, TableModule, ToastModule, DialogModule, ConfirmDialogModule,
     MenuModule, NgIf, FormsModule, ReactiveFormsModule, InputTextModule,
-    DropdownModule, InputNumberModule, CommonModule, InputTextarea, InputTextarea,
+    DropdownModule, InputNumberModule, CommonModule, InputTextareaModule, InputTextareaModule,
     CmpLibModule,
   ],
   providers: [MessageService, ConfirmationService, DialogService],
@@ -204,7 +203,7 @@ export class DependenciasAtfComponent implements OnInit {
     this.onLazyLoadActivo = true;
   }
 
-  protected buscarDependenciaATFPaginacion(event: TableLazyLoadEvent) {
+  protected buscarDependenciaATFPaginacion(event: LazyLoadEvent) {
     if (this.onLazyLoadActivo) {
       //configurando page cuyos valores son (0,10,20,30,... deben ser convertidos a 1,2,3,...)
       this.configPage.pages = event.first / 10 + 1;

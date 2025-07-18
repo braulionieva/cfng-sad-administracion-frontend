@@ -5,7 +5,7 @@ import { MenuModule } from 'primeng/menu';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Despacho, DespachoBandejaResponse } from '@interfaces/admin-despacho/admin-despacho';
 import { AdminDespachoService } from '@services/admin-despacho/admin-despacho.service';
-import { DialogService, DynamicDialogConfig, DynamicDialog, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AlertModalComponent } from '@components/alert-modal/alert-modal.component';
 import {
   EditarDespachoModalComponent
@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
     ButtonModule,
     MenuModule,
     //EditarDespachoComponent,
-    DynamicDialog,
+    DynamicDialogModule,
     CommonModule
   ],
   providers: [MessageService, DynamicDialogRef, DynamicDialogConfig],

@@ -25,7 +25,7 @@ import {
 } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextarea } from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { Subscription } from 'rxjs';
 import { PlazosDetencionService } from '@modulos/gestion-fiscal/plazos/plazos-detencion.service';
 import { PlazoDetencionFlagranciaService } from '@services/plazo-detencion-flagrancia/plazo-detencion-flagrancia.service';
@@ -48,7 +48,7 @@ import { AlertModalComponent } from '@components/alert-modal/alert-modal.compone
     DropdownModule,
     ButtonModule,
     InputNumberModule,
-    InputTextarea,
+    InputTextareaModule,
   ],
   providers: [DialogService],
 })
@@ -180,7 +180,7 @@ export class ModalCrearEditarPlazoComponent implements OnInit, OnDestroy {
             a.nombreEspecialidad.localeCompare(b.nombreEspecialidad, 'es', { sensitivity: 'base' })
           );
           this.specialtiesDropdown = resp;
-
+  
           if (isSettingData && this.plazo) {
             this.especialidadField.patchValue(this.plazo.idEspecialidad);
           }

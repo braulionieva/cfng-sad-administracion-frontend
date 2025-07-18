@@ -9,7 +9,7 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import {
   DialogService,
-  DynamicDialog,
+  DynamicDialogModule,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
@@ -20,7 +20,7 @@ import { ModalDetalleTablaComponent } from '@components/modal-detalle-tabla/moda
 @Component({
   selector: 'app-acto-procesal-tabla',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, DynamicDialog],
+  imports: [CommonModule, TableModule, ButtonModule, DynamicDialogModule],
   templateUrl: './acto-procesal-tabla.component.html',
   styleUrls: ['./acto-procesal-tabla.component.scss'],
   providers: [MessageService, DialogService],

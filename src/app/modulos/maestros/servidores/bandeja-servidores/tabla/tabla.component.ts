@@ -10,7 +10,7 @@ import {
   DialogService,
   DynamicDialogConfig,
   DynamicDialogRef,
-  DynamicDialog,
+  DynamicDialogModule,
 } from 'primeng/dynamicdialog';
 import { AlertModalComponent } from '@components/alert-modal/alert-modal.component';
 
@@ -22,7 +22,7 @@ import { AlertModalComponent } from '@components/alert-modal/alert-modal.compone
     TableModule,
     ButtonModule,
     MenuModule,
-    DynamicDialog,
+    DynamicDialogModule,
   ],
   templateUrl: './tabla.component.html',
   styleUrls: ['./tabla.component.scss'],

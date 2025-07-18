@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MessageService, TreeNode } from 'primeng/api';
-import { ProgressSpinner } from 'primeng/progressspinner';
+import { SpinnerModule } from 'primeng/spinner';
 import { ToastModule } from 'primeng/toast';
 import { TreeTableModule } from 'primeng/treetable';
 import { CommonModule } from '@angular/common';
@@ -30,7 +30,7 @@ import { ComunDialogService } from '@services/dialog/comun-dialog.service';
     FormsModule,
     ButtonModule,
     DialogModule,
-    ProgressSpinner,
+    SpinnerModule,
   ],
   templateUrl: './seleccionar-perfiles-sistemas.component.html',
   styleUrls: ['./seleccionar-perfiles-sistemas.component.scss'],

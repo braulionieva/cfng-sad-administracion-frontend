@@ -4,7 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import {
   DialogService,
-  DynamicDialog,
+  DynamicDialogModule,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { MenuModule } from 'primeng/menu';
@@ -43,7 +43,7 @@ const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.
     TableModule,
     ButtonModule,
     MenuModule,
-    DynamicDialog,
+    DynamicDialogModule,
     DialogModule,
     CommonModule,
     TableModule,

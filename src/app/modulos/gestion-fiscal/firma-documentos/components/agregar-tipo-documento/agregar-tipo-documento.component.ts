@@ -12,11 +12,11 @@ import { InputTextModule } from "primeng/inputtext";
 import { SelectButtonModule } from "primeng/selectbutton";
 import { RouterLink } from "@angular/router";
 import { RippleModule } from "primeng/ripple";
-import { InputTextarea } from "primeng/inputtextarea";
+import { InputTextareaModule } from "primeng/inputtextarea";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { RadioButtonModule } from "primeng/radiobutton";
 import { MessagesModule } from 'primeng/messages';
-import { Message } from 'primeng/message';
+import { Message } from 'primeng/api/message';
 import { Subscription } from 'rxjs';
 import { obtenerIcono } from '@utils/icon';
 import { CmpLibModule } from 'ngx-mpfn-dev-cmp-lib';
@@ -43,7 +43,7 @@ import { Auth2Service } from '@services/auth/auth2.service';
     SelectButtonModule,
     RouterLink,
     RippleModule,
-    InputTextarea,
+    InputTextareaModule,
     FormsModule,
     TableModule,
     RadioButtonModule,
@@ -428,8 +428,8 @@ export class AgregarTipoDocumentoComponent {
       }
       this.firmaDocumentoService.guardarFirmaDocumentoCargo(request).subscribe({
         next: (response) => {
-          completedRequests++;
-
+          completedRequests++; 
+  
           if (completedRequests === totalRequests) {
             responses.push(response.PO_V_ERR_MSG);
             this.informarGuardadoFirma();

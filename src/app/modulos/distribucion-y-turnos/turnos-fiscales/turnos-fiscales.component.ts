@@ -8,7 +8,7 @@ import { FiltrosComponent } from './filtros/filtros.component';
 import { TablaComponent } from './tabla/tabla.component';
 import { AccionesComponent } from './acciones/acciones.component';
 import {
-  DynamicDialog,
+  DynamicDialogModule,
   DialogService,
   DynamicDialogConfig,
 } from 'primeng/dynamicdialog';
@@ -42,7 +42,7 @@ const EXCEL_TYPE =
     FiltrosComponent,
     TablaComponent,
     AccionesComponent,
-    DynamicDialog,
+    DynamicDialogModule,
   ],
   providers: [DynamicDialogConfig, DialogService],
 })

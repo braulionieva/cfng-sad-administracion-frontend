@@ -6,7 +6,7 @@ import { FiltrosComponent } from './filtros/filtros.component';
 import {
   DialogService,
   DynamicDialogConfig,
-  DynamicDialog,
+  DynamicDialogModule,
   DynamicDialogRef,
 } from 'primeng/dynamicdialog';
 import { AlertModalComponent } from '@components/alert-modal/alert-modal.component';
@@ -25,7 +25,7 @@ import { DatePipe } from '@angular/common';
     TablaGenericaComponent,
     AccionesComponent,
     FiltrosComponent,
-    DynamicDialog,
+    DynamicDialogModule,
     AgregarEditarReglaComponent,
   ],
   providers: [
